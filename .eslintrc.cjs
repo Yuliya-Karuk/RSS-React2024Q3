@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint',
     'import',
     'prettier',
+    'react-compiler'
   ],
   settings: {
     'import/resolver': {
@@ -95,5 +96,6 @@ module.exports = {
         allowTaggedTemplates: true,
       },
     ],
+    'react-compiler/react-compiler': 'error',
   },
 };
