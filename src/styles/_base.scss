@@ -1,0 +1,9 @@
+html {
+  scroll-behavior: smooth;
+  font-size: 10px;
+}
+
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
