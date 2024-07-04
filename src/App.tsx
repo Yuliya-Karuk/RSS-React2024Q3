@@ -1,15 +1,22 @@
 /* eslint-disable react/prefer-stateless-function */
 import { Component } from 'react';
-import './App.scss';
+import styles from './App.module.scss';
 import { ErrorButton } from './components/ErrorButton/ErrorButton';
+import List from './components/List/List';
+import { Search } from './components/Search/Search';
+import { DataProvider } from './contexts/dataProvider';
 
 class App extends Component {
   render() {
     return (
-      <>
-        <h1>Pokemon</h1>
-        <ErrorButton />
-      </>
+      <DataProvider>
+        <div className={styles.page}>
+          <h1>Star Wars</h1>
+          <Search />
+          <ErrorButton />
+          <List />
+        </div>
+      </DataProvider>
     );
   }
 }
