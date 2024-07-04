@@ -9,7 +9,8 @@ type DataProviderProps = {
 
 export interface DataProviderState {
   data: APIResponse;
-  updateData: (data: APIResponse) => void;
+  isLoading: boolean;
+  updateData: (data: APIResponse, isLoading: boolean) => void;
 }
 
 const initialData = {
@@ -19,6 +20,7 @@ const initialData = {
     previous: '',
     results: [],
   },
+  isLoading: true,
   updateData: () => {},
 };
 
@@ -40,17 +42,19 @@ export class DataProvider extends Component<DataProviderProps, DataProviderState
     } else {
       data = await api.getPeople();
     }
-    this.setState({ data });
+    this.setState({ data, isLoading: false });
   }
 
-  updateData(data: APIResponse) {
-    this.setState({ data });
+  updateData(data: APIResponse, isLoading: boolean) {
+    this.setState({ data, isLoading });
   }
 
   render() {
-    const { data } = this.state;
+    const { data, isLoading } = this.state;
     const { children } = this.props;
 
-    return <DataContext.Provider value={{ data, updateData: this.updateData }}>{children}</DataContext.Provider>;
+    return (
+      <DataContext.Provider value={{ data, isLoading, updateData: this.updateData }}>{children}</DataContext.Provider>
+    );
   }
 }

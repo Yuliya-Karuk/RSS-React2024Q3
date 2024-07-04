@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import { Component } from 'react';
 import logo from '../../assets/logo.png';
 import { Search } from '../Search/Search';

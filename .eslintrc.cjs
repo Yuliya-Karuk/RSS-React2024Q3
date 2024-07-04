@@ -46,6 +46,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
+    "react/prefer-stateless-function": "off",
     'jsx-a11y/click-events-have-key-events': 'off',
     'react-refresh/only-export-components': [
       'warn',

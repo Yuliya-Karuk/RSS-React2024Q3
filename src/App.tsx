@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import { Component } from 'react';
 import styles from './App.module.scss';
 import { CharacterList } from './components/CharacterList/CharacterList';

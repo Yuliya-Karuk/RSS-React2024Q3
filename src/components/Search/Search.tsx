@@ -26,10 +26,11 @@ export class Search extends Component<object, SearchState> {
   handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { searchValue } = this.state;
-    const { updateData } = this.context as DataProviderState;
+    const { data, updateData } = this.context as DataProviderState;
+    updateData(data, true);
 
-    const data = await api.searchPeopleByName(searchValue);
-    updateData(data);
+    const newData = await api.searchPeopleByName(searchValue);
+    updateData(newData, false);
   };
 
   render() {
