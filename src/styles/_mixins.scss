@@ -18,6 +18,12 @@
   }
 }
 
+@mixin big-mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media (max-width: 480px) {
     @content;
@@ -37,5 +43,11 @@
     &:hover {
       @content;
     }
+  }
+}
+
+@mixin focused {
+  &:focus {
+    filter: drop-shadow(2px 3px 2px $color-primary-bright);
   }
 }

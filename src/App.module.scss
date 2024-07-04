@@ -1,7 +1,17 @@
 .page {
   @include flex(flex-start, center, column);
+  position: relative;
   width: 100vw;
-  height: 100vh;
-  background: center no-repeat url('./assets/bg.png');
-  background-size: cover;
+  background: $color-bg-dark;
+  z-index: 1;
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    width: 100vw;
+    min-height: 100vh;
+    background: center no-repeat url('./assets/bg.png');
+    background-size: cover;
+  }
 }

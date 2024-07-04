@@ -1,0 +1,16 @@
+.header {
+  width: 100%;
+  background: rgb(8 8 8 / 40%);
+}
+
+.header-container {
+  @extend %container;
+  @include flex(space-between, center);
+  backdrop-filter: blur(12.5px);
+  padding: 10px 30px;
+}
+
+.logo {
+  width: 72px;
+  height: 34px;
+}
