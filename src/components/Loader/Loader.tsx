@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import loader from '../../assets/loader2.gif';
+import loader from '../../assets/loader.gif';
 import styles from './Loader.module.scss';
 
 export class Loader extends Component {
