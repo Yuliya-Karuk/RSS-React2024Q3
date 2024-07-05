@@ -1,3 +1,8 @@
+.error-page {
+  background-color: $color-bg-dark;
+  height: 100vh;
+}
+
 .error-container {
   @extend %container;
   @include flex(center, center, row, 20px);
@@ -10,8 +15,6 @@
   @include mobile {
     font-size: 2rem;
   }
-  width: 100vw;
-  background-color: $color-bg-dark;
   height: 100vh;
   padding: 10px 30px;
   color: $color-white-default;

@@ -29,15 +29,17 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const { children } = this.props;
     if (hasError) {
       return (
-        <div className={styles.errorContainer}>
-          <div className={styles.errorContent}>
-            <h2 className={styles.errorHeading}>Something went wrong. Refresh the page, please.</h2>
-            <button type="button" className={styles.errorButton} onClick={this.reload}>
-              Reload
-            </button>
-          </div>
-          <div className={styles.errorImgContainer}>
-            <img className={styles.errorImg} src={errorImg} alt="Error" />
+        <div className={styles.errorPage}>
+          <div className={styles.errorContainer}>
+            <div className={styles.errorContent}>
+              <h2 className={styles.errorHeading}>Something went wrong. Refresh the page, please.</h2>
+              <button type="button" className={styles.errorButton} onClick={this.reload}>
+                Reload
+              </button>
+            </div>
+            <div className={styles.errorImgContainer}>
+              <img className={styles.errorImg} src={errorImg} alt="Error" />
+            </div>
           </div>
         </div>
       );
