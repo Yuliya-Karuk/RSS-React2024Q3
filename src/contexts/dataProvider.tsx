@@ -1,8 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { storage } from '@services/storage';
+import { useLocalStorage } from '@hooks/useSearchQuery';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { PaginatedCharacters } from '../models';
 import { api } from '../services/api';
+
+const productPerPage: number = 10;
 
 type DataProviderProps = {
   children?: ReactNode;
@@ -11,7 +13,11 @@ type DataProviderProps = {
 export interface DataContextValue {
   data: PaginatedCharacters;
   isLoading: boolean;
-  updateData: (data: PaginatedCharacters, isLoading: boolean) => void;
+  currentPage: number | null;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number | null>>;
+  totalPages: number;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const initialData: DataContextValue = {
@@ -22,7 +28,11 @@ const initialData: DataContextValue = {
     results: [],
   },
   isLoading: true,
-  updateData: () => {},
+  currentPage: null,
+  setCurrentPage: () => {},
+  totalPages: 1,
+  searchQuery: '',
+  setSearchQuery: () => {},
 };
 
 export const DataContext = createContext<DataContextValue>(initialData);
@@ -30,25 +40,23 @@ export const DataContext = createContext<DataContextValue>(initialData);
 export const DataProvider = ({ children }: DataProviderProps) => {
   const [data, setData] = useState<PaginatedCharacters>(initialData.data);
   const [isLoading, setIsLoading] = useState<boolean>(initialData.isLoading);
+  // const { errorNotify } = useToast();
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
-  const updateData = (newData: PaginatedCharacters, isLoadingState: boolean) => {
-    setData(newData);
-    setIsLoading(isLoadingState);
-  };
+  const { getStorage } = useLocalStorage();
+  const [currentPage, setCurrentPage] = useState<number | null>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let fetchedData;
-        const storedSearchValue = storage.getStorage();
+        const response = await api.searchPeopleByName(searchQuery, String(currentPage));
 
-        if (storedSearchValue) {
-          fetchedData = await api.searchPeopleByName(storedSearchValue);
-        } else {
-          fetchedData = await api.getPeople();
-        }
-
-        setData(fetchedData);
+        setTotalPages(Math.ceil(response.count / productPerPage));
+        setCurrentPage(currentPage === null ? 1 : currentPage);
+        setData(response);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -57,9 +65,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage, searchQuery]);
 
-  return <DataContext.Provider value={{ data, isLoading, updateData }}>{children}</DataContext.Provider>;
+  return (
+    <DataContext.Provider
+      value={{ data, isLoading, currentPage, setCurrentPage, totalPages, searchQuery, setSearchQuery }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
 };
 
 export const useData = () => {

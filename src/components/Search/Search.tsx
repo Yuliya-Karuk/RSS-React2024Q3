@@ -1,23 +1,21 @@
-import { DataContext } from '@contexts/dataProvider';
-import { api } from '@services/api';
-import { storage } from '@services/storage';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { useData } from '@contexts/dataProvider';
+import { useLocalStorage } from '@hooks/useSearchQuery';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './Search.module.scss';
 
 export const Search = () => {
-  const { data, updateData } = useContext(DataContext);
-  const [searchValue, setSearchValue] = useState(storage.getStorage() || '');
+  const { searchQuery, setSearchQuery } = useData();
+  const [searchValue, setSearchValue] = useState(searchQuery);
+  const { setStorage } = useLocalStorage();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newSearchValue = e.target.value;
     setSearchValue(newSearchValue);
-    storage.setStorage(searchValue);
   };
 
   const updateSearchData = async () => {
-    updateData(data, true);
-    const newData = await api.searchPeopleByName(searchValue);
-    updateData(newData, false);
+    setStorage(searchValue);
+    setSearchQuery(searchValue);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

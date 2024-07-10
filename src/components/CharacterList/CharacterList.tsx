@@ -3,8 +3,21 @@ import { Loader } from '@components/Loader/Loader';
 import { useData } from '@contexts/dataProvider';
 import styles from './CharacterList.module.scss';
 
-export const CharacterList = () => {
+interface CharacterListProps {
+  setDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const CharacterList = ({ setDetailsOpen }: CharacterListProps) => {
   const { data, isLoading } = useData();
+
+  // const handleCloseDetails = () => {
+  //   setDetailsOpen(false);
+
+  //   // Удаляем параметр details из URL
+  //   navigate({
+  //     search: qs.stringify({ ...qs.parse(window.location.search, { ignoreQueryPrefix: true }), details: undefined }),
+  //   });
+  // };
 
   if (isLoading) {
     return <Loader />;
@@ -15,7 +28,7 @@ export const CharacterList = () => {
       {data.results.length > 0 ? (
         <ul className={styles.mainContainer}>
           {data.results.map(character => (
-            <CharacterItem key={character.name} character={character} />
+            <CharacterItem key={character.name} character={character} setDetailsOpen={setDetailsOpen} />
           ))}
         </ul>
       ) : (

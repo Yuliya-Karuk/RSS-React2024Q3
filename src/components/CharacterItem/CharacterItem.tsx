@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import { Character } from '@models/index';
 import { extractIdFromUrl } from '@utils/utils';
 import classnames from 'classnames';
@@ -5,14 +6,19 @@ import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
   character: Character;
+  setDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const CharacterItem = ({ character }: CharacterItemProps) => {
+export const CharacterItem = ({ character, setDetailsOpen }: CharacterItemProps) => {
   const characterId = extractIdFromUrl(character.url);
   const imageUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
 
+  const handleItemClick = () => {
+    setDetailsOpen(true);
+  };
+
   return (
-    <li className={styles.characterItem}>
+    <li className={styles.characterItem} role="button" tabIndex={0} onClick={handleItemClick}>
       <div className={styles.characterImgContainer}>
         <img className={styles.characterImg} src={imageUrl} alt="Character" />
       </div>
