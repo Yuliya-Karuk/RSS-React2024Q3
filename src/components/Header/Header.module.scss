@@ -1,5 +1,7 @@
 .header {
   width: 100%;
+  position: relative;
+  z-index: 1;
   background: rgb(8 8 8 / 40%);
 }
 
@@ -7,10 +9,22 @@
   @extend %container;
   @include flex(space-between, center);
   backdrop-filter: blur(12.5px);
-  padding: 10px 30px;
 }
 
 .logo {
   width: 72px;
   height: 34px;
+}
+
+.logo-link {
+  @include focused;
+
+  @include laptop {
+    margin-right: auto;
+    padding: 0 20px;
+  }
+
+  @include mobile {
+    display: none;
+  }
 }

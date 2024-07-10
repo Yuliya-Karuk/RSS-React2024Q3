@@ -1,13 +1,17 @@
-.search {
+.search-container {
+  @include font(1.6rem, 400, 1, 0.05rem);
   position: relative;
   max-width: 300px;
   width: 70%;
+}
+
+.search {
+  width: 100%;
   height: 40px;
 }
 
 .search-input {
   @extend %transition;
-  @include font(1.6rem, 400, 1, 0.05rem);
   width: 100%;
   height: 100%;
   padding: 0 45px 0 15px;
@@ -33,6 +37,10 @@
   @extend %transition;
 
   @include focused;
+
+  @include hover {
+    transform: rotate(360deg);
+  }
   content: '';
   position: absolute;
   top: 10px;
@@ -40,8 +48,4 @@
   width: 21px;
   height: 21px;
   background: no-repeat center url('../../assets/search.svg');
-
-  &:hover {
-    transform: rotate(360deg);
-  }
 }

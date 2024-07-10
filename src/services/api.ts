@@ -1,4 +1,4 @@
-import { PaginatedCharacters } from '../types/types';
+import { PaginatedCharacters } from '../models';
 
 export class ApiService {
   private basicUrl: string = 'https://swapi.dev/api/people/';

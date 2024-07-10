@@ -1,0 +1,51 @@
+.footer {
+  width: 100%;
+  background: rgb(8 8 8 / 80%);
+}
+
+.footer-container {
+  @extend %container;
+  @include flex(space-between, center);
+  backdrop-filter: blur(12.5px);
+}
+
+.footer-copyright {
+  @include font(1.6rem, 400, 1, 0.05rem);
+
+  @include big-mobile {
+    font-size: 1.2rem;
+  }
+  display: flex;
+  color: $color-white-default;
+
+  .api {
+    @extend %transition;
+
+    @include hover {
+      text-decoration: none;
+    }
+    padding: 0 10px;
+    text-decoration: underline;
+
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.footer-github-link {
+  @extend %transition;
+  @include focused;
+
+  @include hover {
+    transform: rotate(360deg);
+  }
+}
+
+.footer-github {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: no-repeat center url('../../assets/github.svg');
+  background-size: contain;
+}

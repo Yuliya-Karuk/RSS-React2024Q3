@@ -1,32 +1,26 @@
-import { Component } from 'react';
-import { DataContext, DataProviderState } from '../../contexts/dataProvider';
-import { Character } from '../../types/types';
-import { CharacterItem } from '../CharacterItem/CharacterItem';
-import { Loader } from '../Loader/Loader';
+import { CharacterItem } from '@components/CharacterItem/CharacterItem';
+import { Loader } from '@components/Loader/Loader';
+import { useData } from '@contexts/dataProvider';
 import styles from './CharacterList.module.scss';
 
-export class CharacterList extends Component {
-  renderCharacterCards(context: DataProviderState) {
-    if (context.isLoading) {
-      return <Loader />;
-    }
+export const CharacterList = () => {
+  const { data, isLoading } = useData();
 
-    return context.data.results.length > 0 ? (
-      <div className={styles.mainContainer}>
-        {context.data.results.map((character: Character) => (
-          <CharacterItem key={character.name} character={character} />
-        ))}
-      </div>
-    ) : (
-      <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
-    );
+  if (isLoading) {
+    return <Loader />;
   }
 
-  render() {
-    return (
-      <DataContext.Consumer>
-        {context => <main className={styles.main}>{this.renderCharacterCards(context)}</main>}
-      </DataContext.Consumer>
-    );
-  }
-}
+  return (
+    <main className={styles.main}>
+      {data.results.length > 0 ? (
+        <ul className={styles.mainContainer}>
+          {data.results.map(character => (
+            <CharacterItem key={character.name} character={character} />
+          ))}
+        </ul>
+      ) : (
+        <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
+      )}
+    </main>
+  );
+};

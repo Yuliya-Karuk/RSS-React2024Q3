@@ -1,6 +1,6 @@
+import { CharacterList } from '@components/CharacterList/CharacterList';
 import { Component } from 'react';
 import styles from './App.module.scss';
-import { CharacterList } from './components/CharacterList/CharacterList';
 import { ErrorButton } from './components/ErrorButton/ErrorButton';
 import { Header } from './components/Header/Header';
 import { DataProvider } from './contexts/dataProvider';

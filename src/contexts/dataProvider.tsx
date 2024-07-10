@@ -1,19 +1,20 @@
-import React, { Component, ReactNode } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { storage } from '@services/storage';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { PaginatedCharacters } from '../models';
 import { api } from '../services/api';
-import { storage } from '../services/storage';
-import { PaginatedCharacters } from '../types/types';
 
 type DataProviderProps = {
   children?: ReactNode;
 };
 
-export interface DataProviderState {
+export interface DataContextValue {
   data: PaginatedCharacters;
   isLoading: boolean;
   updateData: (data: PaginatedCharacters, isLoading: boolean) => void;
 }
 
-const initialData = {
+const initialData: DataContextValue = {
   data: {
     count: 0,
     next: '',
@@ -24,37 +25,49 @@ const initialData = {
   updateData: () => {},
 };
 
-export const DataContext = React.createContext<DataProviderState>(initialData);
+export const DataContext = createContext<DataContextValue>(initialData);
 
-export class DataProvider extends Component<DataProviderProps, DataProviderState> {
-  constructor(props: DataProviderProps) {
-    super(props);
-    this.state = initialData;
-    this.updateData = this.updateData.bind(this);
+export const DataProvider = ({ children }: DataProviderProps) => {
+  const [data, setData] = useState<PaginatedCharacters>(initialData.data);
+  const [isLoading, setIsLoading] = useState<boolean>(initialData.isLoading);
+
+  const updateData = (newData: PaginatedCharacters, isLoadingState: boolean) => {
+    setData(newData);
+    setIsLoading(isLoadingState);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let fetchedData;
+        const storedSearchValue = storage.getStorage();
+
+        if (storedSearchValue) {
+          fetchedData = await api.searchPeopleByName(storedSearchValue);
+        } else {
+          fetchedData = await api.getPeople();
+        }
+
+        setData(fetchedData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return <DataContext.Provider value={{ data, isLoading, updateData }}>{children}</DataContext.Provider>;
+};
+
+export const useData = () => {
+  const context = useContext(DataContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth hook must be used within a AuthProvider');
   }
 
-  async componentDidMount() {
-    let data;
-    const storedSearchValue = storage.getStorage();
-
-    if (storedSearchValue) {
-      data = await api.searchPeopleByName(storedSearchValue);
-    } else {
-      data = await api.getPeople();
-    }
-    this.setState({ data, isLoading: false });
-  }
-
-  updateData(data: PaginatedCharacters, isLoading: boolean) {
-    this.setState({ data, isLoading });
-  }
-
-  render() {
-    const { data, isLoading } = this.state;
-    const { children } = this.props;
-
-    return (
-      <DataContext.Provider value={{ data, isLoading, updateData: this.updateData }}>{children}</DataContext.Provider>
-    );
-  }
-}
+  return context;
+};
