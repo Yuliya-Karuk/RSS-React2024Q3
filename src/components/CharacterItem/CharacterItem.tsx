@@ -2,6 +2,7 @@
 import { Character } from '@models/index';
 import { extractIdFromUrl } from '@utils/utils';
 import classnames from 'classnames';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
@@ -12,9 +13,16 @@ interface CharacterItemProps {
 export const CharacterItem = ({ character, setDetailsOpen }: CharacterItemProps) => {
   const characterId = extractIdFromUrl(character.url);
   const imageUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleItemClick = () => {
     setDetailsOpen(true);
+
+    const params = new URLSearchParams(location.search);
+
+    params.set('details', characterId);
+    navigate(`/?${params.toString()}`);
   };
 
   return (

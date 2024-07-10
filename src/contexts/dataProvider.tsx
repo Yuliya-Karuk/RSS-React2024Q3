@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, ReactNode, useContext, useState } from 'react';
-import { PaginatedCharacters } from '../models';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { PaginatedCharacters, PaginatedFilms } from '../models';
 import { api } from '../services/api';
 
 const productPerPage: number = 10;
@@ -10,28 +10,26 @@ type DataProviderProps = {
 };
 
 export interface DataContextValue {
-  data: PaginatedCharacters;
+  data: PaginatedCharacters | null;
   isLoading: boolean;
   totalPages: number;
   fetchData: (searchQuery: string, currentPage: string) => void;
+  films: PaginatedFilms | null;
 }
 
 const initialData: DataContextValue = {
-  data: {
-    count: 0,
-    next: '',
-    previous: '',
-    results: [],
-  },
+  data: null,
   isLoading: true,
   totalPages: 1,
   fetchData: () => {},
+  films: null,
 };
 
 export const DataContext = createContext<DataContextValue>(initialData);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
-  const [data, setData] = useState<PaginatedCharacters>(initialData.data);
+  const [data, setData] = useState<PaginatedCharacters | null>(null);
+  const [films, setFilms] = useState<PaginatedFilms | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(initialData.isLoading);
   const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -47,7 +45,22 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     setIsLoading(false);
   };
 
-  return <DataContext.Provider value={{ data, isLoading, totalPages, fetchData }}>{children}</DataContext.Provider>;
+  useEffect(() => {
+    const fetchFilms = async () => {
+      try {
+        const response = await api.getAllFilms();
+        setFilms(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchFilms();
+  }, []);
+
+  return (
+    <DataContext.Provider value={{ data, isLoading, totalPages, fetchData, films }}>{children}</DataContext.Provider>
+  );
 };
 
 export const useData = () => {

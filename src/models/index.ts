@@ -25,3 +25,39 @@ export interface PaginatedResponse<T> {
 }
 
 export interface PaginatedCharacters extends PaginatedResponse<Character> {}
+
+export interface Planet {
+  climate: string;
+  created: string;
+  diameter: string;
+  edited: string;
+  films: string[];
+  gravity: string;
+  name: string;
+  orbital_period: string;
+  population: string;
+  residents: string[];
+  rotation_period: string;
+  surface_water: string;
+  terrain: string;
+  url: string;
+}
+
+export interface Film {
+  characters: string[];
+  created: string;
+  director: string;
+  edited: string;
+  episode_id: number;
+  opening_crawl: string;
+  planets: string[];
+  producer: string;
+  release_date: string;
+  species: string[];
+  starships: string[];
+  title: string;
+  url: string;
+  vehicles: string[];
+}
+
+export interface PaginatedFilms extends PaginatedResponse<Film> {}
