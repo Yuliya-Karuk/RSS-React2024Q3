@@ -1,5 +1,4 @@
 import { CharacterItem } from '@components/CharacterItem/CharacterItem';
-import { Loader } from '@components/Loader/Loader';
 import { useData } from '@contexts/dataProvider';
 import styles from './CharacterList.module.scss';
 
@@ -8,7 +7,7 @@ interface CharacterListProps {
 }
 
 export const CharacterList = ({ setDetailsOpen }: CharacterListProps) => {
-  const { data, isLoading } = useData();
+  const { data } = useData();
 
   // const handleCloseDetails = () => {
   //   setDetailsOpen(false);
@@ -18,10 +17,6 @@ export const CharacterList = ({ setDetailsOpen }: CharacterListProps) => {
   //     search: qs.stringify({ ...qs.parse(window.location.search, { ignoreQueryPrefix: true }), details: undefined }),
   //   });
   // };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <main className={styles.main}>
