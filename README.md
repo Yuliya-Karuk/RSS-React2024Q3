@@ -1,1 +1,1 @@
-# RSS-React2024Q3
+# React + TypeScript + Vite
