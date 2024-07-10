@@ -1,5 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { DataContext, DataProviderState } from '../../contexts/dataProvider';
+import { DataContext } from '../../contexts/dataProvider';
 import { api } from '../../services/api';
 import { storage } from '../../services/storage';
 import styles from './Search.module.scss';
@@ -8,8 +8,11 @@ interface SearchState {
   searchValue: string;
 }
 
-export class Search extends Component<object, SearchState> {
-  constructor(props: object) {
+export class Search extends Component<Record<string, never>, SearchState> {
+  static contextType = DataContext;
+  declare context: React.ContextType<typeof DataContext>;
+
+  constructor(props: Record<string, never>) {
     super(props);
     const searchValue = storage.getStorage() || '';
     this.state = {
@@ -23,14 +26,18 @@ export class Search extends Component<object, SearchState> {
     storage.setStorage(searchValue);
   };
 
-  handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { searchValue } = this.state;
-    const { data, updateData } = this.context as DataProviderState;
+  updateSearchData = async (searchValue: string) => {
+    const { data, updateData } = this.context;
     updateData(data, true);
 
     const newData = await api.searchPeopleByName(searchValue);
     updateData(newData, false);
+  };
+
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { searchValue } = this.state;
+    this.updateSearchData(searchValue);
   };
 
   render() {
@@ -51,5 +58,3 @@ export class Search extends Component<object, SearchState> {
     );
   }
 }
-
-Search.contextType = DataContext;

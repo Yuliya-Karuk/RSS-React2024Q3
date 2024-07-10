@@ -1,5 +1,5 @@
 export class StorageService {
-  private storageKey: string = 'pokemon_search';
+  private storageKey: string = 'karuk_star_wars';
 
   public setStorage(searchValue: string): void {
     localStorage.setItem(this.storageKey, JSON.stringify(searchValue));

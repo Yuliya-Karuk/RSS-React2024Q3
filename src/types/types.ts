@@ -17,9 +17,11 @@ export interface Character {
   url: string;
 }
 
-export interface APIResponse {
+export interface PaginatedResponse<T> {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Character[];
+  results: T[];
 }
+
+export interface PaginatedCharacters extends PaginatedResponse<Character> {}

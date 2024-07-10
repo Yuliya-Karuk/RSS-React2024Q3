@@ -5,8 +5,8 @@ interface ErrorButtonState {
   hasError: boolean;
 }
 
-export class ErrorButton extends Component<object, ErrorButtonState> {
-  constructor(props: object) {
+export class ErrorButton extends Component<Record<string, never>, ErrorButtonState> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       hasError: false,

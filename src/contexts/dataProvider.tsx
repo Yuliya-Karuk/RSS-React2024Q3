@@ -1,16 +1,16 @@
 import React, { Component, ReactNode } from 'react';
 import { api } from '../services/api';
 import { storage } from '../services/storage';
-import { APIResponse } from '../types/types';
+import { PaginatedCharacters } from '../types/types';
 
 type DataProviderProps = {
   children?: ReactNode;
 };
 
 export interface DataProviderState {
-  data: APIResponse;
+  data: PaginatedCharacters;
   isLoading: boolean;
-  updateData: (data: APIResponse, isLoading: boolean) => void;
+  updateData: (data: PaginatedCharacters, isLoading: boolean) => void;
 }
 
 const initialData = {
@@ -27,7 +27,7 @@ const initialData = {
 export const DataContext = React.createContext<DataProviderState>(initialData);
 
 export class DataProvider extends Component<DataProviderProps, DataProviderState> {
-  constructor(props: object) {
+  constructor(props: DataProviderProps) {
     super(props);
     this.state = initialData;
     this.updateData = this.updateData.bind(this);
@@ -45,7 +45,7 @@ export class DataProvider extends Component<DataProviderProps, DataProviderState
     this.setState({ data, isLoading: false });
   }
 
-  updateData(data: APIResponse, isLoading: boolean) {
+  updateData(data: PaginatedCharacters, isLoading: boolean) {
     this.setState({ data, isLoading });
   }
 
