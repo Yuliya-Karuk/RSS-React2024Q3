@@ -1,9 +1,12 @@
+import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
+import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
+import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
+import { DetailsShip } from '@components/DetailsShip/DetailsShip';
 import { Loader } from '@components/Loader/Loader';
 import { useData } from '@contexts/dataProvider';
 import { useToast } from '@contexts/toastProvider';
-import { Character, Film } from '@models/index';
+import { Character, Film, Planet, Starship } from '@models/index';
 import { api } from '@services/api';
-import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './Details.module.scss';
@@ -14,18 +17,20 @@ export const Details = () => {
   const [character, setCharacter] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { errorNotify } = useToast();
-  const { films } = useData();
+  const { films, starships } = useData();
   const [filteredFilms, setFilteredFilms] = useState<Film[]>([]);
+  const [filteredStarships, setFilteredStarships] = useState<Starship[]>([]);
+  const [planet, setPlanet] = useState<Planet | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      if (characterId && films) {
+      if (characterId && films && starships) {
         try {
           const response = await api.getCharacterById(characterId);
           setCharacter(response);
           setFilteredFilms(films.results.filter(film => response.films.includes(film.url)));
-          // console.log(response);
+          setFilteredStarships(starships.filter(ship => response.starships.includes(ship.url)));
         } catch (e) {
           errorNotify((e as Error).message);
         }
@@ -34,7 +39,7 @@ export const Details = () => {
     };
 
     fetchData();
-  }, [characterId, errorNotify, films]);
+  }, [characterId, errorNotify, films, starships]);
 
   useEffect(() => {
     const setSearchInput = () => {
@@ -47,7 +52,16 @@ export const Details = () => {
     setSearchInput();
   }, [location.search]);
 
-  // console.log(filteredFilms);
+  useEffect(() => {
+    const getPlanet = async () => {
+      if (character) {
+        const planetResponse = await api.getPlanet(character.homeworld);
+        setPlanet(planetResponse);
+      }
+    };
+
+    getPlanet();
+  }, [character]);
 
   if (isLoading) {
     return (
@@ -68,41 +82,10 @@ export const Details = () => {
           />
         </div>
         <p>{character.name}</p>
-        <div className={styles.characterFeatureBlock}>
-          <p className={styles.featureTitle}>Gender</p>
-          <div className={styles.genderIcon}>
-            <span className={classnames(styles.male, { [styles.female]: character.gender === 'female' })} />
-          </div>
-        </div>
-        <div className={styles.characterFeatureBlock}>
-          <p className={styles.featureTitle}>Date of Birth</p>
-          <p className={styles.featureValue}>{character.birth_year}</p>
-        </div>
-        <div className={styles.characterFeatureBlock}>
-          <p className={styles.featureTitle}>Weight</p>
-          <p className={styles.featureValue}>{character.mass}</p>
-        </div>
-        <div className={styles.characterFeatureBlock}>
-          <p className={styles.featureTitle}>Height</p>
-          <p className={styles.featureValue}>{character.height}</p>
-        </div>
-        <div>
-          <h4>Films</h4>
-          <ul className={styles.films}>
-            {filteredFilms.map(film => (
-              <li key={film.episode_id} className={styles.filmItem}>
-                <h5>{film.title}</h5>
-                <div className={styles.filmImgContainer}>
-                  <img
-                    className={styles.filmImg}
-                    src={`https://starwars-visualguide.com/assets/img/films/${film.episode_id}.jpg`}
-                    alt="Character"
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <DetailsInfo character={character} />
+        {filteredFilms && <DetailsFilms filteredFilms={filteredFilms} />}
+        {planet && <DetailsPlanet planet={planet} />}
+        {filteredStarships && <DetailsShip filteredStarships={filteredStarships} />}
       </div>
     )
   );

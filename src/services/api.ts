@@ -1,9 +1,9 @@
-import { Character, PaginatedCharacters, PaginatedFilms, Planet } from '../models';
+import { Character, PaginatedCharacters, PaginatedFilms, PaginatedStarships, Planet } from '../models';
 
 export class ApiService {
   private basicPeopleUrl: string = 'https://swapi.dev/api/people/';
-  private basicPlanetsUrl: string = 'https://swapi.dev/api/planets/';
   private basicFilmsUrl: string = 'https://swapi.dev/api/films/';
+  private basicStarShipsUrl: string = 'https://swapi.dev/api/starships/';
 
   public async getPeople(): Promise<PaginatedCharacters> {
     try {
@@ -46,8 +46,7 @@ export class ApiService {
     }
   }
 
-  public async getPlanet(id: number): Promise<Planet> {
-    const url = `${this.basicPlanetsUrl}/${id}/`;
+  public async getPlanet(url: string): Promise<Planet> {
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -68,6 +67,19 @@ export class ApiService {
       });
 
       const films: PaginatedFilms = await response.json();
+      return films;
+    } catch (error) {
+      throw Error('Error');
+    }
+  }
+
+  public async getAllStarShips(url: string = this.basicStarShipsUrl): Promise<PaginatedStarships> {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+      });
+
+      const films: PaginatedStarships = await response.json();
       return films;
     } catch (error) {
       throw Error('Error');
