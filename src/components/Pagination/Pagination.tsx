@@ -1,6 +1,7 @@
 import { getPaginationRange } from '@utils/utils';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Pagination.module.scss';
 
 const maxShownPages = 5;
@@ -8,11 +9,18 @@ const maxShownPages = 5;
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  setCurrentPage: (data: number) => void;
 }
 
-export const Pagination = ({ currentPage, totalPages, setCurrentPage }: PaginationProps) => {
+export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
   const [paginationRange, setPaginationRange] = useState<number[]>([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(location.search);
+    params.set('page', String(page));
+    navigate(`/?${params.toString()}`);
+  };
 
   useEffect(() => {
     const newPaginationRange = getPaginationRange(currentPage, totalPages);
@@ -27,7 +35,7 @@ export const Pagination = ({ currentPage, totalPages, setCurrentPage }: Paginati
             <button
               type="button"
               className={classnames(styles.pgnButton, { [styles.first]: true })}
-              onClick={() => setCurrentPage(1)}
+              onClick={() => handlePageChange(1)}
               aria-label="First"
               disabled={currentPage === 1}
             >
@@ -38,7 +46,7 @@ export const Pagination = ({ currentPage, totalPages, setCurrentPage }: Paginati
             <button
               type="button"
               className={classnames(styles.pgnButton, { [styles.previous]: true })}
-              onClick={() => setCurrentPage(currentPage - 1)}
+              onClick={() => handlePageChange(currentPage - 1)}
               aria-label="Previous"
               disabled={currentPage === 1}
             >
@@ -50,7 +58,7 @@ export const Pagination = ({ currentPage, totalPages, setCurrentPage }: Paginati
               <button
                 type="button"
                 className={classnames(styles.pgnButton, { [styles.active]: el === currentPage })}
-                onClick={() => setCurrentPage(el)}
+                onClick={() => handlePageChange(el)}
               >
                 {el}
               </button>
@@ -67,7 +75,7 @@ export const Pagination = ({ currentPage, totalPages, setCurrentPage }: Paginati
             <button
               type="button"
               className={classnames(styles.pgnButton, { [styles.next]: true })}
-              onClick={() => setCurrentPage(currentPage + 1)}
+              onClick={() => handlePageChange(currentPage + 1)}
               aria-label="Next"
               disabled={currentPage === totalPages || totalPages === 0}
             >
@@ -78,7 +86,7 @@ export const Pagination = ({ currentPage, totalPages, setCurrentPage }: Paginati
             <button
               type="button"
               className={classnames(styles.pgnButton, { [styles.last]: true })}
-              onClick={() => setCurrentPage(totalPages)}
+              onClick={() => handlePageChange(totalPages)}
               aria-label="Last"
               disabled={currentPage === totalPages || totalPages === 0}
             >

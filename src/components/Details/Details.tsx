@@ -8,7 +8,7 @@ import { useToast } from '@contexts/toastProvider';
 import { Character, Film, Planet, Starship } from '@models/index';
 import { api } from '@services/api';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Details.module.scss';
 
 export const Details = () => {
@@ -21,6 +21,7 @@ export const Details = () => {
   const [filteredFilms, setFilteredFilms] = useState<Film[]>([]);
   const [filteredStarships, setFilteredStarships] = useState<Starship[]>([]);
   const [planet, setPlanet] = useState<Planet | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +64,12 @@ export const Details = () => {
     getPlanet();
   }, [character]);
 
+  const closeDetails = () => {
+    const params = new URLSearchParams(location.search);
+    params.delete('details');
+    navigate(`/?${params.toString()}`);
+  };
+
   if (isLoading) {
     return (
       <div className={styles.page}>
@@ -86,6 +93,9 @@ export const Details = () => {
         {filteredFilms && <DetailsFilms filteredFilms={filteredFilms} />}
         {planet && <DetailsPlanet planet={planet} />}
         {filteredStarships && <DetailsShip filteredStarships={filteredStarships} />}
+        <button type="button" className={styles.closeButton} aria-label="Close details" onClick={closeDetails}>
+          <span className={styles.closeIcon} />
+        </button>
       </div>
     )
   );

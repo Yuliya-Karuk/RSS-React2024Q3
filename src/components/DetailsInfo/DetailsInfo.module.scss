@@ -31,7 +31,7 @@
 }
 
 .details-info {
-  @include flex(center, flex-start, column, 5px);
+  @include flex(center, flex-start, column, 10px);
   width: 100%;
 }
 

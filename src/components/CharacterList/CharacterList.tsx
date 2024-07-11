@@ -2,11 +2,7 @@ import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { useData } from '@contexts/dataProvider';
 import styles from './CharacterList.module.scss';
 
-interface CharacterListProps {
-  setDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const CharacterList = ({ setDetailsOpen }: CharacterListProps) => {
+export const CharacterList = () => {
   const { data } = useData();
 
   // const handleCloseDetails = () => {
@@ -19,16 +15,16 @@ export const CharacterList = ({ setDetailsOpen }: CharacterListProps) => {
   // };
 
   return (
-    <main className={styles.main}>
-      {data.results.length > 0 ? (
+    <div className={styles.main}>
+      {data && data.results.length > 0 ? (
         <ul className={styles.mainContainer}>
           {data.results.map(character => (
-            <CharacterItem key={character.name} character={character} setDetailsOpen={setDetailsOpen} />
+            <CharacterItem key={character.name} character={character} />
           ))}
         </ul>
       ) : (
         <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
       )}
-    </main>
+    </div>
   );
 };

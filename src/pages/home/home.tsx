@@ -4,34 +4,30 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { useData } from '@contexts/dataProvider';
 import { useLocalStorage } from '@hooks/useSearchQuery';
 import { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import styles from './home.module.scss';
 
 export const Home = () => {
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [searchDetails, setSearchDetails] = useState<string>('');
   const { isLoading, totalPages, fetchData } = useData();
   const { getStorage } = useLocalStorage();
   const [currentPage, setCurrentPage] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
-  const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    if (currentPage) {
-      const params = new URLSearchParams({ search: searchQuery, page: String(currentPage) });
-      navigate(`/?${params.toString()}`);
-    }
-  }, [currentPage, navigate, searchQuery]);
 
   useEffect(() => {
     const getParams = () => {
       const params = new URLSearchParams(location.search);
-      const query = params.get('search') || '';
+      const query = getStorage() || '';
       const page = params.get('page') || '1';
+      const details = params.get('details') || '';
 
+      if (query !== searchQuery || +page !== currentPage) {
+        fetchData(query, page);
+      }
       setCurrentPage(+page);
       setSearchQuery(query);
-      fetchData(query, page);
+      setSearchDetails(details);
     };
 
     getParams();
@@ -48,10 +44,12 @@ export const Home = () => {
   }
 
   return (
-    <div className={styles.page}>
-      <CharacterList setDetailsOpen={setDetailsOpen} />
-      {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} />}
-      {detailsOpen && <Outlet />}
-    </div>
+    <main className={styles.page}>
+      <div className={styles.leftContainer}>
+        <CharacterList />
+        {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
+      </div>
+      {Boolean(searchDetails) && <Outlet />}
+    </main>
   );
 };

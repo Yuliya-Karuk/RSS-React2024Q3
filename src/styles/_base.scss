@@ -1,4 +1,7 @@
 html {
+  @include laptop {
+    font-size: 9px;
+  }
   scroll-behavior: smooth;
   font-size: 10px;
   font-family: Montserrat, serif;

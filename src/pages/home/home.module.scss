@@ -1,5 +1,5 @@
 .page {
-  @include flex(flex-start, center, column);
+  @include flex(center, stretch, row);
   background: $color-bg-dark;
   flex: 1;
   z-index: 0;
@@ -24,4 +24,16 @@
     background: linear-gradient(to bottom, rgb(0 0 0 / 0%), $color-bg-dark);
     z-index: 0;
   }
+}
+
+.leftContainer {
+  @include flex(flex-start, center, column);
+
+  // @include  {
+  //   max-width: 350px;
+  // }
+
+  // @include big-mobile {
+  //   max-width: unset;
+  // }
 }

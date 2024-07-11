@@ -1,6 +1,15 @@
 .character-item {
   @include flex(center, flex-start, column, 10px);
-  @include font(2rem, 700, 1, 0.05rem);
+  @include font(2vw, 700, 1, 0.05rem);
+
+  @include laptop {
+    padding: 5px;
+  }
+
+  @include big-mobile {
+    font-size: 3vw;
+    max-width: 200px;
+  }
   width: 100%;
   padding: 15px;
   backdrop-filter: blur(12.5px);
@@ -10,6 +19,10 @@
 }
 
 .character-img-container {
+  @include big-mobile {
+    width: 80%;
+    align-self: center;
+  }
   width: 100%;
 
   .character-img {
@@ -20,8 +33,12 @@
 
 .character-feature-block {
   @include flex(space-between, center);
+
+  @include big-mobile {
+    font-size: 2vw;
+  }
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 1.3vw;
   color: $color-gray-middle;
 }
 

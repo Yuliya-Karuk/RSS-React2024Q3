@@ -7,18 +7,15 @@ import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
   character: Character;
-  setDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const CharacterItem = ({ character, setDetailsOpen }: CharacterItemProps) => {
+export const CharacterItem = ({ character }: CharacterItemProps) => {
   const characterId = extractIdFromUrl(character.url);
   const imageUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    setDetailsOpen(true);
-
     const params = new URLSearchParams(location.search);
 
     params.set('details', characterId);

@@ -2,15 +2,15 @@
   @include flex(space-between, center);
   flex-wrap: wrap;
   width: 100%;
-  font-size: 1.6rem;
+  font-size: 1.3vw;
   color: $color-gray-middle;
 }
 
 .films {
-  // @include flex(flex-start, center, row, 10px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  column-gap: 10px;
+  row-gap: 15px;
 }
 
 .block-title {
@@ -27,7 +27,8 @@
 
 .feature-title {
   color: $color-gray-light;
-  font-size: 0.8em;
+  font-size: 1.2vw;
+  font-weight: 400;
 }
 
 .film-img-container {
