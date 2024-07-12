@@ -48,6 +48,7 @@ export const Details = () => {
       const id = params.get('details') || '';
 
       setCharacterId(+id);
+      console.log(+id);
     };
 
     setSearchInput();
@@ -80,7 +81,7 @@ export const Details = () => {
 
   return (
     character && (
-      <div className={styles.details}>
+      <div className={styles.details} data-testid="details">
         <div className={styles.characterImgContainer}>
           <img
             className={styles.characterImg}

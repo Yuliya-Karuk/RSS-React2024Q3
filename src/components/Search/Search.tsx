@@ -34,7 +34,9 @@ export const Search = () => {
   useEffect(() => {
     const searchQuery = getStorage() || '';
     setSearchValue(searchQuery);
-  }, [getStorage, location.search]);
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   return (
     <div className={styles.searchContainer}>
