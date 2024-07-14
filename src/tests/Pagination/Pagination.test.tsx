@@ -17,31 +17,6 @@ describe('Pagination', () => {
     );
   };
 
-  // it('updates URL query parameter when page changes', () => {
-  //   const currentPage = 1;
-  //   const totalPages = 10;
-
-  //   renderWithRouter(<Pagination currentPage={currentPage} totalPages={totalPages} />, {
-  //     route: '/?page=1',
-  //   });
-
-  //   const nextPageButton = screen.getByRole('button', { name: /Next/i });
-  //   expect(nextPageButton).toBeInTheDocument();
-  //   expect(nextPageButton).not.toBeDisabled();
-
-  //   userEvent.click(nextPageButton);
-
-  //   expect(window.location.search).toBe('?page=2');
-
-  //   const previousPageButton = screen.getByRole('button', { name: /Previous/i });
-  //   expect(previousPageButton).toBeInTheDocument();
-  //   expect(previousPageButton).not.toBeDisabled();
-
-  //   userEvent.click(previousPageButton);
-
-  //   expect(window.location.search).toBe('?page=1');
-  // });
-
   it('disables previous and first buttons on the first page', () => {
     renderWithRouter(<Pagination currentPage={1} totalPages={10} />, {
       route: '/?page=1',

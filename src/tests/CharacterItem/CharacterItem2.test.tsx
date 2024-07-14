@@ -37,10 +37,5 @@ describe('CharacterItem click handling', () => {
     const user = userEvent.setup();
 
     await user.click(characterItem);
-
-    // await waitFor(async () => {
-    //   const detailsItem = await screen.findByTestId('details');
-    //   expect(detailsItem).toBeInTheDocument();
-    // });
   });
 });
