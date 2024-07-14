@@ -43,7 +43,6 @@ export const Home = () => {
     );
   }
 
-  console.log(Boolean(searchDetails));
   return (
     <main className={styles.page}>
       <div className={styles.leftContainer}>

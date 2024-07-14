@@ -1,16 +1,11 @@
-import { http, HttpResponse } from 'msw';
-import { characterNotFound, characters, mockDetails } from './mocks';
+import { delay, http, HttpResponse } from 'msw';
+import { characters, mockDetails, mockedPlanet } from './mocks';
 
 export const handlers = [
-  http.get('/people', () => HttpResponse.json(characters)),
-  http.get('/people/1', ({ request }) => {
-    const url = new URL(request.url);
-
-    const detailsQuery = url.searchParams.get('details');
-
-    if (detailsQuery === '1') {
-      return HttpResponse.json(mockDetails);
-    }
-    return HttpResponse.json(characterNotFound);
+  http.get('*/people', () => HttpResponse.json(characters)),
+  http.get('https://swapi.dev/api/people/1/', () => {
+    delay();
+    return HttpResponse.json(mockDetails);
   }),
+  http.get('https://swapi.dev/api/planets/1/', () => HttpResponse.json(mockedPlanet)),
 ];

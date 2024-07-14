@@ -5,15 +5,6 @@ import styles from './CharacterList.module.scss';
 export const CharacterList = () => {
   const { data } = useData();
 
-  // const handleCloseDetails = () => {
-  //   setDetailsOpen(false);
-
-  //   // Удаляем параметр details из URL
-  //   navigate({
-  //     search: qs.stringify({ ...qs.parse(window.location.search, { ignoreQueryPrefix: true }), details: undefined }),
-  //   });
-  // };
-
   return (
     <div className={styles.main}>
       {data && data.results.length > 0 ? (

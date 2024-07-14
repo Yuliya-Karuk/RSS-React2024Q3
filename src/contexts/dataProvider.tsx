@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react';
-import { PaginatedCharacters, PaginatedFilms, Starship } from '../models';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { PaginatedCharacters, PaginatedFilms } from '../models';
 import { api } from '../services/api';
 
 const productPerPage: number = 10;
@@ -15,7 +15,6 @@ export interface DataContextValue {
   totalPages: number;
   fetchData: (searchQuery: string, currentPage: string) => void;
   films: PaginatedFilms | null;
-  starships: Starship[];
 }
 
 const initialData: DataContextValue = {
@@ -24,7 +23,6 @@ const initialData: DataContextValue = {
   totalPages: 1,
   fetchData: () => {},
   films: null,
-  starships: [],
 };
 
 export const DataContext = createContext<DataContextValue>(initialData);
@@ -32,11 +30,8 @@ export const DataContext = createContext<DataContextValue>(initialData);
 export const DataProvider = ({ children }: DataProviderProps) => {
   const [data, setData] = useState<PaginatedCharacters | null>(null);
   const [films, setFilms] = useState<PaginatedFilms | null>(null);
-  const [starships, setStarships] = useState<Starship[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(initialData.isLoading);
   const [totalPages, setTotalPages] = useState<number>(1);
-
-  const starshipsFetched = useRef(false);
 
   const fetchData = async (searchQuery: string, currentPage: string) => {
     setIsLoading(true);
@@ -60,29 +55,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
       }
     };
 
-    const fetchStarships = async (url: string) => {
-      try {
-        const starshipsResponse = await api.getAllStarShips(url);
-        setStarships(prev => [...prev, ...starshipsResponse.results]);
-        if (starshipsResponse.next !== null) {
-          fetchStarships(starshipsResponse.next);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchFilms();
-    if (!starshipsFetched.current) {
-      fetchStarships('https://swapi.dev/api/starships/');
-      starshipsFetched.current = true;
-    }
   }, []);
 
   return (
-    <DataContext.Provider value={{ data, isLoading, totalPages, fetchData, films, starships }}>
-      {children}
-    </DataContext.Provider>
+    <DataContext.Provider value={{ data, isLoading, totalPages, fetchData, films }}>{children}</DataContext.Provider>
   );
 };
 

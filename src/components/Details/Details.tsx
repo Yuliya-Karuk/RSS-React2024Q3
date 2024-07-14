@@ -1,13 +1,13 @@
 import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
 import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
-import { DetailsShip } from '@components/DetailsShip/DetailsShip';
 import { Loader } from '@components/Loader/Loader';
 import { useData } from '@contexts/dataProvider';
 import { useToast } from '@contexts/toastProvider';
-import { Character, Film, Planet, Starship } from '@models/index';
+import { useClickOutside } from '@hooks/useClickOutside';
+import { Character, Film, Planet } from '@models/index';
 import { api } from '@services/api';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Details.module.scss';
 
@@ -17,21 +17,20 @@ export const Details = () => {
   const [character, setCharacter] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { errorNotify } = useToast();
-  const { films, starships } = useData();
+  const { films } = useData();
   const [filteredFilms, setFilteredFilms] = useState<Film[]>([]);
-  const [filteredStarships, setFilteredStarships] = useState<Starship[]>([]);
   const [planet, setPlanet] = useState<Planet | null>(null);
   const navigate = useNavigate();
+  const detailsRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-      if (characterId && films && starships) {
+      if (characterId && films) {
         try {
+          setIsLoading(true);
           const response = await api.getCharacterById(characterId);
           setCharacter(response);
           setFilteredFilms(films.results.filter(film => response.films.includes(film.url)));
-          setFilteredStarships(starships.filter(ship => response.starships.includes(ship.url)));
         } catch (e) {
           errorNotify((e as Error).message);
         }
@@ -39,8 +38,12 @@ export const Details = () => {
       setIsLoading(false);
     };
 
-    fetchData();
-  }, [characterId, errorNotify, films, starships]);
+    if (characterId && films) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [characterId]);
 
   useEffect(() => {
     const setSearchInput = () => {
@@ -48,7 +51,6 @@ export const Details = () => {
       const id = params.get('details') || '';
 
       setCharacterId(+id);
-      console.log(+id);
     };
 
     setSearchInput();
@@ -71,17 +73,19 @@ export const Details = () => {
     navigate(`/?${params.toString()}`);
   };
 
+  useClickOutside(detailsRef, closeDetails);
+
   if (isLoading) {
     return (
-      <div className={styles.page}>
-        <Loader />
+      <div className={styles.details} data-testid="loader">
+        <Loader style={{ alignSelf: 'flex-start' }} />
       </div>
     );
   }
 
   return (
     character && (
-      <div className={styles.details} data-testid="details">
+      <div className={styles.details} data-testid="details" ref={detailsRef}>
         <div className={styles.characterImgContainer}>
           <img
             className={styles.characterImg}
@@ -93,7 +97,6 @@ export const Details = () => {
         <DetailsInfo character={character} />
         {filteredFilms && <DetailsFilms filteredFilms={filteredFilms} />}
         {planet && <DetailsPlanet planet={planet} />}
-        {filteredStarships && <DetailsShip filteredStarships={filteredStarships} />}
         <button type="button" className={styles.closeButton} aria-label="Close details" onClick={closeDetails}>
           <span className={styles.closeIcon} />
         </button>

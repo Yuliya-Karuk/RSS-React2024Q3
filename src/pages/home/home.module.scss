@@ -28,12 +28,4 @@
 
 .leftContainer {
   @include flex(flex-start, center, column);
-
-  // @include  {
-  //   max-width: 350px;
-  // }
-
-  // @include big-mobile {
-  //   max-width: unset;
-  // }
 }
