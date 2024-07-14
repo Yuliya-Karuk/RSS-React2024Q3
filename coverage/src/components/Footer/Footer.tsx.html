@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,41 +81,41 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import classnames from 'classnames';</span></span></span>
-<span class="cstat-no" title="statement not covered" >import styles from './Footer.module.scss';</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import classnames from 'classnames';
+import styles from './Footer.module.scss';
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export const Footer = () =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >  &lt;footer className={styles.footer}&gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;div className={styles.footerContainer}&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div className={styles.footerCopyright}&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className={styles.footerText}&gt;© 2024 Data sourced from the&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;a className={classnames(styles.footerText, { [styles.api]: true })} href="https://swapi.dev/"&gt;</span>
+export const Footer = () =&gt; (
+  &lt;footer className={styles.footer}&gt;
+    &lt;div className={styles.footerContainer}&gt;
+      &lt;div className={styles.footerCopyright}&gt;
+        &lt;span className={styles.footerText}&gt;© 2024 Data sourced from the&lt;/span&gt;
+        &lt;a className={classnames(styles.footerText, { [styles.api]: true })} href="https://swapi.dev/"&gt;
           SWAPI API
-<span class="cstat-no" title="statement not covered" >        &lt;/a&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;a className={styles.footerGithubLink} href="https://github.com/Yuliya-Karuk" aria-label="link to github"&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className={styles.footerGithub} /&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/a&gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >  &lt;/footer&gt;</span>
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;a className={styles.footerGithubLink} href="https://github.com/Yuliya-Karuk" aria-label="link to github"&gt;
+        &lt;span className={styles.footerGithub} /&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
 );
 &nbsp;</pre></td></tr></table></pre>
 
@@ -124,7 +124,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-14T22:42:45.838Z
+                at 2024-07-14T23:41:49.086Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

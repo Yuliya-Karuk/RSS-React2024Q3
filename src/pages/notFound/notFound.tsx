@@ -1,1 +1,15 @@
-export const NotFound = () => <h1>404</h1>;
+import notFoundImage from '@assets/404.png';
+import { AppRoutes } from '@router/routes';
+import { Link } from 'react-router-dom';
+import styles from './notFound.module.scss';
+
+export function NotFound() {
+  return (
+    <div className={styles.notFound}>
+      <img className={styles.notFoundImage} src={notFoundImage} alt="Icon Not Found" />
+      <Link className={styles.notFoundLink} to={AppRoutes.HOME_ROUTE}>
+        Back to Home page
+      </Link>
+    </div>
+  );
+}
