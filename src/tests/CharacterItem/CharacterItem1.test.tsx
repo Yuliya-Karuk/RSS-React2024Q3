@@ -7,7 +7,7 @@ describe('CharacterItem rendering', () => {
   it('renders character data correctly', () => {
     render(
       <MemoryRouter>
-        <CharacterItem character={mockCharacter} />
+        <CharacterItem character={mockCharacter} isDetailsOpen={false} />
       </MemoryRouter>
     );
 

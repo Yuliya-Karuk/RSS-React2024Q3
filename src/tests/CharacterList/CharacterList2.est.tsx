@@ -20,7 +20,7 @@ describe('CharacterList2', () => {
       }),
     }));
 
-    render(<CharacterList />);
+    render(<CharacterList characters={[]} isDetailsOpen={false} />);
     expect(screen.getAllByText('Mock Character')).toHaveLength(3);
   });
 });
