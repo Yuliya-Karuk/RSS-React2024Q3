@@ -32,7 +32,7 @@ export const swapiApi = createApi({
       query: ({ searchValue, page }) => `people/?search=${searchValue}&page=${page}`,
       transformResponse: addIdToCharacters,
     }),
-    getCharacterById: builder.query<CharacterWithId, number>({
+    getCharacterById: builder.query<CharacterWithId, string>({
       query: id => `people/${id}`,
       transformResponse: addIdToCharacter,
     }),

@@ -1,4 +1,4 @@
-import { Character } from '@models/index';
+import { Character, Film } from '@models/index';
 import { createSlice } from '@reduxjs/toolkit';
 
 const productPerPage: number = 10;
@@ -7,12 +7,14 @@ type CharactersState = {
   characters: Character[] | null;
   totalPages: number;
   error: string | null;
+  films: Film[];
 };
 
 const initialState: CharactersState = {
   characters: [],
   totalPages: 0,
   error: null,
+  films: [],
 };
 
 const charactersSlice = createSlice({
@@ -23,8 +25,11 @@ const charactersSlice = createSlice({
       state.totalPages = Math.ceil(action.payload.count / productPerPage);
       state.characters = action.payload.results;
     },
+    setFilms(state, action) {
+      state.films = action.payload.results;
+    },
   },
 });
 
-export const { setCharacters } = charactersSlice.actions;
+export const { setCharacters, setFilms } = charactersSlice.actions;
 export const charactersReducer = charactersSlice.reducer;

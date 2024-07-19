@@ -2,50 +2,50 @@ import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
 import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
 import { Loader } from '@components/Loader/Loader';
-import { useData } from '@contexts/dataProvider';
 import { useToast } from '@contexts/toastProvider';
 import { useClickOutside } from '@hooks/useClickOutside';
-import { Character, Film, Planet } from '@models/index';
-import { api } from '@services/api';
-import { isNotNullable, urlImgTemplates } from '@utils/utils';
+import { useFilms } from '@hooks/useFilms';
+import { Film } from '@models/index';
+import { extractPlanetPath, isNotNullable, urlImgTemplates } from '@utils/utils';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useGetCharacterByIdQuery, useGetPlanetQuery } from 'src/store/api/swapiApi';
+import { selectFilms } from 'src/store/selectors';
 import styles from './Details.module.scss';
 
 export const Details = () => {
   const location = useLocation();
   const [characterId, setCharacterId] = useState<string | null>(null);
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { errorNotify } = useToast();
-  const { films } = useData();
   const [filteredFilms, setFilteredFilms] = useState<Film[]>([]);
-  const [planet, setPlanet] = useState<Planet | null>(null);
   const navigate = useNavigate();
   const detailsRef = useRef(null);
 
+  const [homeworld, setHomeworld] = useState<string | null>(null);
+  useFilms();
+  const films = useSelector(selectFilms);
+  const { data: character, error: characterError } = useGetCharacterByIdQuery(characterId || '', {
+    skip: !characterId,
+  });
+  const { data: planet, error: planetError } = useGetPlanetQuery(homeworld || '', { skip: !homeworld });
+
+  useEffect(() => {
+    if (characterError || planetError) {
+      errorNotify(`Error fetching data: ${characterError}`);
+    }
+  }, [characterError, planetError, errorNotify]);
+
   useEffect(() => {
     const fetchData = async () => {
-      if (!characterId || !films) {
-        return;
+      if (character && films.length > 0) {
+        setFilteredFilms(films.filter(film => character.films.includes(film.url)));
+        setHomeworld(extractPlanetPath(character.homeworld));
       }
-
-      try {
-        setIsLoading(true);
-        const response = await api.getCharacterById(+characterId);
-        setCharacter(response);
-        setFilteredFilms(films.results.filter(film => response.films.includes(film.url)));
-      } catch (e) {
-        errorNotify((e as Error).message);
-      }
-
-      setIsLoading(false);
     };
 
     fetchData();
-    // eslint-disable-next-line react-compiler/react-compiler
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [characterId, films]);
+  }, [character, films]);
 
   useEffect(() => {
     const setSearchInput = () => {
@@ -58,17 +58,6 @@ export const Details = () => {
     setSearchInput();
   }, [location.search]);
 
-  useEffect(() => {
-    const getPlanet = async () => {
-      if (character) {
-        const planetResponse = await api.getPlanet(character.homeworld);
-        setPlanet(planetResponse);
-      }
-    };
-
-    getPlanet();
-  }, [character]);
-
   const closeDetails = () => {
     const params = new URLSearchParams(location.search);
     params.delete('details');
@@ -77,7 +66,7 @@ export const Details = () => {
 
   useClickOutside(detailsRef, closeDetails);
 
-  if (isLoading) {
+  if (!character || !planet || films.length < 0) {
     return (
       <div className={styles.details} data-testid="loader">
         <Loader style={{ alignSelf: 'flex-start' }} />
