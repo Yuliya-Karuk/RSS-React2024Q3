@@ -17,6 +17,14 @@ export interface Character {
   url: string;
 }
 
+export interface CharacterWithId extends Character {
+  id: string;
+}
+
+export interface CharacterWithFavorite extends CharacterWithId {
+  isFavorite: boolean;
+}
+
 export interface PaginatedResponse<T> {
   count: number;
   next: string | null;
@@ -25,6 +33,11 @@ export interface PaginatedResponse<T> {
 }
 
 export interface PaginatedCharacters extends PaginatedResponse<Character> {}
+export interface PaginatedCharactersWithId extends PaginatedResponse<CharacterWithId> {}
+
+export interface FavoriteItem {
+  id: string;
+}
 
 export interface Planet {
   climate: string;
