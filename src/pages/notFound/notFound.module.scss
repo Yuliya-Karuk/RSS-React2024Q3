@@ -1,6 +1,6 @@
 .not-found {
   @include flex(flex-start, center, column);
-  @include font(1.6vw, 700, 1, 0.05rem);
+  @include font(1.6rem, 700, 1, 0.05rem);
   width: 100vw;
   height: 100vh;
   color: $color-white-default;

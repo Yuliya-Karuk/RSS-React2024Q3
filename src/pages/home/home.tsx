@@ -9,7 +9,7 @@ import styles from './home.module.scss';
 
 export const Home = () => {
   const [searchDetails, setSearchDetails] = useState<string>('');
-  const { isLoading, totalPages, fetchData } = useData();
+  const { isLoading, totalPages, fetchData, data } = useData();
   const { getStorage } = useLocalStorage();
   const [currentPage, setCurrentPage] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
@@ -45,11 +45,17 @@ export const Home = () => {
 
   return (
     <main className={styles.page}>
-      <div className={styles.leftContainer}>
-        <CharacterList />
-        {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
+      <div className={styles.container}>
+        {data && data.results.length > 0 ? (
+          <div className={styles.leftContainer}>
+            <CharacterList characters={data?.results} isDetailsOpen={Boolean(searchDetails)} />
+            {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
+          </div>
+        ) : (
+          <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
+        )}
+        {Boolean(searchDetails) && <Outlet />}
       </div>
-      {Boolean(searchDetails) && <Outlet />}
     </main>
   );
 };

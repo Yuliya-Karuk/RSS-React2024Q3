@@ -1,4 +1,5 @@
 import { Film } from '@models/index';
+import { urlImgTemplates } from '@utils/utils';
 import styles from './DetailsFilms.module.scss';
 
 interface DetailsFilmsProps {
@@ -13,11 +14,7 @@ export const DetailsFilms = ({ filteredFilms }: DetailsFilmsProps) => (
         <li key={film.episode_id} className={styles.filmItem}>
           <h5 className={styles.featureTitle}>{film.title}</h5>
           <div className={styles.filmImgContainer}>
-            <img
-              className={styles.filmImg}
-              src={`https://starwars-visualguide.com/assets/img/films/${film.episode_id}.jpg`}
-              alt="Character"
-            />
+            <img className={styles.filmImg} src={urlImgTemplates.film(film.episode_id)} alt="Character" />
           </div>
         </li>
       ))}

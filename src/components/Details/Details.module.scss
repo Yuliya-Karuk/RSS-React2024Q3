@@ -1,5 +1,6 @@
 .character-img-container {
-  width: 100%;
+  width: 70%;
+  align-self: center;
 
   .character-img {
     width: 100%;
@@ -20,11 +21,6 @@
   @include flex(flex-start, flex-start, column, 10px);
   @include font(2rem, 700, 1, 0.05rem);
 
-  @include mobile {
-    min-width: 300px;
-    font-size: 1.6rem;
-  }
-
   @include laptop {
     min-width: 250px;
   }
@@ -32,8 +28,9 @@
   @include big-mobile {
     position: absolute;
     right: 0;
+    top: 10px;
   }
-  width: 40%;
+  width: 30%;
   min-width: 350px;
   padding: 40px 15px 10px;
   background: #4f4f4f60;

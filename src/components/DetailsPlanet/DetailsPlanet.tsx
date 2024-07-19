@@ -1,6 +1,6 @@
 import defaultPlanet from '@assets/default-planet.jpg';
 import { Planet } from '@models/index';
-import { extractIdFromUrl } from '@utils/utils';
+import { extractIdFromUrl, urlImgTemplates } from '@utils/utils';
 import styles from './DetailsPlanet.module.scss';
 
 interface DetailsPlanetProps {
@@ -21,7 +21,7 @@ export const DetailsPlanet = ({ planet }: DetailsPlanetProps) => {
         <div className={styles.planetImgContainer}>
           <img
             className={styles.planetImg}
-            src={`https://starwars-visualguide.com/assets/img/planets/${extractIdFromUrl(planet.url)}.jpg`}
+            src={urlImgTemplates.planet(extractIdFromUrl(planet.url))}
             alt="Character"
             onError={e => handleImgSrcError(e)}
           />

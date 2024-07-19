@@ -10,3 +10,16 @@ export const getPaginationRange = (currentPage: number, totalPages: number) => {
 
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 };
+
+export const urlImgTemplates = {
+  character: (characterId: string) => `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`,
+  film: (episodeId: number) => `https://starwars-visualguide.com/assets/img/films/${episodeId}.jpg`,
+  planet: (planetId: string) => `https://starwars-visualguide.com/assets/img/planets/${planetId}.jpg`,
+};
+
+export function isNotNullable<T>(value: T, errorMessage?: string): NonNullable<T> {
+  if (value === undefined || value === null) {
+    throw new Error(errorMessage || 'Not expected value');
+  }
+  return value;
+}

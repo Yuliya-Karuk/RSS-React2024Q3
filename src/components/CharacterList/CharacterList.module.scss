@@ -23,6 +23,13 @@
   padding: 10px 20px;
 }
 
+.small {
+  @include big-mobile {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 10px;
+  }
+}
+
 .empty-search {
   @include flex(center, center);
   @include font(2.8rem, 700, 1, 0.05rem);

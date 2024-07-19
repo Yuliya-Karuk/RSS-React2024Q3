@@ -67,7 +67,7 @@ export const useData = () => {
   const context = useContext(DataContext);
 
   if (context === undefined) {
-    throw new Error('useAuth hook must be used within a AuthProvider');
+    throw new Error('useData hook must be used within a DataProvider');
   }
 
   return context;

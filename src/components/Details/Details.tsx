@@ -7,13 +7,14 @@ import { useToast } from '@contexts/toastProvider';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { Character, Film, Planet } from '@models/index';
 import { api } from '@services/api';
+import { isNotNullable, urlImgTemplates } from '@utils/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Details.module.scss';
 
 export const Details = () => {
   const location = useLocation();
-  const [characterId, setCharacterId] = useState<number | null>(null);
+  const [characterId, setCharacterId] = useState<string | null>(null);
   const [character, setCharacter] = useState<Character | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { errorNotify } = useToast();
@@ -25,32 +26,33 @@ export const Details = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (characterId && films) {
-        try {
-          setIsLoading(true);
-          const response = await api.getCharacterById(characterId);
-          setCharacter(response);
-          setFilteredFilms(films.results.filter(film => response.films.includes(film.url)));
-        } catch (e) {
-          errorNotify((e as Error).message);
-        }
+      if (!characterId || !films) {
+        return;
       }
+
+      try {
+        setIsLoading(true);
+        const response = await api.getCharacterById(+characterId);
+        setCharacter(response);
+        setFilteredFilms(films.results.filter(film => response.films.includes(film.url)));
+      } catch (e) {
+        errorNotify((e as Error).message);
+      }
+
       setIsLoading(false);
     };
 
-    if (characterId && films) {
-      fetchData();
-    }
+    fetchData();
     // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [characterId]);
+  }, [characterId, films]);
 
   useEffect(() => {
     const setSearchInput = () => {
       const params = new URLSearchParams(location.search);
       const id = params.get('details') || '';
 
-      setCharacterId(+id);
+      setCharacterId(id);
     };
 
     setSearchInput();
@@ -89,7 +91,7 @@ export const Details = () => {
         <div className={styles.characterImgContainer}>
           <img
             className={styles.characterImg}
-            src={`https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`}
+            src={urlImgTemplates.character(isNotNullable(characterId))}
             alt="Character"
           />
         </div>
