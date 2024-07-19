@@ -1,32 +1,17 @@
-import { Component } from 'react';
-import { DataContext, DataProviderState } from '../../contexts/dataProvider';
-import { Character } from '../../types/types';
-import { CharacterItem } from '../CharacterItem/CharacterItem';
-import { Loader } from '../Loader/Loader';
+import { CharacterItem } from '@components/CharacterItem/CharacterItem';
+import { Character } from '@models/index';
+import classnames from 'classnames';
 import styles from './CharacterList.module.scss';
 
-export class CharacterList extends Component {
-  renderCharacterCards(context: DataProviderState) {
-    if (context.isLoading) {
-      return <Loader />;
-    }
-
-    return context.data.results.length > 0 ? (
-      <div className={styles.mainContainer}>
-        {context.data.results.map((character: Character) => (
-          <CharacterItem key={character.name} character={character} />
-        ))}
-      </div>
-    ) : (
-      <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
-    );
-  }
-
-  render() {
-    return (
-      <DataContext.Consumer>
-        {context => <main className={styles.main}>{this.renderCharacterCards(context)}</main>}
-      </DataContext.Consumer>
-    );
-  }
+interface CharacterListProps {
+  characters: Character[];
+  isDetailsOpen: boolean;
 }
+
+export const CharacterList = ({ characters, isDetailsOpen }: CharacterListProps) => (
+  <ul className={classnames(styles.mainContainer, { [styles.small]: isDetailsOpen })}>
+    {characters.map(character => (
+      <CharacterItem key={character.name} character={character} isDetailsOpen={isDetailsOpen} />
+    ))}
+  </ul>
+);

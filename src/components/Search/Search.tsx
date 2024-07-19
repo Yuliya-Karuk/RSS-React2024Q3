@@ -1,60 +1,57 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
-import { DataContext } from '../../contexts/dataProvider';
-import { api } from '../../services/api';
-import { storage } from '../../services/storage';
+import { useData } from '@contexts/dataProvider';
+import { useLocalStorage } from '@hooks/useSearchQuery';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Search.module.scss';
 
-interface SearchState {
-  searchValue: string;
-}
+export const Search = () => {
+  const { getStorage, setStorage } = useLocalStorage();
+  const [searchValue, setSearchValue] = useState(getStorage() || '');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { fetchData } = useData();
 
-export class Search extends Component<Record<string, never>, SearchState> {
-  static contextType = DataContext;
-  declare context: React.ContextType<typeof DataContext>;
-
-  constructor(props: Record<string, never>) {
-    super(props);
-    const searchValue = storage.getStorage() || '';
-    this.state = {
-      searchValue,
-    };
-  }
-
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value;
-    this.setState({ searchValue });
-    storage.setStorage(searchValue);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newSearchValue = e.target.value;
+    setSearchValue(newSearchValue);
   };
 
-  updateSearchData = async (searchValue: string) => {
-    const { data, updateData } = this.context;
-    updateData(data, true);
-
-    const newData = await api.searchPeopleByName(searchValue);
-    updateData(newData, false);
-  };
-
-  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { searchValue } = this.state;
-    this.updateSearchData(searchValue);
+
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+
+    setStorage(searchValue);
+    fetchData(searchValue, '1');
+    const params = new URLSearchParams(location.search);
+    params.set('page', '1');
+    navigate(`/?${params.toString()}`);
   };
 
-  render() {
-    const { searchValue } = this.state;
+  useEffect(() => {
+    const searchQuery = getStorage() || '';
+    setSearchValue(searchQuery);
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
-    return (
-      <form noValidate method="" className={styles.search} onSubmit={this.handleSubmit}>
+  return (
+    <div className={styles.searchContainer}>
+      <form noValidate method="" className={styles.search} onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           className={styles.searchInput}
           required
           type="text"
           placeholder="SEARCH ..."
           value={searchValue}
-          onChange={this.handleInputChange}
+          onChange={handleInputChange}
         />
         <button type="submit" className={styles.searchIcon} aria-label="search button" />
       </form>
-    );
-  }
-}
+    </div>
+  );
+};

@@ -1,33 +1,20 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './ErrorButton.module.scss';
 
-interface ErrorButtonState {
-  hasError: boolean;
-}
+export const ErrorButton = () => {
+  const [hasError, setHasError] = useState(false);
 
-export class ErrorButton extends Component<Record<string, never>, ErrorButtonState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      hasError: false,
-    };
-  }
-
-  throwError = () => {
-    this.setState({ hasError: true });
+  const throwError = () => {
+    setHasError(true);
   };
 
-  render() {
-    const { hasError } = this.state;
-
-    if (hasError) {
-      throw new Error('The site is broken!');
-    }
-
-    return (
-      <button type="button" className={styles.errorButton} onClick={this.throwError}>
-        Destroy the World
-      </button>
-    );
+  if (hasError) {
+    throw new Error('The site is broken!');
   }
-}
+
+  return (
+    <button type="button" className={styles.errorButton} onClick={throwError}>
+      Destroy the World
+    </button>
+  );
+};

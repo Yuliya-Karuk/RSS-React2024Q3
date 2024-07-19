@@ -15,18 +15,26 @@
     "types-check": "tsc --noEmit",
     "check": "npm run format && npm run stylelint && npm run lint && npm run types-check",
     "all-fix": "npm run format:fix && npm run stylelint:fix && npm run lint:fix",
-    "prepare": "husky .husky"
+    "prepare": "husky .husky",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.24.1",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.0.2",
     "classnames": "^2.5.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -40,7 +48,10 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "husky": "^9.0.11",
+    "jest-fetch-mock": "^3.0.3",
+    "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
+    "msw": "^2.3.1",
     "prettier": "^3.3.2",
     "sass": "^1.77.6",
     "stylelint": "^16.6.1",
@@ -50,6 +61,8 @@
     "stylelint-prettier": "^5.0.0",
     "stylelint-scss": "^6.3.2",
     "typescript": "^5.2.2",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^2.0.2"
   }
 }

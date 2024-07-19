@@ -1,13 +1,12 @@
-import { Component } from 'react';
-import loader from '../../assets/loader.gif';
+import loader from '@assets/loader.gif';
 import styles from './Loader.module.scss';
 
-export class Loader extends Component {
-  render() {
-    return (
-      <div className={styles.loaderContainer}>
-        <img className={styles.loader} src={loader} alt="Loader" />
-      </div>
-    );
-  }
+interface LoaderProps {
+  style?: React.CSSProperties;
 }
+
+export const Loader = ({ style }: LoaderProps) => (
+  <div className={styles.loaderContainer}>
+    <img className={styles.loader} src={loader} alt="Loader" style={style} />
+  </div>
+);
