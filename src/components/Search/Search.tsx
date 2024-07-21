@@ -1,4 +1,4 @@
-import { useLocalStorage } from '@hooks/useSearchQuery';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Search.module.scss';

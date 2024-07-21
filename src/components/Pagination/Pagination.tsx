@@ -1,7 +1,6 @@
 import { useTheme } from '@contexts/themeProvider';
 import { getPaginationRange } from '@utils/utils';
 import classnames from 'classnames';
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Pagination.module.scss';
 
@@ -13,7 +12,7 @@ interface PaginationProps {
 }
 
 export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
-  const [paginationRange, setPaginationRange] = useState<number[]>([]);
+  const paginationRange = getPaginationRange(currentPage, totalPages);
   const location = useLocation();
   const navigate = useNavigate();
   const { theme } = useTheme();
@@ -23,11 +22,6 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
     params.set('page', String(page));
     navigate(`/?${params.toString()}`);
   };
-
-  useEffect(() => {
-    const newPaginationRange = getPaginationRange(currentPage, totalPages);
-    setPaginationRange(newPaginationRange);
-  }, [currentPage, totalPages]);
 
   return (
     <nav className={styles.paginationNav} aria-label="Page navigation">

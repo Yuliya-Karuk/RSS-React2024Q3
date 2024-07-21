@@ -1,5 +1,4 @@
 import { ThemeProvider } from '@contexts/themeProvider.tsx';
-import { ToastProvider } from '@contexts/toastProvider.tsx';
 import { AppRouter } from '@router/router.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -15,9 +14,7 @@ ReactDOM.createRoot(root).render(
     <ErrorBoundary>
       <Provider store={store}>
         <ThemeProvider>
-          <ToastProvider>
-            <AppRouter />
-          </ToastProvider>
+          <AppRouter />
         </ThemeProvider>
       </Provider>
     </ErrorBoundary>

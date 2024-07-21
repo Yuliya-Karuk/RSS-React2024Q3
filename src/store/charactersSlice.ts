@@ -1,10 +1,10 @@
-import { Character, Film } from '@models/index';
+import { CharacterWithId, Film } from '@models/index';
 import { createSlice } from '@reduxjs/toolkit';
 
 const productPerPage: number = 10;
 
 type CharactersState = {
-  characters: Character[] | null;
+  characters: CharacterWithId[] | null;
   totalPages: number;
   error: string | null;
   films: Film[];

@@ -1,38 +1,28 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-import { Character } from '@models/index';
-import { extractIdFromUrl, urlImgTemplates } from '@utils/utils';
+import { useHandleDetails } from '@hooks/useHandleDetails';
+import { CharacterWithId } from '@models/index';
+import { urlImgTemplates } from '@utils/utils';
 import classnames from 'classnames';
-import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
-  character: Character;
+  character: CharacterWithId;
   isDetailsOpen: boolean;
 }
 
 export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) => {
-  const characterId = extractIdFromUrl(character.url);
-  const imageUrl = urlImgTemplates.character(characterId);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleItemClick = (e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>) => {
-    e.stopPropagation();
-    const params = new URLSearchParams(location.search);
-
-    params.set('details', characterId);
-    navigate(`/?${params.toString()}`);
-  };
+  const { openDetails } = useHandleDetails();
+  const imageUrl = urlImgTemplates.character(character.id);
 
   return (
     <li
       className={classnames(styles.characterItem, { [styles.small]: isDetailsOpen })}
       role="button"
       tabIndex={0}
-      onClick={handleItemClick}
+      onClick={e => openDetails(e, character.id)}
       onKeyUp={e => {
         if (e.key === 'Enter' || e.key === ' ') {
-          handleItemClick(e);
+          openDetails(e, character.id);
         }
       }}
     >
