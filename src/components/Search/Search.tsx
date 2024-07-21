@@ -1,4 +1,3 @@
-import { useData } from '@contexts/dataProvider';
 import { useLocalStorage } from '@hooks/useSearchQuery';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +9,6 @@ export const Search = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fetchData } = useData();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newSearchValue = e.target.value;
@@ -25,7 +23,6 @@ export const Search = () => {
     }
 
     setStorage(searchValue);
-    fetchData(searchValue, '1');
     const params = new URLSearchParams(location.search);
     params.set('page', '1');
     navigate(`/?${params.toString()}`);

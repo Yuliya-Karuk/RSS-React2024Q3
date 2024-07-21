@@ -1,4 +1,4 @@
-import { DataProvider } from '@contexts/dataProvider.tsx';
+import { ThemeProvider } from '@contexts/themeProvider.tsx';
 import { ToastProvider } from '@contexts/toastProvider.tsx';
 import { AppRouter } from '@router/router.tsx';
 import React from 'react';
@@ -14,11 +14,11 @@ ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <ToastProvider>
-          <DataProvider>
+        <ThemeProvider>
+          <ToastProvider>
             <AppRouter />
-          </DataProvider>
-        </ToastProvider>
+          </ToastProvider>
+        </ThemeProvider>
       </Provider>
     </ErrorBoundary>
   </React.StrictMode>

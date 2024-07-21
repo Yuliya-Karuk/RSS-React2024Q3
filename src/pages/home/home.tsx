@@ -1,8 +1,10 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
 import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
+import { useTheme } from '@contexts/themeProvider';
 import { useLocalStorage } from '@hooks/useSearchQuery';
 import { useAppDispatch } from '@hooks/useStoreHooks';
+import classnames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -18,6 +20,7 @@ export const Home = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
   const location = useLocation();
+  const { theme } = useTheme();
 
   const { data, isLoading } = useSearchPeopleQuery({
     searchValue: searchQuery,
@@ -57,7 +60,7 @@ export const Home = () => {
   }
 
   return (
-    <main className={styles.page}>
+    <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
       <div className={styles.container}>
         {characters && characters.length > 0 ? (
           <div className={styles.leftContainer}>

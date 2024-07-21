@@ -40,7 +40,7 @@ export const swapiApi = createApi({
       query: url => `${url}`,
     }),
     getFilms: builder.query<PaginatedFilms, void>({
-      query: () => 'films/',
+      query: () => 'films',
     }),
   }),
 });

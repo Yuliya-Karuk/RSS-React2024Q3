@@ -3,7 +3,6 @@ import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
 import { Loader } from '@components/Loader/Loader';
 import { useToast } from '@contexts/toastProvider';
-import { useClickOutside } from '@hooks/useClickOutside';
 import { useFilms } from '@hooks/useFilms';
 import { Film } from '@models/index';
 import { extractPlanetPath, isNotNullable, urlImgTemplates } from '@utils/utils';
@@ -63,8 +62,6 @@ export const Details = () => {
     params.delete('details');
     navigate(`/?${params.toString()}`);
   };
-
-  useClickOutside(detailsRef, closeDetails);
 
   if (!character || !planet || films.length < 0) {
     return (

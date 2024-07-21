@@ -16,7 +16,8 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleItemClick = () => {
+  const handleItemClick = (e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>) => {
+    e.stopPropagation();
     const params = new URLSearchParams(location.search);
 
     params.set('details', characterId);
@@ -31,7 +32,7 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
       onClick={handleItemClick}
       onKeyUp={e => {
         if (e.key === 'Enter' || e.key === ' ') {
-          handleItemClick();
+          handleItemClick(e);
         }
       }}
     >

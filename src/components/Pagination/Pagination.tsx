@@ -1,3 +1,4 @@
+import { useTheme } from '@contexts/themeProvider';
 import { getPaginationRange } from '@utils/utils';
 import classnames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
   const [paginationRange, setPaginationRange] = useState<number[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(location.search);
@@ -34,7 +36,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           <li>
             <button
               type="button"
-              className={classnames(styles.pgnButton, { [styles.first]: true })}
+              className={classnames(styles.pgnButton, { [styles.first]: true, [styles.light]: theme === 'light' })}
               onClick={() => handlePageChange(1)}
               aria-label="First"
               disabled={currentPage === 1}
@@ -45,7 +47,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           <li>
             <button
               type="button"
-              className={classnames(styles.pgnButton, { [styles.previous]: true })}
+              className={classnames(styles.pgnButton, { [styles.previous]: true, [styles.light]: theme === 'light' })}
               onClick={() => handlePageChange(currentPage - 1)}
               aria-label="Previous"
               disabled={currentPage === 1}
@@ -57,7 +59,10 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
             <li key={el}>
               <button
                 type="button"
-                className={classnames(styles.pgnButton, { [styles.active]: el === currentPage })}
+                className={classnames(styles.pgnButton, {
+                  [styles.light]: theme === 'light',
+                  [styles.active]: el === currentPage,
+                })}
                 onClick={() => handlePageChange(el)}
               >
                 {el}
@@ -66,7 +71,11 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           ))}
           {totalPages > maxShownPages && paginationRange.length === 5 && (
             <li>
-              <button type="button" className={classnames(styles.pgnButton, { [styles.empty]: true })} disabled>
+              <button
+                type="button"
+                className={classnames(styles.pgnButton, { [styles.empty]: true, [styles.light]: theme === 'light' })}
+                disabled
+              >
                 ...
               </button>
             </li>
@@ -74,7 +83,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           <li>
             <button
               type="button"
-              className={classnames(styles.pgnButton, { [styles.next]: true })}
+              className={classnames(styles.pgnButton, { [styles.next]: true, [styles.light]: theme === 'light' })}
               onClick={() => handlePageChange(currentPage + 1)}
               aria-label="Next"
               disabled={currentPage === totalPages || totalPages === 0}
@@ -85,7 +94,7 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           <li>
             <button
               type="button"
-              className={classnames(styles.pgnButton, { [styles.last]: true })}
+              className={classnames(styles.pgnButton, { [styles.last]: true, [styles.light]: theme === 'light' })}
               onClick={() => handlePageChange(totalPages)}
               aria-label="Last"
               disabled={currentPage === totalPages || totalPages === 0}

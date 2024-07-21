@@ -1,8 +1,20 @@
-$color-black-default: #000;
-$color-white-default: #fff;
-$color-input-bg: #3a3a3a;
-$color-primary-bright: #f6a100;
-$color-bg-dark: #121212;
-$color-gray-dark: #4f4f4f;
-$color-gray-middle: #b5b5b5;
-$color-gray-light: #e8e6e6;
+:root {
+  --color-black-default: #000;
+  --color-white-default: #fff;
+  --color-input-bg: #3a3a3a;
+  --color-primary-bright: #f6a100;
+  --color-bg-dark: #121212;
+  --color-gray-dark: #4f4f4f;
+  --color-gray-middle: #b5b5b5;
+  --color-gray-light: #e8e6e6;
+
+  .light {
+    --color-input-bg: #3a3a3a;
+    --color-primary-bright: #ac7000;
+    --color-gray-dark: #888;
+    --color-gray-middle: #545454;
+    --color-gray-light: #101010;
+    --color-bg-dark: #e8e6e6;
+    --color-white-default: #121212;
+  }
+}

@@ -15,6 +15,7 @@
     "MGLT",
     "hyperdrive",
     "atmosphering",
-    "reduxjs"
+    "reduxjs",
+    "testid"
   ]
 }

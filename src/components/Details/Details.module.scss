@@ -14,7 +14,7 @@
   flex-wrap: wrap;
   width: 100%;
   font-size: 1.6rem;
-  color: $color-gray-middle;
+  color: var(--color-gray-middle);
 }
 
 .details {
@@ -36,8 +36,8 @@
   background: #4f4f4f60;
   overflow: scroll;
   border-radius: 5px;
-  border: 1px solid $color-gray-dark;
-  color: $color-white-default;
+  border: 1px solid var(--color-gray-dark);
+  color: var(--color-white-default);
   backdrop-filter: blur(10px);
 }
 
