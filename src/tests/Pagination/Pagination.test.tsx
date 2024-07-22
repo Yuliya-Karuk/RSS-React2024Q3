@@ -1,22 +1,26 @@
 import { Pagination } from '@components/Pagination/Pagination';
-import { render, screen } from '@testing-library/react';
-import { ReactNode } from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import * as ReactRouterDom from 'react-router-dom';
+import { renderWithRouter } from 'src/testSetup/render-router';
 import { describe, expect, it } from 'vitest';
 
-describe('Pagination', () => {
-  const renderWithRouter = (ui: ReactNode, { route = '/' } = {}) => {
-    window.history.pushState({}, 'Test page', route);
+const mockNavigate = vi.fn();
 
-    return render(
-      <MemoryRouter initialEntries={[route]}>
-        <Routes>
-          <Route path="/" element={ui} />
-        </Routes>
-      </MemoryRouter>
-    );
+vi.mock('react-router-dom', async importOriginal => {
+  const actual = (await importOriginal()) as typeof ReactRouterDom;
+
+  return {
+    ...actual,
+    MemoryRouter: actual.MemoryRouter,
+    Route: actual.Route,
+    Routes: actual.Routes,
+    useLocation: () => ({ search: '' }),
+    useNavigate: () => mockNavigate,
   };
+});
 
+describe('Pagination', () => {
   it('disables previous and first buttons on the first page', () => {
     renderWithRouter(<Pagination currentPage={1} totalPages={10} />, {
       route: '/?page=1',
@@ -39,5 +43,31 @@ describe('Pagination', () => {
 
     expect(nextPageButton).toBeDisabled();
     expect(lastPageButton).toBeDisabled();
+  });
+
+  it('updates URL query parameter when specific page button is clicked - 1', async () => {
+    renderWithRouter(<Pagination currentPage={1} totalPages={10} />, {
+      route: '/?page=1',
+    });
+
+    const nextPageButton = await screen.findByRole('button', { name: /Next/i });
+
+    const user = userEvent.setup();
+
+    await user.click(nextPageButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=2');
+  });
+
+  it('updates URL query parameter when specific page button is clicked - 2', async () => {
+    renderWithRouter(<Pagination currentPage={1} totalPages={10} />, {
+      route: '/?page=1',
+    });
+
+    const pageButton = screen.getByText('3');
+    const user = userEvent.setup();
+    await user.click(pageButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=3');
   });
 });

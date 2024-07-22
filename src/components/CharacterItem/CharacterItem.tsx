@@ -18,6 +18,7 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
     <li
       className={classnames(styles.characterItem, { [styles.small]: isDetailsOpen })}
       role="button"
+      data-testid="item"
       tabIndex={0}
       onClick={e => openDetails(e, character.id)}
       onKeyUp={e => {

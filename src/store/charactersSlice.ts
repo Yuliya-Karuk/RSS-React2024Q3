@@ -1,5 +1,6 @@
 import { CharacterWithId, Film } from '@models/index';
 import { createSlice } from '@reduxjs/toolkit';
+import { swapiApi } from './api/swapiApi';
 
 const productPerPage: number = 10;
 
@@ -28,6 +29,11 @@ const charactersSlice = createSlice({
     setFilms(state, action) {
       state.films = action.payload.results;
     },
+  },
+  extraReducers: builder => {
+    builder.addMatcher(swapiApi.endpoints.getFilms.matchFulfilled, (state, action) => {
+      state.films = action.payload.results;
+    });
   },
 });
 

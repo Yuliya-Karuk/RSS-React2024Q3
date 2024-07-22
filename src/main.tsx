@@ -15,6 +15,7 @@ ReactDOM.createRoot(root).render(
       <Provider store={store}>
         <ThemeProvider>
           <AppRouter />
+          {/* <RouterProvider router={AppRouter} /> */}
         </ThemeProvider>
       </Provider>
     </ErrorBoundary>
