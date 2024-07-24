@@ -66,4 +66,8 @@
 
 .leftContainer {
   @include flex(flex-start, center, column);
+
+  @include big-mobile {
+    width: 100%;
+  }
 }

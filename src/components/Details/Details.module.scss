@@ -28,10 +28,10 @@
   @include big-mobile {
     position: absolute;
     right: 0;
-    top: 10px;
   }
   width: 30%;
   min-width: 350px;
+  margin-top: 10px;
   padding: 40px 15px 10px;
   background: #4f4f4f60;
   overflow: scroll;
@@ -43,20 +43,75 @@
 
 .close-button {
   position: absolute;
-  top: 0;
-  top: 5px;
-  left: 0;
-  padding: 5px;
+  top: 10px;
+  left: 10px;
 }
 
 .close-icon {
   display: block;
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   background: no-repeat center url('../../assets/close.svg');
   background-size: contain;
 }
 
 .page-loader {
   align-self: flex-start;
+}
+
+.add-to-favorite-button {
+  @extend %transition;
+
+  @include hover {
+    background-color: var(--color-primary-bright);
+  }
+
+  @include flex(center, center);
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border: 1px solid var(--color-gray-dark);
+  background-color: var(--color-input-bg);
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+@keyframes fly-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+.heart-animation {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  animation: fly-up 0.5s ease-out forwards;
+}
+
+.heart {
+  path {
+    fill: var(--color-white-default);
+  }
+
+  .favorite {
+    path {
+      fill: var(--color-invalid-input);
+    }
+  }
+}
+
+.favorite {
+  path {
+    fill: var(--color-invalid-input);
+  }
 }

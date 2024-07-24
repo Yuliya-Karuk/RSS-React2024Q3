@@ -16,6 +16,7 @@
     "hyperdrive",
     "atmosphering",
     "reduxjs",
-    "testid"
+    "testid",
+    "svgr",
   ]
 }

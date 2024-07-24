@@ -13,6 +13,7 @@ const SWAPI_BASE_URL = 'https://swapi.dev/api/';
 
 const addIdToCharacter = (character: Character): CharacterWithId => {
   const id = extractIdFromUrl(character.url);
+
   return {
     ...character,
     id,

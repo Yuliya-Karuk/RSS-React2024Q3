@@ -34,10 +34,7 @@ export interface PaginatedResponse<T> {
 
 export interface PaginatedCharacters extends PaginatedResponse<Character> {}
 export interface PaginatedCharactersWithId extends PaginatedResponse<CharacterWithId> {}
-
-export interface FavoriteItem {
-  id: string;
-}
+export interface PaginatedCharactersWithFavorites extends PaginatedResponse<CharacterWithFavorite> {}
 
 export interface Planet {
   climate: string;

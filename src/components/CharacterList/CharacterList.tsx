@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { useHandleDetails } from '@hooks/useHandleDetails';
-import { CharacterWithId } from '@models/index';
+import { CharacterWithFavorite, CharacterWithId } from '@models/index';
+import { selectFavorites } from '@store/selectors';
+import { markFavorites } from '@utils/utils';
 import classnames from 'classnames';
+import { useSelector } from 'react-redux';
 import styles from './CharacterList.module.scss';
 
 interface CharacterListProps {
@@ -13,9 +16,12 @@ interface CharacterListProps {
 export const CharacterList = ({ characters, isDetailsOpen }: CharacterListProps) => {
   const { closeDetails } = useHandleDetails();
 
+  const favorites = useSelector(selectFavorites);
+  const markedCharacters: CharacterWithFavorite[] = markFavorites(characters, favorites);
+
   return characters.length > 0 ? (
     <ul className={classnames(styles.mainContainer, { [styles.small]: isDetailsOpen })} onClick={closeDetails}>
-      {characters.map(character => (
+      {markedCharacters.map(character => (
         <CharacterItem key={character.name} character={character} isDetailsOpen={isDetailsOpen} />
       ))}
     </ul>

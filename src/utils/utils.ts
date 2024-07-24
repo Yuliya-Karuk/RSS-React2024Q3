@@ -1,3 +1,5 @@
+import { CharacterWithFavorite, CharacterWithId } from '@models/index';
+
 export const extractIdFromUrl = (url: string): string => {
   const parts = url.split('/');
   return parts[parts.length - 2];
@@ -27,4 +29,16 @@ export function isNotNullable<T>(value: T, errorMessage?: string): NonNullable<T
 export function extractPlanetPath(url: string) {
   const baseUrl = 'https://swapi.dev/api/';
   return url.slice(baseUrl.length);
+}
+
+export function markFavorites(
+  characters: CharacterWithId[],
+  favorites: CharacterWithFavorite[]
+): CharacterWithFavorite[] {
+  const favoriteIds = new Set(favorites.map(fav => fav.id));
+
+  return characters.map(character => ({
+    ...character,
+    isFavorite: favoriteIds.has(character.id),
+  }));
 }
