@@ -14,6 +14,26 @@
   padding-bottom: 45px;
 }
 
+.favorites-block {
+  @include flex(space-between, center, row, 10px);
+  width: 100%;
+}
+
+.favorites-button {
+  @extend %transition;
+  @include font(1.6rem, 400, 1, 0.05rem);
+
+  @include hover {
+    background-color: var(--color-gray-dark);
+    color: var(--color-black-default);
+  }
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  background-color: var(--color-primary-bright);
+}
+
 .favorites-item {
   @include flex(space-between, flex-start, column, 10px);
   max-width: 120px;
@@ -21,7 +41,7 @@
 
 .favorites-title {
   @include font(2.4rem, 700, 1, 0.05rem);
-  align-self: center;
+  margin-right: auto;
 }
 
 .favorites-list {
