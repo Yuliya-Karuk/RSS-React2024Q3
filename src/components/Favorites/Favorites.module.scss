@@ -1,21 +1,22 @@
 .favorites {
-  width: 100%;
+  width: 200px;
   position: fixed;
   z-index: 100;
   background: var(--color-favorites-bg);
-  bottom: 0;
+  top: 60px;
+  left: 0;
   color: var(--color-bg-dark);
+  border-radius: 5px;
 }
 
 .container {
-  @extend %container;
-  @include flex(center, flex-start, column, 20px);
+  @include flex(center, flex-start, column, 15px);
+  padding: 10px;
   backdrop-filter: blur(12.5px);
-  padding-bottom: 45px;
 }
 
 .favorites-block {
-  @include flex(space-between, center, row, 10px);
+  @include flex(space-between, center, row, 30px);
   width: 100%;
 }
 
@@ -27,32 +28,53 @@
     background-color: var(--color-gray-dark);
     color: var(--color-black-default);
   }
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   color: #fff;
   text-decoration: none;
   background-color: var(--color-primary-bright);
 }
 
-.favorites-item {
-  @include flex(space-between, flex-start, column, 10px);
-  max-width: 120px;
+.remove-icon {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: no-repeat center url('../../assets/remove-all.svg');
+  background-size: contain;
+  border-radius: 5px;
+}
+
+.download-icon {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: no-repeat center url('../../assets/download.svg');
+  background-size: contain;
+  border-radius: 5px;
 }
 
 .favorites-title {
   @include font(2.4rem, 700, 1, 0.05rem);
   margin-right: auto;
+
+  .favorites-name {
+    display: block;
+  }
+}
+
+.favorites-name {
+  @include font(1.4rem, 700, 1, 0.05rem);
 }
 
 .favorites-list {
-  @include flex(flex-start, stretch, row, 10px);
-  flex-wrap: wrap;
+  @include flex(flex-start, center, column, 10px);
+  width: 100%;
   max-height: 210px;
   overflow-y: auto;
 }
 
 .favorites-list::-webkit-scrollbar {
-  width: 7px;
+  width: 10px;
   border: 1px solid var(--color-bg-dark);
   border-radius: 50px;
 }
@@ -66,17 +88,4 @@
   height: 10px;
   background-color: var(--color-bg-dark);
   border-radius: 50px;
-}
-
-.favorites-name {
-  @include font(1.4rem, 700, 1, 0.05rem);
-}
-
-.favorites-img-container {
-  width: 100%;
-
-  .favorites-img {
-    width: 100%;
-    aspect-ratio: 8 / 11;
-  }
 }
