@@ -1,4 +1,5 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Favorites } from '@components/Favorites/Favorites';
 import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
 import { useTheme } from '@contexts/themeProvider';
@@ -51,6 +52,7 @@ export const Home = () => {
         )}
         {Boolean(searchDetails) && <Outlet />}
       </div>
+      <Favorites />
     </main>
   );
 };
