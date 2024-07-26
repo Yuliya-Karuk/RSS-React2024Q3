@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { store } from 'src/store/store';
-import { mockedCharacter } from 'src/testSetup/msw/mocks';
+import { mockedReadyCharacter } from 'src/testSetup/msw/mocks';
 import { renderWithRouter } from 'src/testSetup/render-router';
 
 describe('CharacterItem rendering', () => {
@@ -18,14 +18,9 @@ describe('CharacterItem rendering', () => {
   });
 
   it('Ensure that the card component renders the relevant card data', () => {
-    renderWithRouter(<CharacterItem character={mockedCharacter} isDetailsOpen={false} />, {
+    renderWithRouter(<CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />, {
       route: '/',
     });
-    // render(
-    //   <MemoryRouter>
-    //     <CharacterItem character={mockedCharacter} isDetailsOpen={false} />
-    //   </MemoryRouter>
-    // );
 
     const characterName = screen.getByText('Luke Skywalker Mocked');
     expect(characterName).toBeInTheDocument();
@@ -38,7 +33,7 @@ describe('CharacterItem rendering', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CharacterItem character={mockedCharacter} isDetailsOpen={false} />
+          <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
           <Details />
         </MemoryRouter>
       </Provider>
@@ -46,7 +41,7 @@ describe('CharacterItem rendering', () => {
 
     const spy = vi.spyOn(globalThis, 'fetch');
 
-    const characterItem = await screen.findByRole('button');
+    const characterItem = await screen.findByTestId('item');
     expect(characterItem).toBeInTheDocument();
 
     const user = userEvent.setup();
@@ -67,13 +62,13 @@ describe('CharacterItem rendering', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CharacterItem character={mockedCharacter} isDetailsOpen={false} />
+          <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
           <Details />
         </MemoryRouter>
       </Provider>
     );
 
-    const characterItem = await screen.findByRole('button');
+    const characterItem = await screen.findByTestId('item');
     expect(characterItem).toBeInTheDocument();
 
     const user = userEvent.setup();

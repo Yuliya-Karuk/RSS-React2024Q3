@@ -38,14 +38,7 @@ export const Details = () => {
         <DetailsInfo character={preparedCharacter} />
         {filteredFilms && <DetailsFilms filteredFilms={filteredFilms} />}
         {planet && <DetailsPlanet planet={planet} />}
-        <button
-          type="button"
-          className={styles.closeButton}
-          aria-label="Close details"
-          onClick={() => {
-            closeDetails();
-          }}
-        >
+        <button type="button" className={styles.closeButton} aria-label="Close details" onClick={() => closeDetails()}>
           <span className={styles.closeIcon} />
         </button>
         <FavoriteButton favorite={preparedCharacter} />

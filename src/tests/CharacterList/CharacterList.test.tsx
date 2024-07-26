@@ -1,6 +1,7 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { mockedCharacters } from 'src/testSetup/msw/mocks';
+import { renderWithRouter } from 'src/testSetup/render-router';
 import { describe, expect, vi } from 'vitest';
 
 vi.mock('@hooks/useHandleDetails', () => ({
@@ -16,16 +17,20 @@ describe('CharacterList', () => {
   });
 
   it('verify that the component renders the specified number of cards', () => {
-    render(<CharacterList characters={[]} isDetailsOpen={false} />);
+    renderWithRouter(<CharacterList characters={[]} isDetailsOpen={false} />, {
+      route: '/',
+    });
 
     const emptyMessage = screen.getByText(/Sorry, we couldn`t find anything matching your search./i);
     expect(emptyMessage).toBeInTheDocument();
   });
 
-  it('check that an appropriate message is displayed if no cards are present', () => {
-    render(<CharacterList characters={mockedCharacters.results} isDetailsOpen={false} />);
+  it('check that an appropriate message is displayed if no cards are present', async () => {
+    renderWithRouter(<CharacterList characters={mockedCharacters.results} isDetailsOpen={false} />, {
+      route: '/',
+    });
 
-    const characterItems = screen.getAllByRole('button');
+    const characterItems = await screen.findAllByTestId('item');
     expect(characterItems.length).toBe(mockedCharacters.results.length);
   });
 });

@@ -8,15 +8,6 @@ describe('MainLayout', () => {
     renderWithRouter(<MainLayout />, {
       route: '/',
     });
-    // render(
-    //   <Provider store={store}>
-    //     <ThemeProvider>
-    //       <MemoryRouter initialEntries={['/']}>
-    //         <MainLayout />
-    //       </MemoryRouter>
-    //     </ThemeProvider>
-    //   </Provider>
-    // );
 
     const headerLogo = screen.getByRole('img', { name: /Logo/i });
     expect(headerLogo).toBeInTheDocument();

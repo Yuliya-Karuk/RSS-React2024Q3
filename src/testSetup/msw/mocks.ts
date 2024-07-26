@@ -1,4 +1,4 @@
-import { CharacterWithId } from '@models/index';
+import { CharacterWithFavorite, CharacterWithId } from '@models/index';
 
 export const mockedCharacter: CharacterWithId = {
   id: '1',
@@ -24,6 +24,13 @@ export const mockedCharacter: CharacterWithId = {
   edited: '2014-12-20T21:17:56.891000Z',
   url: 'https://swapi.dev/api/people/1/',
 };
+
+export const mockedReadyCharacter: CharacterWithFavorite = {
+  ...mockedCharacter,
+  isFavorite: false,
+};
+
+export const mockedFavorites: CharacterWithFavorite[] = [mockedReadyCharacter];
 
 export const mockedDetails = {
   id: '1',

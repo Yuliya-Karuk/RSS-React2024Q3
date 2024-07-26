@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { useSearchPeopleQuery } from 'src/store/api/swapiApi';
 import { setCharacters } from 'src/store/charactersSlice';
-import { selectCharacters, selectTotalPages } from 'src/store/selectors';
+import { selectCharacters, selectFavorites, selectTotalPages } from 'src/store/selectors';
 import styles from './home.module.scss';
 
 export const Home = () => {
@@ -26,6 +26,7 @@ export const Home = () => {
 
   const characters = useSelector(selectCharacters);
   const totalPages = useSelector(selectTotalPages);
+  const favorites = useSelector(selectFavorites);
 
   useEffect(() => {
     if (data) {
@@ -52,7 +53,7 @@ export const Home = () => {
         )}
         {Boolean(searchDetails) && <Outlet />}
       </div>
-      <Favorites />
+      {favorites.length > 0 && <Favorites favorites={favorites} />}
     </main>
   );
 };
