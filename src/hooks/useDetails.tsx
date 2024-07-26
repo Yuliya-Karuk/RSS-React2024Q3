@@ -1,6 +1,5 @@
-import { Film } from '@models/index';
 import { extractPlanetPath } from '@utils/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useGetCharacterByIdQuery, useGetFilmsQuery, useGetPlanetQuery } from 'src/store/api/swapiApi';
@@ -8,8 +7,7 @@ import { selectFilms } from 'src/store/selectors';
 
 export const useDetails = () => {
   const [characterId, setCharacterId] = useState<string | null>(null);
-  const [filteredFilms, setFilteredFilms] = useState<Film[]>([]);
-  const [homeworld, setHomeworld] = useState<string | null>(null);
+  const location = useLocation();
 
   const films = useSelector(selectFilms);
 
@@ -17,20 +15,16 @@ export const useDetails = () => {
     skip: !characterId,
   });
 
-  const { data: planet } = useGetPlanetQuery(homeworld || '', { skip: !homeworld });
+  const planetPath = useMemo(() => (character ? extractPlanetPath(character.homeworld) : ''), [character]);
+  const { data: planet } = useGetPlanetQuery(planetPath, { skip: !character });
   useGetFilmsQuery();
 
-  const location = useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (character && films.length > 0) {
-        setFilteredFilms(films.filter(film => character.films.includes(film.url)));
-        setHomeworld(extractPlanetPath(character.homeworld));
-      }
-    };
-
-    fetchData();
+  const { filteredFilms } = useMemo(() => {
+    if (character && films) {
+      const preparedFilms = films.filter(film => character.films.includes(film.url));
+      return { filteredFilms: preparedFilms };
+    }
+    return { filteredFilms: [] };
   }, [character, films]);
 
   useEffect(() => {
