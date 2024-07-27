@@ -1,11 +1,11 @@
 import { Search } from '@components/Search/Search';
-import { useLocalStorage } from '@hooks/useSearchQuery';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
-describe('SearchF', () => {
+describe('Search', () => {
   test('clicking the Search button saves the entered value to the local storage', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>

@@ -1,0 +1,18 @@
+.favorites-item {
+  @include flex(space-between, center, column, 10px);
+  width: 95%;
+  position: relative;
+}
+
+.favorites-name {
+  @include font(1.4rem, 700, 1, 0.05rem);
+}
+
+.favorites-img-container {
+  width: 70%;
+
+  .favorites-img {
+    width: 100%;
+    aspect-ratio: 8 / 11;
+  }
+}

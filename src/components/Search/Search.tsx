@@ -1,42 +1,10 @@
-import { useData } from '@contexts/dataProvider';
-import { useLocalStorage } from '@hooks/useSearchQuery';
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchForm } from '@hooks/useSearchForm';
+import { useRef } from 'react';
 import styles from './Search.module.scss';
 
 export const Search = () => {
-  const { getStorage, setStorage } = useLocalStorage();
-  const [searchValue, setSearchValue] = useState(getStorage() || '');
-  const location = useLocation();
-  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fetchData } = useData();
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newSearchValue = e.target.value;
-    setSearchValue(newSearchValue);
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (inputRef.current) {
-      inputRef.current.blur();
-    }
-
-    setStorage(searchValue);
-    fetchData(searchValue, '1');
-    const params = new URLSearchParams(location.search);
-    params.set('page', '1');
-    navigate(`/?${params.toString()}`);
-  };
-
-  useEffect(() => {
-    const searchQuery = getStorage() || '';
-    setSearchValue(searchQuery);
-    // eslint-disable-next-line react-compiler/react-compiler
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  const { searchValue, handleInputChange, handleSubmit } = useSearchForm(inputRef);
 
   return (
     <div className={styles.searchContainer}>

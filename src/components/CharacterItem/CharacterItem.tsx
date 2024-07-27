@@ -1,37 +1,30 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-import { Character } from '@models/index';
-import { extractIdFromUrl, urlImgTemplates } from '@utils/utils';
+import { FavoriteButton } from '@components/FavoriteButton/FavoriteButton';
+import { useHandleDetails } from '@hooks/useHandleDetails';
+import { CharacterWithFavorite } from '@models/index';
+import { urlImgTemplates } from '@utils/utils';
 import classnames from 'classnames';
-import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
-  character: Character;
+  character: CharacterWithFavorite;
   isDetailsOpen: boolean;
 }
 
 export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) => {
-  const characterId = extractIdFromUrl(character.url);
-  const imageUrl = urlImgTemplates.character(characterId);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleItemClick = () => {
-    const params = new URLSearchParams(location.search);
-
-    params.set('details', characterId);
-    navigate(`/?${params.toString()}`);
-  };
+  const imageUrl = urlImgTemplates.character(character.id);
+  const { openDetails } = useHandleDetails();
 
   return (
     <li
       className={classnames(styles.characterItem, { [styles.small]: isDetailsOpen })}
       role="button"
+      data-testid="item"
       tabIndex={0}
-      onClick={handleItemClick}
+      onClick={e => openDetails(e, character.id)}
       onKeyUp={e => {
         if (e.key === 'Enter' || e.key === ' ') {
-          handleItemClick();
+          openDetails(e, character.id);
         }
       }}
     >
@@ -49,6 +42,7 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
         <p className={styles.featureTitle}>Date of Birth</p>
         <p className={styles.featureValue}>{character.birth_year}</p>
       </div>
+      <FavoriteButton favorite={character} />
     </li>
   );
 };

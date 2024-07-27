@@ -27,6 +27,7 @@
   @include big-mobile {
     grid-template-columns: repeat(1, 1fr);
     padding: 10px;
+    width: 100%;
   }
 }
 
@@ -35,7 +36,7 @@
   @include font(2.8rem, 700, 1, 0.05rem);
   width: 70%;
   margin: 0 auto;
-  color: $color-white-default;
+  color: var(--color-white-default);
   text-align: center;
   flex-grow: 1;
 }

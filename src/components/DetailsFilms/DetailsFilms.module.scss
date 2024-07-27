@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   width: 100%;
   font-size: 1.3rem;
-  color: $color-gray-middle;
+  color: var(--color-gray-middle);
 }
 
 .films {
@@ -16,7 +16,7 @@
 .block-title {
   text-align: center;
   margin: 10px;
-  color: $color-primary-bright;
+  color: var(--color-primary-bright);
   width: 100%;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .feature-title {
-  color: $color-gray-light;
+  color: var(--color-gray-light);
   font-size: 1.2rem;
   font-weight: 400;
 }

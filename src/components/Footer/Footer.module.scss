@@ -16,7 +16,7 @@
     font-size: 1.2rem;
   }
   display: flex;
-  color: $color-white-default;
+  color: var(--color-white-default);
 
   .api {
     @extend %transition;

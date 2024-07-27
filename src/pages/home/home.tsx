@@ -1,41 +1,40 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Favorites } from '@components/Favorites/Favorites';
 import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
-import { useData } from '@contexts/dataProvider';
-import { useLocalStorage } from '@hooks/useSearchQuery';
-import { useEffect, useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useTheme } from '@contexts/themeProvider';
+import { useSearchParams } from '@hooks/useSearchParams';
+import { useAppDispatch } from '@hooks/useStoreHooks';
+import classnames from 'classnames';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import { useSearchPeopleQuery } from 'src/store/api/swapiApi';
+import { setCharacters } from 'src/store/charactersSlice';
+import { selectCharacters, selectFavorites, selectTotalPages } from 'src/store/selectors';
 import styles from './home.module.scss';
 
 export const Home = () => {
-  const [searchDetails, setSearchDetails] = useState<string>('');
-  const { isLoading, totalPages, fetchData, data } = useData();
-  const { getStorage } = useLocalStorage();
-  const [currentPage, setCurrentPage] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
-  const location = useLocation();
+  const { searchDetails, currentPage, searchQuery } = useSearchParams();
+  const dispatch = useAppDispatch();
+  const { theme } = useTheme();
+
+  const { data, isLoading, isFetching } = useSearchPeopleQuery({
+    searchValue: searchQuery,
+    page: currentPage,
+  });
+
+  const characters = useSelector(selectCharacters);
+  const totalPages = useSelector(selectTotalPages);
+  const favorites = useSelector(selectFavorites);
 
   useEffect(() => {
-    const getParams = () => {
-      const params = new URLSearchParams(location.search);
-      const query = getStorage() || '';
-      const page = params.get('page') || '1';
-      const details = params.get('details') || '';
+    if (data) {
+      dispatch(setCharacters(data));
+    }
+  }, [data, dispatch]);
 
-      if (query !== searchQuery || +page !== currentPage) {
-        fetchData(query, page);
-      }
-      setCurrentPage(+page);
-      setSearchQuery(query);
-      setSearchDetails(details);
-    };
-
-    getParams();
-    // eslint-disable-next-line react-compiler/react-compiler
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
-
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className={styles.page}>
         <Loader />
@@ -44,18 +43,17 @@ export const Home = () => {
   }
 
   return (
-    <main className={styles.page}>
+    <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
       <div className={styles.container}>
-        {data && data.results.length > 0 ? (
+        {characters && (
           <div className={styles.leftContainer}>
-            <CharacterList characters={data?.results} isDetailsOpen={Boolean(searchDetails)} />
+            <CharacterList characters={characters} isDetailsOpen={Boolean(searchDetails)} />
             {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
           </div>
-        ) : (
-          <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
         )}
         {Boolean(searchDetails) && <Outlet />}
       </div>
+      {favorites.length > 0 && <Favorites favorites={favorites} />}
     </main>
   );
 };

@@ -1,3 +1,5 @@
+import { CharacterWithFavorite, CharacterWithId } from '@models/index';
+
 export const extractIdFromUrl = (url: string): string => {
   const parts = url.split('/');
   return parts[parts.length - 2];
@@ -22,4 +24,80 @@ export function isNotNullable<T>(value: T, errorMessage?: string): NonNullable<T
     throw new Error(errorMessage || 'Not expected value');
   }
   return value;
+}
+
+export function extractPlanetPath(url: string) {
+  const baseUrl = 'https://swapi.dev/api/';
+  return url.slice(baseUrl.length);
+}
+
+export function setFavoriteFlag(
+  characters: CharacterWithId[],
+  favorites: CharacterWithFavorite[]
+): CharacterWithFavorite[] {
+  const favoriteIds = new Set(favorites.map(fav => fav.id));
+
+  return characters.map(character => ({
+    ...character,
+    isFavorite: favoriteIds.has(character.id),
+  }));
+}
+
+function formatCSVValue(value: string[] | string): string {
+  let formattedValue: string;
+
+  if (Array.isArray(value)) {
+    formattedValue = value.join(', ');
+  } else {
+    formattedValue = value;
+  }
+
+  if (/[",]/.test(formattedValue)) {
+    formattedValue = `"${formattedValue}"`;
+  }
+
+  return formattedValue;
+}
+
+export function generateCSVContent(characters: CharacterWithFavorite[]): string {
+  const headers = [
+    'Name',
+    'Height',
+    'Mass',
+    'Hair Color',
+    'Skin Color',
+    'Eye Color',
+    'Birth Year',
+    'Gender',
+    'Homeworld',
+    'Films',
+    'Species',
+    'Vehicles',
+    'Starships',
+    'Created',
+    'Edited',
+    'URL',
+  ];
+
+  const rows = characters.map(character => [
+    character.name || '',
+    character.height || '',
+    character.mass || '',
+    formatCSVValue(character.hair_color),
+    formatCSVValue(character.skin_color),
+    formatCSVValue(character.eye_color),
+    character.birth_year || '',
+    character.gender || '',
+    character.homeworld || '',
+    formatCSVValue(character.films),
+    formatCSVValue(character.species),
+    formatCSVValue(character.vehicles),
+    formatCSVValue(character.starships),
+    character.created || '',
+    character.edited || '',
+    character.url || '',
+  ]);
+
+  const csvContent = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
+  return csvContent;
 }

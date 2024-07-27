@@ -1,9 +1,9 @@
-import { Character } from '@models/index';
+import { CharacterWithFavorite } from '@models/index';
 import classnames from 'classnames';
 import styles from './DetailsInfo.module.scss';
 
 interface DetailsInfoProps {
-  character: Character;
+  character: CharacterWithFavorite;
 }
 
 export const DetailsInfo = ({ character }: DetailsInfoProps) => (

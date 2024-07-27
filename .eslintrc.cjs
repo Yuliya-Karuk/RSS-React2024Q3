@@ -99,5 +99,6 @@ module.exports = {
     ],
     'react-compiler/react-compiler': 'error',
     'react/static-property-placement': 'off',
+    'react/no-unescaped-entities': 'off',
   },
 };

@@ -1,15 +1,13 @@
 import { MainLayout } from '@components/MainLayout/MainLayout';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import { renderWithRouter } from 'src/testSetup/render-router';
 
 describe('MainLayout', () => {
   it('renders all required components', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <MainLayout />
-      </MemoryRouter>
-    );
+    renderWithRouter(<MainLayout />, {
+      route: '/',
+    });
 
     const headerLogo = screen.getByRole('img', { name: /Logo/i });
     expect(headerLogo).toBeInTheDocument();
