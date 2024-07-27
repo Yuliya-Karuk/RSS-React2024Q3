@@ -16,16 +16,16 @@ describe('CharacterList', () => {
     vi.resetAllMocks();
   });
 
-  it('verify that the component renders the specified number of cards', () => {
+  it('check that an appropriate message is displayed if no cards are present', () => {
     renderWithRouter(<CharacterList characters={[]} isDetailsOpen={false} />, {
       route: '/',
     });
 
-    const emptyMessage = screen.getByText(/Sorry, we couldn`t find anything matching your search./i);
+    const emptyMessage = screen.getByText(/Sorry, we couldn't find anything matching your search./i);
     expect(emptyMessage).toBeInTheDocument();
   });
 
-  it('check that an appropriate message is displayed if no cards are present', async () => {
+  it('verify that the component renders the specified number of cards', async () => {
     renderWithRouter(<CharacterList characters={mockedCharacters.results} isDetailsOpen={false} />, {
       route: '/',
     });

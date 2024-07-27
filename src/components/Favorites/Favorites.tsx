@@ -11,7 +11,7 @@ export const Favorites = ({ favorites }: FavoritesProps) => {
   const { downloadUrl, handleRemoveAll } = useHandleFlyout(favorites);
 
   return (
-    <div className={styles.favorites}>
+    <div className={styles.favorites} data-testid="favorites">
       <div className={styles.container}>
         <h3 className={styles.favoritesTitle}>
           Favorites <span className={styles.favoritesName}>({favorites.length} selected)</span>

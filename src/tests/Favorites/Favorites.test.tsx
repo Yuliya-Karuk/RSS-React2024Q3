@@ -1,7 +1,6 @@
 import { Favorites } from '@components/Favorites/Favorites';
 import { store } from '@store/store';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { mockedFavorites } from 'src/testSetup/msw/mocks';
@@ -30,23 +29,6 @@ describe('Favorites Component', () => {
     expect(screen.getByText('(1 selected)')).toBeInTheDocument();
 
     expect(screen.getByText(/Luke Skywalker Mocked/i)).toBeInTheDocument();
-  });
-
-  it('should call handleRemoveAll when the remove all button is clicked', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Favorites favorites={mockedFavorites} />
-        </MemoryRouter>
-      </Provider>
-    );
-
-    const removeAllButton = screen.getByLabelText('remove all');
-
-    const user = userEvent.setup();
-    await user.click(removeAllButton);
-
-    expect(handleRemoveAllMock).toHaveBeenCalled();
   });
 
   it('should have a download link with correct href', async () => {

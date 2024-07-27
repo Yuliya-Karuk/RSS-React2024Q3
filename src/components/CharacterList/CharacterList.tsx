@@ -3,7 +3,7 @@ import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { useHandleDetails } from '@hooks/useHandleDetails';
 import { CharacterWithFavorite, CharacterWithId } from '@models/index';
 import { selectFavorites } from '@store/selectors';
-import { markFavorites } from '@utils/utils';
+import { setFavoriteFlag } from '@utils/utils';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import styles from './CharacterList.module.scss';
@@ -17,15 +17,15 @@ export const CharacterList = ({ characters, isDetailsOpen }: CharacterListProps)
   const { closeDetails } = useHandleDetails();
 
   const favorites = useSelector(selectFavorites);
-  const markedCharacters: CharacterWithFavorite[] = markFavorites(characters, favorites);
+  const markedCharacters: CharacterWithFavorite[] = setFavoriteFlag(characters, favorites);
 
   return characters.length > 0 ? (
     <ul className={classnames(styles.mainContainer, { [styles.small]: isDetailsOpen })} onClick={closeDetails}>
       {markedCharacters.map(character => (
-        <CharacterItem key={character.name} character={character} isDetailsOpen={isDetailsOpen} />
+        <CharacterItem key={character.id} character={character} isDetailsOpen={isDetailsOpen} />
       ))}
     </ul>
   ) : (
-    <div className={styles.emptySearch}>Sorry, we couldn`t find anything matching your search.</div>
+    <div className={styles.emptySearch}>Sorry, we couldn't find anything matching your search.</div>
   );
 };

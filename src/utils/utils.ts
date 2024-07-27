@@ -31,7 +31,7 @@ export function extractPlanetPath(url: string) {
   return url.slice(baseUrl.length);
 }
 
-export function markFavorites(
+export function setFavoriteFlag(
   characters: CharacterWithId[],
   favorites: CharacterWithFavorite[]
 ): CharacterWithFavorite[] {

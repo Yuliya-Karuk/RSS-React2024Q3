@@ -16,7 +16,7 @@ export const FavoritesItem = ({ favorite }: FavoritesListProps) => {
       <div className={styles.favoritesImgContainer}>
         <img className={styles.favoritesImg} src={imageUrl} alt="Character" />
       </div>
-      <FavoriteButton favorite={{ ...favorite, isFavorite: true }} />
+      <FavoriteButton favorite={favorite} />
     </li>
   );
 };

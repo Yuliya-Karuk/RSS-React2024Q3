@@ -6,14 +6,14 @@ import { Loader } from '@components/Loader/Loader';
 import { useDetails } from '@hooks/useDetails';
 import { useHandleDetails } from '@hooks/useHandleDetails';
 import { selectFavorites } from '@store/selectors';
-import { isNotNullable, markFavorites, urlImgTemplates } from '@utils/utils';
+import { isNotNullable, setFavoriteFlag, urlImgTemplates } from '@utils/utils';
 import { useSelector } from 'react-redux';
 import styles from './Details.module.scss';
 
 export const Details = () => {
   const { character, planet, filteredFilms } = useDetails();
   const favorites = useSelector(selectFavorites);
-  const preparedCharacter = character && markFavorites([character], favorites)[0];
+  const preparedCharacter = character && setFavoriteFlag([character], favorites)[0];
   const { closeDetails } = useHandleDetails();
 
   if (!preparedCharacter || !planet || filteredFilms.length < 0) {

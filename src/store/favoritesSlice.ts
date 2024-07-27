@@ -19,7 +19,7 @@ const favoritesSlice = createSlice({
       if (index !== -1) {
         state.favorites.splice(index, 1);
       } else {
-        state.favorites.push(action.payload);
+        state.favorites.push({ ...action.payload, isFavorite: true });
       }
     },
     clearFavorites(state) {
