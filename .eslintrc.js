@@ -1,4 +1,7 @@
-module.exports = {
+// .eslintrc.mjs
+import { defineConfig } from 'eslint';
+
+export default defineConfig({
   root: true,
   env: {
     browser: true,
@@ -15,12 +18,12 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier'
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vitest.config.ts'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vitest.config.ts', 'next.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.app.json'],
+    project: ['./tsconfig.json'],
     ecmaFeatures: {
       jsx: true,
     },
@@ -37,7 +40,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {
-        project: './tsconfig.app.json',
+        project: './tsconfig.json',
       },
     },
   },
@@ -101,4 +104,4 @@ module.exports = {
     'react/static-property-placement': 'off',
     'react/no-unescaped-entities': 'off',
   },
-};
+});

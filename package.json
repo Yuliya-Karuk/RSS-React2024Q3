@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "format": "prettier ./src --check",
@@ -22,6 +22,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-redux": "^7.1.33",
+    "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
@@ -65,8 +66,6 @@
     "stylelint-scss": "^6.3.2",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.0.2"
   }
 }

@@ -14,7 +14,7 @@ export default defineConfig({
     setupFiles: './src/testSetup/setupTests.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['**/.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'dist' ]
+      exclude: ['**/.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'dist', '**/*.test.{js,jsx,ts,tsx}' ]
     },
   },
 });
