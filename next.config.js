@@ -1,21 +1,21 @@
 import path from 'path';
 
+const stylesPath = path.resolve('styles');
+
 export default {
   reactStrictMode: true,
-  // webpack(config, options) {
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     use: ['@svgr/webpack'],
-  //   });
+  swcMinify: true,
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
 
-  //   config.resolve.alias['@components'] = path.join(__dirname, 'src/components');
-  //   config.resolve.alias['@styles'] = path.join(__dirname, 'src/styles');
+    return config;
+  },
 
-  //   return config;
-  // },
-
-  // sassOptions: {
-  //   includePaths: [path.join(__dirname, 'src/styles')],
-  //   prependData: `@import "mixins.scss"; @import "placeholders.scss"; @import "constants.scss";`,
-  // },
+  sassOptions: {
+    includePaths: [stylesPath],
+    prependData: `@import "mixins.scss"; @import "placeholders.scss"; @import "constants.scss";`,
+  },
 };

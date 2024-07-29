@@ -13,20 +13,19 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "jsx": "preserve"
-    // "baseUrl": ".",
-    // "paths": {
-    //   "@components/*": ["src/components/*"],
-    //   "@assets/*": ["src/assets/*"],
-    //   "@contexts/*": ["src/contexts/*"],
-    //   "@utils/*": ["src/utils/*"],
-    //   "@router/*": ["src/router/*"],
-    //   "@pages/*": ["src/pages/*"],
-    //   "@models/*": ["src/models/*"],
-    //   "@hooks/*": ["src/hooks/*"],
-    //   "@store/*": ["src/store/*"]
-    // }
-    ,
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@contexts/*": ["contexts/*"],
+      "@utils/*": ["utils/*"],
+      "@pages/*": ["pages/*"],
+      "@models/*": ["models/*"],
+      "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"],
+      "@public/*": ["public/*"]
+    },
     "strict": false,
     "incremental": true,
     "resolveJsonModule": true,
@@ -34,7 +33,11 @@
   },
   "include": [
     "pages",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/**/*.ts",
+    "**/**/*.tsx",
   ],
   "exclude": [
     "node_modules"

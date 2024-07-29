@@ -1,0 +1,91 @@
+.favorites {
+  width: 200px;
+  position: fixed;
+  z-index: 100;
+  background: $color-favorites-bg;
+  top: 60px;
+  left: 0;
+  color: $color-bg-dark;
+  border-radius: 5px;
+}
+
+.container {
+  @include flex(center, flex-start, column, 15px);
+  padding: 10px;
+  backdrop-filter: blur(12.5px);
+}
+
+.favorites-block {
+  @include flex(space-between, center, row, 30px);
+  width: 100%;
+}
+
+.favorites-button {
+  @extend %transition;
+  @include font(1.6rem, 400, 1, 0.05rem);
+
+  @include hover {
+    background-color: $color-gray-dark;
+    color: $color-black-default;
+  }
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  background-color: $color-primary-bright;
+}
+
+.remove-icon {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: no-repeat center url('/icons/remove-all.svg');
+  background-size: contain;
+  border-radius: 5px;
+}
+
+.download-icon {
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: no-repeat center url('/icons/download.svg');
+  background-size: contain;
+  border-radius: 5px;
+}
+
+.favorites-title {
+  @include font(2.4rem, 700, 1, 0.05rem);
+  margin-right: auto;
+
+  .favorites-name {
+    display: block;
+  }
+}
+
+.favorites-name {
+  @include font(1.4rem, 700, 1, 0.05rem);
+}
+
+.favorites-list {
+  @include flex(flex-start, center, column, 10px);
+  width: 100%;
+  max-height: 210px;
+  overflow-y: auto;
+}
+
+.favorites-list::-webkit-scrollbar {
+  width: 10px;
+  border: 1px solid $color-bg-dark;
+  border-radius: 50px;
+}
+
+.favorites-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.favorites-list::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  height: 10px;
+  background-color: $color-bg-dark;
+  border-radius: 50px;
+}
