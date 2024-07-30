@@ -30,21 +30,10 @@
     "incremental": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "classnameTransform": "camelCase",
-          "customMatcher": "\\.module\\.scss$"
-        }
-      }
-    ],
-    "types": ["@types/node", "@types/react", "@types/react-dom"]
   },
   "include": [
     "pages",
     "next-env.d.ts",
-    "index.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/**/*.ts",
