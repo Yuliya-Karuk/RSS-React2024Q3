@@ -5,14 +5,6 @@ const stylesPath = path.resolve('styles');
 export default {
   reactStrictMode: true,
   swcMinify: true,
-  // webpack(config, options) {
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     use: ['@svgr/webpack'],
-  //   });
-
-  //   return config;
-  // },
 
   webpack: (config, options) => {
     const rules = config.module.rules

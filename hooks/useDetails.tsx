@@ -34,7 +34,7 @@ export const useDetails = () => {
     };
 
     setSearchInput();
-  }, [window.location.search]);
+  }, []);
 
   return { character, planet, filteredFilms };
 };

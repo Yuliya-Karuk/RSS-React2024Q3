@@ -6,13 +6,13 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* Добавьте сюда метатеги, ссылки на шрифты и другие ресурсы */}
+          <meta charSet="UTF-8" />
           <meta name="description" content="Ваше описание приложения" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" type="image/ico" sizes="32x32" />
         </Head>
         <body>
-          <Main /> {/* Основной контент страниц */}
-          <NextScript /> {/* Скрипты Next.js */}
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );
