@@ -9,7 +9,7 @@ interface DetailsPlanetProps {
 export const DetailsPlanet = ({ planet }: DetailsPlanetProps) => {
   const handleImgSrcError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;
-    target.src = "/images/default-planet.jpg";
+    target.src = '/images/default-planet.jpg';
   };
 
   return (

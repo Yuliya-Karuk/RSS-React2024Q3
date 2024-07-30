@@ -27,7 +27,7 @@ export const useDetails = () => {
 
   useEffect(() => {
     const setSearchInput = () => {
-      const params = new URLSearchParams(location.search);
+      const params = new URLSearchParams(window.location.search);
       const id = params.get('details') || '';
 
       setCharacterId(id);
@@ -36,5 +36,5 @@ export const useDetails = () => {
     setSearchInput();
   }, [window.location.search]);
 
- return { character, planet, filteredFilms };
+  return { character, planet, filteredFilms };
 };

@@ -5,17 +5,14 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import '../styles/index.scss';
 
-
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </ThemeProvider>
-    </Provider>
-  );
-};
+const MyApp = ({ Component, pageProps }: AppProps) => (
+  <Provider store={store}>
+    <ThemeProvider>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </ThemeProvider>
+  </Provider>
+);
 
 export default MyApp;

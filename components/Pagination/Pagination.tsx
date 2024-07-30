@@ -13,7 +13,7 @@ interface PaginationProps {
 
 export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
   const paginationRange = getPaginationRange(currentPage, totalPages);
-const router = useRouter();
+  const router = useRouter();
   const { query } = router;
   const { theme } = useTheme();
 

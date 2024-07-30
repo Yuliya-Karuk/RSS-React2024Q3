@@ -1,4 +1,4 @@
-import { CharacterWithFavorite, CharacterWithId } from "../models";
+import { CharacterWithFavorite, CharacterWithId } from '../models';
 
 export const extractIdFromUrl = (url: string): string => {
   const parts = url.split('/');

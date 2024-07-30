@@ -6,6 +6,6 @@ interface LoaderProps {
 
 export const Loader = ({ style }: LoaderProps) => (
   <div className={styles.loaderContainer}>
-    <img className={styles.loader} src='/loader.gif' alt="Loader" style={style} />
+    <img className={styles.loader} src="/loader.gif" alt="Loader" style={style} />
   </div>
 );

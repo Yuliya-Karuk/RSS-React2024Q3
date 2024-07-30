@@ -1,4 +1,4 @@
-import { CharacterWithFavorite } from '@/models/index';
+import { CharacterWithFavorite } from '@models/index';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type FavoritesState = {

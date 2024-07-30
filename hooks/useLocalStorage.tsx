@@ -1,8 +1,7 @@
 const storageKey = 'karuk_star_wars';
 
-
 export const useLocalStorage = () => {
-const isClient = typeof window !== 'undefined';
+  const isClient = typeof window !== 'undefined';
 
   const setStorage = (searchValue: string): void => {
     if (isClient) {

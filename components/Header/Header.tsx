@@ -7,7 +7,7 @@ export const Header = () => (
   <header className={styles.header}>
     <div className={styles.headerContainer}>
       <Link href="/" className={styles.logoLink}>
-        <img className={styles.logo} src='/images/logo.png' alt="Logo" />
+        <img className={styles.logo} src="/images/logo.png" alt="Logo" />
       </Link>
       <Search />
       <ThemeSwitcher />

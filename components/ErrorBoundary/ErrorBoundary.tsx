@@ -41,7 +41,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               </button>
             </div>
             <div className={styles.errorImgContainer}>
-              <img className={styles.errorImg} src='/images/error.png' alt="Error" />
+              <img className={styles.errorImg} src="/images/error.png" alt="Error" />
             </div>
           </div>
         </div>

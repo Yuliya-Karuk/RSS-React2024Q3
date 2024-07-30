@@ -1,4 +1,4 @@
-import { CharacterWithId, Film } from '@/models/index';
+import { CharacterWithId, Film } from '@models/index';
 import { createSlice } from '@reduxjs/toolkit';
 import { swapiApi } from './api/swapiApi';
 

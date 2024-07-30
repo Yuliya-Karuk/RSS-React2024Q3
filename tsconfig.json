@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
@@ -29,17 +25,8 @@
     "strict": false,
     "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": true
   },
-  "include": [
-    "pages",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/**/*.ts",
-    "**/**/*.tsx",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["pages", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
