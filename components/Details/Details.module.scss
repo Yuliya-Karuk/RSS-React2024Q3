@@ -9,14 +9,6 @@
   }
 }
 
-.character-feature-block {
-  @include flex(space-between, center);
-  flex-wrap: wrap;
-  width: 100%;
-  font-size: 1.6rem;
-  color: $color-gray-middle;
-}
-
 .details {
   @include flex(flex-start, flex-start, column, 10px);
   @include font(2rem, 700, 1, 0.05rem);
@@ -58,4 +50,10 @@
 
 .page-loader {
   align-self: flex-start;
+}
+
+[class*='light'] {
+  .details {
+    color: $color-bg-dark;
+  }
 }

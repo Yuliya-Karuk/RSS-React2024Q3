@@ -41,3 +41,13 @@
   color: $color-primary-bright;
   width: 100%;
 }
+
+[class*='light'] {
+  .character-feature-block {
+    color: #545454;
+  }
+
+  .block-title {
+    color: $color-primary-bright-faded;
+  }
+}

@@ -72,3 +72,15 @@
     fill: $color-invalid-input;
   }
 }
+
+[class*='light'] {
+  .add-to-favorite-button {
+    background-color: $color-gray-middle;
+  }
+
+  .heart {
+    path {
+      fill: $color-bg-dark;
+    }
+  }
+}

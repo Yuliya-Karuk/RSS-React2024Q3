@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
 export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
@@ -23,10 +23,6 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     params.set('page', '1');
     router.push(`/?${params.toString()}`);
   };
-
-  useEffect(() => {
-    setSearchValue(getStorage() || '');
-  }, [getStorage]);
 
   return { searchValue, handleInputChange, handleSubmit };
 };

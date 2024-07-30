@@ -71,7 +71,7 @@
 
   &.light {
     background-color: $color-input-bg;
-    color: $color-bg-dark;
+    border: 1px solid $color-bg-dark;
   }
 
   &.active {

@@ -1,4 +1,3 @@
-// import HeartIcon from '@assets/heart.svg?react';
 import { useFavorites } from '@hooks/useFavorites';
 import { CharacterWithFavorite } from '@models/index';
 import HeartIcon from '@public/icons/heart.svg';

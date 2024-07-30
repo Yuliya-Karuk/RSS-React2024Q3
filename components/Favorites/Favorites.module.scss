@@ -9,6 +9,13 @@
   border-radius: 5px;
 }
 
+[class*='light'] {
+  .favorites {
+    background-color: rgb(0 0 0 / 60%);
+    color: $color-gray-light;
+  }
+}
+
 .container {
   @include flex(center, flex-start, column, 15px);
   padding: 10px;
