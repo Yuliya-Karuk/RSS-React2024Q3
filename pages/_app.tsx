@@ -1,3 +1,4 @@
+import { MainLayout } from '@components/MainLayout/MainLayout';
 import { ThemeProvider } from '@contexts/themeProvider';
 import { store } from '@store/store';
 import type { AppProps } from 'next/app';
@@ -9,7 +10,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <Component {...pageProps} />
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
       </ThemeProvider>
     </Provider>
   );

@@ -3,11 +3,9 @@ import { selectFilms } from '@store/selectors';
 import { extractPlanetPath } from '@utils/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 export const useDetails = () => {
   const [characterId, setCharacterId] = useState<string | null>(null);
-  const location = useLocation();
 
   const films = useSelector(selectFilms);
 
@@ -36,7 +34,7 @@ export const useDetails = () => {
     };
 
     setSearchInput();
-  }, [location.search]);
+  }, [window.location.search]);
 
-  return { character, planet, filteredFilms };
+ return { character, planet, filteredFilms };
 };
