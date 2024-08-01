@@ -15,13 +15,7 @@
     "plugin:react-hooks/recommended",
     "prettier"
   ],
-  "ignorePatterns": [
-    "dist",
-    ".eslintrc.cjs",
-    "vitest.config.ts",
-    "next.config.js",
-    "src"
-  ],
+  "ignorePatterns": ["dist", ".eslintrc.cjs", "vitest.config.ts", "next.config.js", "src"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -31,15 +25,7 @@
       "jsx": true
     }
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "react-refresh",
-    "@typescript-eslint",
-    "import",
-    "prettier",
-    "react-compiler"
-  ],
+  "plugins": ["react", "react-hooks", "react-refresh", "@typescript-eslint", "import", "prettier", "react-compiler"],
   "settings": {
     "import/resolver": {
       "typescript": {

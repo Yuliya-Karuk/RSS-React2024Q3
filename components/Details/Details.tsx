@@ -15,14 +15,6 @@ export const Details = () => {
   const preparedCharacter = character && setFavoriteFlag([character], favorites)[0];
   const { closeDetails } = useHandleDetails();
 
-  // if (!preparedCharacter || !planet || filteredFilms.length < 0) {
-  //   return (
-  //     <div className={styles.details} data-testid="loader">
-  //       <Loader style={{ alignSelf: 'flex-start' }} />
-  //     </div>
-  //   );
-  // }
-
   return (
     preparedCharacter && (
       <div className={styles.details} data-testid="details">

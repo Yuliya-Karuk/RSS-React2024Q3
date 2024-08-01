@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { CharacterList } from '@components/CharacterList/CharacterList';
 import { Details } from '@components/Details/Details';
 import { Favorites } from '@components/Favorites/Favorites';
@@ -20,7 +21,7 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { theme } = useTheme();
 
-  const { data, isLoading, isFetching } = useSearchPeopleQuery({
+  const { data } = useSearchPeopleQuery({
     searchValue: searchQuery,
     page: currentPage,
   });
@@ -34,14 +35,6 @@ const Home = () => {
       dispatch(setCharacters(data));
     }
   }, [data, dispatch]);
-
-  // if (isLoading || isFetching) {
-  //   return (
-  //     <div className={styles.page}>
-  //       <Loader />
-  //     </div>
-  //   );
-  // }
 
   return (
     <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>

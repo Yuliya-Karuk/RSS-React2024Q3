@@ -30,6 +30,7 @@
         "properties": ["width", "font-size", "background-color"],
         "emptyLineBefore": "never"
       }
-    ]
+    ],
+    "selector-id-pattern": null
   }
 }
