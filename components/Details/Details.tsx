@@ -2,7 +2,6 @@ import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
 import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
 import { FavoriteButton } from '@components/FavoriteButton/FavoriteButton';
-import { Loader } from '@components/Loader/Loader';
 import { useDetails } from '@hooks/useDetails';
 import { useHandleDetails } from '@hooks/useHandleDetails';
 import { selectFavorites } from '@store/selectors';
@@ -16,13 +15,13 @@ export const Details = () => {
   const preparedCharacter = character && setFavoriteFlag([character], favorites)[0];
   const { closeDetails } = useHandleDetails();
 
-  if (!preparedCharacter || !planet || filteredFilms.length < 0) {
-    return (
-      <div className={styles.details} data-testid="loader">
-        <Loader style={{ alignSelf: 'flex-start' }} />
-      </div>
-    );
-  }
+  // if (!preparedCharacter || !planet || filteredFilms.length < 0) {
+  //   return (
+  //     <div className={styles.details} data-testid="loader">
+  //       <Loader style={{ alignSelf: 'flex-start' }} />
+  //     </div>
+  //   );
+  // }
 
   return (
     preparedCharacter && (

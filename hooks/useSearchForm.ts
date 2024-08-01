@@ -19,9 +19,8 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     }
 
     setStorage(searchValue);
-    const params = new URLSearchParams(router.query as Record<string, string>);
-    params.set('page', '1');
-    router.push(`/?${params.toString()}`);
+    const newQuery = { page: '1', query: searchValue, ...(router.query.details && { details: router.query.details }) };
+    router.push({ pathname: router.pathname, query: newQuery });
   };
 
   return { searchValue, handleInputChange, handleSubmit };

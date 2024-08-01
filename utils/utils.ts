@@ -123,3 +123,19 @@ export const addIdToCharacters = (response: PaginatedCharacters): PaginatedChara
   ...response,
   results: response.results.map(addIdToCharacter),
 });
+
+type CheckAppFunctionParams = Record<string, unknown>;
+
+type AppSearchParams = {
+  searchDetails: string;
+  currentPage: number;
+  searchQuery: string;
+};
+
+export function checkTypesSearchParams({ page, query, details }: CheckAppFunctionParams): AppSearchParams {
+  return {
+    searchDetails: typeof details === 'string' ? details : '',
+    currentPage: typeof page === 'string' ? +page : 1,
+    searchQuery: typeof query === 'string' ? query : '',
+  };
+}

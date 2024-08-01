@@ -1,7 +1,6 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
 import { Details } from '@components/Details/Details';
 import { Favorites } from '@components/Favorites/Favorites';
-import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
 import { useTheme } from '@contexts/themeProvider';
 import { useSearchParams } from '@hooks/useSearchParams';
@@ -11,6 +10,7 @@ import { setCharacters } from '@store/charactersSlice';
 import { selectCharacters, selectFavorites, selectTotalPages } from '@store/selectors';
 import { wrapper } from '@store/store';
 import styles from '@styles/home.module.scss';
+import { checkTypesSearchParams, extractPlanetPath } from '@utils/utils';
 import classnames from 'classnames';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -35,13 +35,13 @@ const Home = () => {
     }
   }, [data, dispatch]);
 
-  if (isLoading || isFetching) {
-    return (
-      <div className={styles.page}>
-        <Loader />
-      </div>
-    );
-  }
+  // if (isLoading || isFetching) {
+  //   return (
+  //     <div className={styles.page}>
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
 
   return (
     <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
@@ -60,17 +60,27 @@ const Home = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
-  let { search = '', page = 1 } = context.query;
+  const { page, query, details } = context.query;
 
-  // search = Array.isArray(search) ? search[0] : search;
-  // page = Array.isArray(page) ? page[0] : page;
+  const { searchDetails, currentPage, searchQuery } = checkTypesSearchParams({ page, query, details });
 
-  const result = await store.dispatch(
+  await store.dispatch(
     swapiApi.endpoints.searchPeople.initiate({
-      searchValue: search,
-      page: page,
+      searchValue: searchQuery,
+      page: currentPage,
     })
   );
+
+  await store.dispatch(swapiApi.endpoints.getFilms.initiate());
+
+  if (searchDetails) {
+    const character = await store.dispatch(swapiApi.endpoints.getCharacterById.initiate(searchDetails));
+    if (character.data) {
+      const planetId = extractPlanetPath(character.data.homeworld);
+
+      await store.dispatch(swapiApi.endpoints.getPlanet.initiate(planetId));
+    }
+  }
 
   await Promise.all(store.dispatch(getRunningQueriesThunk()));
 

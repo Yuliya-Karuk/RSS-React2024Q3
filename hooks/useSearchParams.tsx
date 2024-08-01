@@ -1,26 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useLocalStorage } from './useLocalStorage';
+import { checkTypesSearchParams } from '@utils/utils';
+import { useRouter } from 'next/router';
 
 export const useSearchParams = () => {
-  const [searchDetails, setSearchDetails] = useState<string>('');
-  const { getStorage } = useLocalStorage();
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchQuery, setSearchQuery] = useState<string>(getStorage() || '');
+  const router = useRouter();
+  const { page, query, details } = router.query;
 
-  useEffect(() => {
-    const getParams = () => {
-      const params = new URLSearchParams(window.location.search);
-      const query = getStorage() || '';
-      const page = params.get('page') || '1';
-      const details = params.get('details') || '';
+  const { searchDetails, currentPage, searchQuery } = checkTypesSearchParams({ page, query, details });
 
-      setCurrentPage(+page);
-      setSearchQuery(query);
-      setSearchDetails(details);
-    };
-
-    getParams();
-  }, [getStorage]);
+  // useEffect(() => {
+  //   const newQuery = { page: currentPage, query: searchQuery, details: searchDetails };
+  //   router.push({ pathname: router.pathname, query: newQuery });
+  // }, []);
 
   return { searchDetails, currentPage, searchQuery };
 };
