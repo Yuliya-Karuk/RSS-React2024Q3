@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import {
   Character,
   CharacterWithId,
@@ -8,6 +9,7 @@ import {
 } from '@models/index';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { extractIdFromUrl } from '@utils/utils';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const SWAPI_BASE_URL = 'https://swapi.dev/api/';
 
@@ -28,6 +30,11 @@ const addIdToCharacters = (response: PaginatedCharacters): PaginatedCharactersWi
 export const swapiApi = createApi({
   reducerPath: 'swapiApi',
   baseQuery: fetchBaseQuery({ baseUrl: SWAPI_BASE_URL }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: builder => ({
     searchPeople: builder.query<PaginatedCharactersWithId, { searchValue: string; page?: number }>({
       query: ({ searchValue, page }) => `people/?search=${searchValue}&page=${page}`,
@@ -52,4 +59,5 @@ export const {
   useGetCharacterByIdQuery,
   useGetPlanetQuery,
   useGetFilmsQuery,
+  util: { getRunningQueriesThunk },
 } = swapiApi;

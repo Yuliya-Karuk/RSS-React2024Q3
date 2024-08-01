@@ -6,9 +6,10 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { useTheme } from '@contexts/themeProvider';
 import { useSearchParams } from '@hooks/useSearchParams';
 import { useAppDispatch } from '@hooks/useStoreHooks';
-import { useSearchPeopleQuery } from '@store/api/swapiApi';
+import { getRunningQueriesThunk, swapiApi, useSearchPeopleQuery } from '@store/api/swapiApi';
 import { setCharacters } from '@store/charactersSlice';
 import { selectCharacters, selectFavorites, selectTotalPages } from '@store/selectors';
+import { wrapper } from '@store/store';
 import styles from '@styles/home.module.scss';
 import classnames from 'classnames';
 import { useEffect } from 'react';
@@ -57,5 +58,25 @@ const Home = () => {
     </main>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
+  let { search = '', page = 1 } = context.query;
+
+  // search = Array.isArray(search) ? search[0] : search;
+  // page = Array.isArray(page) ? page[0] : page;
+
+  const result = await store.dispatch(
+    swapiApi.endpoints.searchPeople.initiate({
+      searchValue: search,
+      page: page,
+    })
+  );
+
+  await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+  return {
+    props: {},
+  };
+});
 
 export default Home;

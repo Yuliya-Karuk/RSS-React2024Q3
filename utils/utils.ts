@@ -1,4 +1,10 @@
-import { CharacterWithFavorite, CharacterWithId } from '../models';
+import {
+  Character,
+  CharacterWithFavorite,
+  CharacterWithId,
+  PaginatedCharacters,
+  PaginatedCharactersWithId,
+} from '@models/index';
 
 export const extractIdFromUrl = (url: string): string => {
   const parts = url.split('/');
@@ -101,3 +107,19 @@ export function generateCSVContent(characters: CharacterWithFavorite[]): string 
   const csvContent = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
   return csvContent;
 }
+
+export const SWAPI_BASE_URL = 'https://swapi.dev/api/';
+
+export const addIdToCharacter = (character: Character): CharacterWithId => {
+  const id = extractIdFromUrl(character.url);
+
+  return {
+    ...character,
+    id,
+  };
+};
+
+export const addIdToCharacters = (response: PaginatedCharacters): PaginatedCharactersWithId => ({
+  ...response,
+  results: response.results.map(addIdToCharacter),
+});
