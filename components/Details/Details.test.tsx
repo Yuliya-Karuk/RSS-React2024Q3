@@ -4,14 +4,21 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '@testSetup/render-router';
 
 const closeDetailsMock = vi.fn();
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
-// vi.mock('@hooks/useHandleDetails', () => ({
-//   useHandleDetails: () => ({
-//     closeDetails: closeDetailsMock,
-//     openDetails: vi.fn(),
-//   }),
-// }));
+vi.mock('@hooks/useHandleDetails', () => ({
+  useHandleDetails: () => ({
+    closeDetails: closeDetailsMock,
+    openDetails: vi.fn(),
+  }),
+}));
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    query: {
+      details: '1',
+    },
+  }),
+}));
 
 describe('Details Component', () => {
   afterAll(() => {
@@ -23,7 +30,7 @@ describe('Details Component', () => {
     cleanup();
   });
 
-  it.only('Make sure the detailed card component correctly displays the detailed card data;', async () => {
+  it('Make sure the detailed card component correctly displays the detailed card data;', async () => {
     renderWithProviders(<Details />);
 
     const characterName = await screen.findByText('Luke Skywalker Details');
@@ -31,6 +38,12 @@ describe('Details Component', () => {
 
     const birthYear = await screen.findByText('19BBY');
     expect(birthYear).toBeInTheDocument();
+
+    const weight = await screen.findByText('172');
+    expect(weight).toBeInTheDocument();
+
+    const height = await screen.findByText('77');
+    expect(height).toBeInTheDocument();
 
     const planet = await screen.findByText('Tatooine Mocked');
     expect(planet).toBeInTheDocument();
