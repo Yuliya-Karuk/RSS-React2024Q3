@@ -1,12 +1,11 @@
 import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { Details } from '@components/Details/Details';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { store } from 'src/store/store';
-import { mockedReadyCharacter } from 'src/testSetup/msw/mocks';
-import { renderWithRouter } from 'src/testSetup/render-router';
+import { mockedReadyCharacter } from '@testSetup/msw/mocks';
+import { renderWithProviders } from '@testSetup/render-router';
+
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('CharacterItem rendering', () => {
   afterAll(() => {
@@ -18,9 +17,7 @@ describe('CharacterItem rendering', () => {
   });
 
   it('Ensure that the card component renders the relevant card data', () => {
-    renderWithRouter(<CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />, {
-      route: '/',
-    });
+    renderWithProviders(<CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />);
 
     const characterName = screen.getByText('Luke Skywalker Mocked');
     expect(characterName).toBeInTheDocument();
@@ -30,13 +27,11 @@ describe('CharacterItem rendering', () => {
   });
 
   it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
-          <Details />
-        </MemoryRouter>
-      </Provider>
+    renderWithProviders(
+      <>
+        <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
+        <Details />
+      </>
     );
 
     const spy = vi.spyOn(globalThis, 'fetch');
@@ -59,13 +54,11 @@ describe('CharacterItem rendering', () => {
   });
 
   it('Validate that clicking on a card opens a detailed card component;', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
-          <Details />
-        </MemoryRouter>
-      </Provider>
+    renderWithProviders(
+      <>
+        <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
+        <Details />
+      </>
     );
 
     const characterItem = await screen.findByTestId('item');

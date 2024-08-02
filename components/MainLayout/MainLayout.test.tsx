@@ -1,13 +1,17 @@
 import { MainLayout } from '@components/MainLayout/MainLayout';
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from 'src/testSetup/render-router';
+import { renderWithProviders } from '@testSetup/render-router';
+
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('MainLayout', () => {
   it('renders all required components', () => {
-    renderWithRouter(<MainLayout />, {
-      route: '/',
-    });
+    renderWithProviders(
+      <MainLayout>
+        <div>Test Fragment</div>
+      </MainLayout>
+    );
 
     const headerLogo = screen.getByRole('img', { name: /Logo/i });
     expect(headerLogo).toBeInTheDocument();

@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import { join } from 'path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -9,10 +10,22 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/testSetup/setupTests.ts',
+    setupFiles: './testSetup/setupTests.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['**/.eslintrc.cjs', 'vite.config.ts', 'vitest.config.ts', 'dist', '**/*.test.{js,jsx,ts,tsx}'],
+      exclude: ['**/.eslintrc.cjs', 'vitest.config.ts', '.next', 'dist', '**/*.test.{js,jsx,ts,tsx}'],
+    },
+    alias: {
+      '@components': join(__dirname, 'components'),
+      '@contexts': join(__dirname, 'contexts'),
+      '@utils': join(__dirname, 'utils'),
+      '@pages': join(__dirname, 'pages'),
+      '@models': join(__dirname, 'models'),
+      '@hooks': join(__dirname, 'hooks'),
+      '@store': join(__dirname, 'store'),
+      '@styles': join(__dirname, 'styles'),
+      '@public': join(__dirname, 'public'),
+      '@testSetup': join(__dirname, 'testSetup'),
     },
   },
 });

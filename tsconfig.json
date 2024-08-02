@@ -20,7 +20,8 @@
       "@hooks/*": ["hooks/*"],
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@testSetup/*": ["testSetup/*"]
     },
     "strict": false,
     "incremental": true,

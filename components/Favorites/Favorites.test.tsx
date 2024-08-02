@@ -1,9 +1,7 @@
 import { Favorites } from '@components/Favorites/Favorites';
-import { store } from '@store/store';
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { mockedFavorites } from 'src/testSetup/msw/mocks';
+import { screen } from '@testing-library/react';
+import { mockedFavorites } from '@testSetup/msw/mocks';
+import { renderWithProviders } from '@testSetup/render-router';
 import { vi } from 'vitest';
 
 const handleRemoveAllMock = vi.fn();
@@ -17,13 +15,7 @@ vi.mock('@hooks/useHandleFlyout', () => ({
 
 describe('Favorites Component', () => {
   it('should display the list of favorite items', () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Favorites favorites={mockedFavorites} />
-        </MemoryRouter>
-      </Provider>
-    );
+    renderWithProviders(<Favorites favorites={mockedFavorites} />);
 
     expect(screen.getByText('Favorites')).toBeInTheDocument();
     expect(screen.getByText('(1 selected)')).toBeInTheDocument();
@@ -32,13 +24,7 @@ describe('Favorites Component', () => {
   });
 
   it('should have a download link with correct href', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Favorites favorites={mockedFavorites} />
-        </MemoryRouter>
-      </Provider>
-    );
+    renderWithProviders(<Favorites favorites={mockedFavorites} />);
 
     const downloadLink = screen.getByLabelText('download');
     expect(downloadLink).toHaveAttribute('download', '1_characters.csv');

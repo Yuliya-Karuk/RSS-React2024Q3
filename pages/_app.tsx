@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '@components/Loader/Loader';
 import { MainLayout } from '@components/MainLayout/MainLayout';
@@ -12,19 +11,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 
-function parseQueryString(queryString) {
-  const query = queryString.slice(2);
-  const pairs = query.split('&');
-
-  const result = pairs.reduce((acc, pair) => {
-    const [key, value] = pair.split('=');
-    acc[key] = value;
-    return acc;
-  }, {});
-
-  return result;
-}
-
 export default function MyApp({ Component, ...pageProps }: AppProps) {
   const { store } = wrapper.useWrappedStore(pageProps);
 
@@ -32,21 +18,14 @@ export default function MyApp({ Component, ...pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const startObj = parseQueryString(router.asPath);
-
-    const handleRouteChangeStart = (url: string) => {
-      const endObj = parseQueryString(url);
-
-      if (startObj.details === endObj.details) {
-        setIsLoading(true);
-      } else {
-        setIsLoading(false);
-      }
+    const handleRouteChangeStart = () => {
+      setIsLoading(true);
     };
 
     const handleRouteChangeEnd = () => {
       setIsLoading(false);
     };
+
     router.events.on('routeChangeStart', handleRouteChangeStart);
     router.events.on('routeChangeComplete', handleRouteChangeEnd);
     router.events.on('routeChangeError', handleRouteChangeEnd);

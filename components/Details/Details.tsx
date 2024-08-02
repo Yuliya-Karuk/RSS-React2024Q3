@@ -15,6 +15,8 @@ export const Details = () => {
   const preparedCharacter = character && setFavoriteFlag([character], favorites)[0];
   const { closeDetails } = useHandleDetails();
 
+  // console.log(preparedCharacter);
+
   return (
     preparedCharacter && (
       <div className={styles.details} data-testid="details">

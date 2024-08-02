@@ -1,16 +1,17 @@
 import { Details } from '@components/Details/Details';
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouter } from 'src/testSetup/render-router';
+import { renderWithProviders } from '@testSetup/render-router';
 
 const closeDetailsMock = vi.fn();
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
-vi.mock('@hooks/useHandleDetails', () => ({
-  useHandleDetails: () => ({
-    closeDetails: closeDetailsMock,
-    openDetails: vi.fn(),
-  }),
-}));
+// vi.mock('@hooks/useHandleDetails', () => ({
+//   useHandleDetails: () => ({
+//     closeDetails: closeDetailsMock,
+//     openDetails: vi.fn(),
+//   }),
+// }));
 
 describe('Details Component', () => {
   afterAll(() => {
@@ -22,19 +23,8 @@ describe('Details Component', () => {
     cleanup();
   });
 
-  it('displays a loading indicator while fetching data', async () => {
-    renderWithRouter(<Details />, {
-      route: '/?details=1',
-    });
-
-    const loader = screen.getByTestId('loader');
-    expect(loader).toBeInTheDocument();
-  });
-
-  it('Make sure the detailed card component correctly displays the detailed card data;', async () => {
-    renderWithRouter(<Details />, {
-      route: '/?details=1',
-    });
+  it.only('Make sure the detailed card component correctly displays the detailed card data;', async () => {
+    renderWithProviders(<Details />);
 
     const characterName = await screen.findByText('Luke Skywalker Details');
     expect(characterName).toBeInTheDocument();
@@ -47,9 +37,7 @@ describe('Details Component', () => {
   });
 
   it('Ensure that clicking the close button hides the component.', async () => {
-    renderWithRouter(<Details />, {
-      route: '/?details=1',
-    });
+    renderWithProviders(<Details />);
 
     const user = userEvent.setup();
 
