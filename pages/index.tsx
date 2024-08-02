@@ -5,20 +5,18 @@ import { Favorites } from '@components/Favorites/Favorites';
 import { Pagination } from '@components/Pagination/Pagination';
 import { useTheme } from '@contexts/themeProvider';
 import { useSearchParams } from '@hooks/useSearchParams';
-import { useAppDispatch } from '@hooks/useStoreHooks';
 import { getRunningQueriesThunk, swapiApi, useSearchPeopleQuery } from '@store/api/swapiApi';
-import { setCharacters } from '@store/charactersSlice';
-import { selectCharacters, selectFavorites, selectTotalPages } from '@store/selectors';
+import { selectFavorites } from '@store/selectors';
 import { wrapper } from '@store/store';
 import styles from '@styles/home.module.scss';
 import { checkTypesSearchParams, extractPlanetPath } from '@utils/utils';
 import classnames from 'classnames';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+const productPerPage: number = 10;
 
 const Home = () => {
   const { searchDetails, currentPage, searchQuery } = useSearchParams();
-  const dispatch = useAppDispatch();
   const { theme } = useTheme();
 
   const { data } = useSearchPeopleQuery({
@@ -26,22 +24,16 @@ const Home = () => {
     page: currentPage,
   });
 
-  const characters = useSelector(selectCharacters);
-  const totalPages = useSelector(selectTotalPages);
-  const favorites = useSelector(selectFavorites);
+  const totalPages = data ? Math.ceil(data.count / productPerPage) : 0;
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setCharacters(data));
-    }
-  }, [data, dispatch]);
+  const favorites = useSelector(selectFavorites);
 
   return (
     <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
       <div className={styles.container}>
-        {characters && (
+        {data && (
           <div className={styles.leftContainer}>
-            <CharacterList characters={characters} isDetailsOpen={Boolean(searchDetails)} />
+            <CharacterList characters={data.results} isDetailsOpen={Boolean(searchDetails)} />
             {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
           </div>
         )}

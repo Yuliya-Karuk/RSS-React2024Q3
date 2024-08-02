@@ -7,10 +7,5 @@ export const useSearchParams = () => {
 
   const { searchDetails, currentPage, searchQuery } = checkTypesSearchParams({ page, query, details });
 
-  // useEffect(() => {
-  //   const newQuery = { page: currentPage, query: searchQuery, details: searchDetails };
-  //   router.push({ pathname: router.pathname, query: newQuery });
-  // }, []);
-
   return { searchDetails, currentPage, searchQuery };
 };

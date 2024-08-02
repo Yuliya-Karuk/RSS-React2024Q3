@@ -2,12 +2,12 @@ import { useGetCharacterByIdQuery, useGetFilmsQuery, useGetPlanetQuery } from '@
 import { selectFilms } from '@store/selectors';
 import { extractPlanetPath } from '@utils/utils';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 export const useDetails = () => {
   const router = useRouter();
-  const [characterId, setCharacterId] = useState<string | null>(null);
+  const characterId = (router.query.details as string) || '';
 
   const films = useSelector(selectFilms);
 
@@ -26,16 +26,6 @@ export const useDetails = () => {
     }
     return { filteredFilms: [] };
   }, [character, films]);
-
-  useEffect(() => {
-    const setSearchInput = () => {
-      const id = (router.query.details as string) || '';
-
-      setCharacterId(id);
-    };
-
-    setSearchInput();
-  }, [router.query.details]);
 
   return { character, planet, filteredFilms };
 };

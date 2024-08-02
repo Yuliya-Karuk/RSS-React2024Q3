@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '@components/Loader/Loader';
 import { MainLayout } from '@components/MainLayout/MainLayout';
@@ -11,29 +12,49 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 
+function parseQueryString(queryString) {
+  const query = queryString.slice(2);
+  const pairs = query.split('&');
+
+  const result = pairs.reduce((acc, pair) => {
+    const [key, value] = pair.split('=');
+    acc[key] = value;
+    return acc;
+  }, {});
+
+  return result;
+}
+
 export default function MyApp({ Component, ...pageProps }: AppProps) {
   const { store } = wrapper.useWrappedStore(pageProps);
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const start = () => {
-    setIsLoading(true);
-  };
-
-  const end = () => {
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    router.events.on('routeChangeStart', start);
-    router.events.on('routeChangeComplete', end);
-    router.events.on('routeChangeError', end);
+    const startObj = parseQueryString(router.asPath);
+
+    const handleRouteChangeStart = (url: string) => {
+      const endObj = parseQueryString(url);
+
+      if (startObj.details === endObj.details) {
+        setIsLoading(true);
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    const handleRouteChangeEnd = () => {
+      setIsLoading(false);
+    };
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeEnd);
+    router.events.on('routeChangeError', handleRouteChangeEnd);
 
     return () => {
-      router.events.off('routeChangeStart', start);
-      router.events.off('routeChangeComplete', end);
-      router.events.off('routeChangeError', end);
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeEnd);
+      router.events.off('routeChangeError', handleRouteChangeEnd);
     };
   }, [router]);
 
