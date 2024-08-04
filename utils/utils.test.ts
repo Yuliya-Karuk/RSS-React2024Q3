@@ -1,10 +1,16 @@
+import { CharacterWithFavorite } from '@models/index';
+import { mockedCharacter, mockedCharacters, mockedFavorites } from '@testSetup/msw/mocks';
 import { describe, expect, it } from 'vitest';
 import {
+  addIdToCharacter,
+  addIdToCharacters,
   checkTypesSearchParams,
   extractIdFromUrl,
   extractPlanetPath,
+  generateCSVContent,
   getPaginationRange,
   isNotNullable,
+  setFavoriteFlag,
   urlImgTemplates,
 } from './utils';
 
@@ -62,56 +68,44 @@ describe('extractPlanetPath', () => {
   });
 });
 
-// describe('setFavoriteFlag', () => {
-//   it('should set the isFavorite flag for characters', () => {
-//     const characters: CharacterWithId[] = [{ id: '1', name: 'Luke' }];
-//     const favorites: CharacterWithFavorite[] = [{ id: '1', name: 'Luke', isFavorite: true }];
+describe('setFavoriteFlag', () => {
+  it('should set the isFavorite flag for characters', () => {
+    const result = setFavoriteFlag(mockedCharacters.results, mockedFavorites);
+    expect(result[0].isFavorite).toBe(true);
+  });
 
-//     const result = setFavoriteFlag(characters, favorites);
-//     expect(result[0].isFavorite).toBe(true);
-//   });
+  it('should set isFavorite to false if the character is not in favorites', () => {
+    const favorites = [];
 
-//   it('should set isFavorite to false if the character is not in favorites', () => {
-//     const characters: CharacterWithId[] = [{ id: '2', name: 'Leia' }];
-//     const favorites: CharacterWithFavorite[] = [{ id: '1', name: 'Luke', isFavorite: true }];
+    const result = setFavoriteFlag(mockedCharacters.results, favorites);
+    expect(result[0].isFavorite).toBe(false);
+  });
+});
 
-//     const result = setFavoriteFlag(characters, favorites);
-//     expect(result[0].isFavorite).toBe(false);
-//   });
-// });
+describe('generateCSVContent', () => {
+  it('should generate correct CSV content', () => {
+    const characters: CharacterWithFavorite[] = mockedFavorites;
 
-// describe('generateCSVContent', () => {
-//   it('should generate correct CSV content', () => {
-//     const characters: CharacterWithFavorite[] = [mockedReadyCharacter];
+    const csvContent = generateCSVContent(characters);
 
-//     const csvContent = generateCSVContent(characters);
+    expect(csvContent).toContain('Name,Height,Mass,Hair Color');
+    expect(csvContent).toContain('Luke Skywalker Mocked,172,77,blond');
+  });
+});
 
-//     expect(csvContent).toContain('Name,Height,Mass,Hair Color');
-//     expect(csvContent).toContain('Luke Skywalker,172,77,blond');
-//   });
-// });
+describe('addIdToCharacter', () => {
+  it('should add an ID to a character', () => {
+    const result = addIdToCharacter(mockedCharacter);
+    expect(result.id).toBe('1');
+  });
+});
 
-// describe('addIdToCharacter', () => {
-//   it('should add an ID to a character', () => {
-//     const character: Character = { url: 'https://swapi.dev/api/people/1/', name: 'Luke' };
-//     const result = addIdToCharacter(character);
-//     expect(result.id).toBe('1');
-//   });
-// });
-
-// describe('addIdToCharacters', () => {
-//   it('should add IDs to all characters in the response', () => {
-//     const response: PaginatedCharacters = {
-//       count: 1,
-//       next: null,
-//       previous: null,
-//       results: [{ url: 'https://swapi.dev/api/people/1/', name: 'Luke' }],
-//     };
-
-//     const result = addIdToCharacters(response);
-//     expect(result.results[0].id).toBe('1');
-//   });
-// });
+describe('addIdToCharacters', () => {
+  it('should add IDs to all characters in the response', () => {
+    const result = addIdToCharacters(mockedCharacters);
+    expect(result.results[0].id).toBe('1');
+  });
+});
 
 describe('checkTypesSearchParams', () => {
   it('should return the correct search parameters', () => {

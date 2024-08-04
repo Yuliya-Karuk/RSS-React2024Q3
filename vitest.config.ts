@@ -13,7 +13,7 @@ export default defineConfig({
     setupFiles: './testSetup/setupTests.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['**/.eslintrc.cjs', 'vitest.config.ts', 'next.config.js', '.next',  'dist', '**/*.test.{js,jsx,ts,tsx}'],
+      exclude: ['**/.eslintrc.cjs', 'vitest.config.ts', 'next.config.js', '.next', 'dist', '**/*.test.{js,jsx,ts,tsx}'],
     },
     alias: {
       '@components': join(__dirname, 'components'),
@@ -26,6 +26,11 @@ export default defineConfig({
       '@styles': join(__dirname, 'styles'),
       '@public': join(__dirname, 'public'),
       '@testSetup': join(__dirname, 'testSetup'),
+    },
+  },
+  resolve: {
+    alias: {
+      '@public/icons/heart.svg': join(__dirname, 'testSetup/svgMock.js'),
     },
   },
 });

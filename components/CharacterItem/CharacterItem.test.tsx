@@ -2,7 +2,7 @@ import { CharacterItem } from '@components/CharacterItem/CharacterItem';
 import { Details } from '@components/Details/Details';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { mockedReadyCharacter } from '@testSetup/msw/mocks';
+import { mockedCharacterWithFavorite } from '@testSetup/msw/mocks';
 import { renderWithProviders } from '@testSetup/render-router';
 
 vi.mock('next/router', () => vi.importActual('next-router-mock'));
@@ -17,7 +17,7 @@ describe('CharacterItem rendering', () => {
   });
 
   it('Ensure that the card component renders the relevant card data', () => {
-    renderWithProviders(<CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />);
+    renderWithProviders(<CharacterItem character={mockedCharacterWithFavorite} isDetailsOpen={false} />);
 
     const characterName = screen.getByText('Luke Skywalker Mocked');
     expect(characterName).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('CharacterItem rendering', () => {
   it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
     renderWithProviders(
       <>
-        <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
+        <CharacterItem character={mockedCharacterWithFavorite} isDetailsOpen={false} />
         <Details />
       </>
     );
@@ -56,7 +56,7 @@ describe('CharacterItem rendering', () => {
   it('Validate that clicking on a card opens a detailed card component;', async () => {
     renderWithProviders(
       <>
-        <CharacterItem character={mockedReadyCharacter} isDetailsOpen={false} />
+        <CharacterItem character={mockedCharacterWithFavorite} isDetailsOpen={false} />
         <Details />
       </>
     );

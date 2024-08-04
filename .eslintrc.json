@@ -15,7 +15,7 @@
     "plugin:react-hooks/recommended",
     "prettier"
   ],
-  "ignorePatterns": ["dist", ".eslintrc.cjs", "vitest.config.ts", "next.config.js", "src"],
+  "ignorePatterns": ["dist", ".eslintrc.cjs", "next.config.js"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
