@@ -29,7 +29,7 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
       ...(details && { details }),
     }).toString();
 
-    router.push(`${newQuery}`);
+    router.push(`?${newQuery}`);
   };
 
   return { searchValue, handleInputChange, handleSubmit };

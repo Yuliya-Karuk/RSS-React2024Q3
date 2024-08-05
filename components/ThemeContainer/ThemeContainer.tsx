@@ -8,7 +8,7 @@ interface ThemeContainerProps {
   children: React.ReactNode;
 }
 
-const ThemeContainer = async ({ children }: ThemeContainerProps) => {
+const ThemeContainer = ({ children }: ThemeContainerProps) => {
   const { theme } = useTheme();
 
   return <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>{children}</main>;

@@ -1,4 +1,5 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
 import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
 import styles from '@styles/home.module.scss';
@@ -14,7 +15,7 @@ async function getPeople(searchValue: string = '', page: string = '1'): Promise<
   return charactersWithId;
 }
 
-// const productPerPage: number = 10;
+const productPerPage: number = 10;
 
 const Home = async ({ searchParams }: { searchParams: { [key: string]: string } }) => {
   const { details, page, query } = searchParams;
@@ -31,7 +32,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
   //   page: currentPage,
   // });
 
-  // const totalPages = data ? Math.ceil(data.count / productPerPage) : 0;
+  const totalPages = data ? Math.ceil(data.count / productPerPage) : 0;
 
   // const favorites = useSelector(selectFavorites);
 
@@ -41,7 +42,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
         {data && (
           <div className={styles.leftContainer}>
             <CharacterList characters={data.results} isDetailsOpen={Boolean(details)} />
-            {/* {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />} */}
+            {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
         {/* {Boolean(searchDetails) && <Details />} */}

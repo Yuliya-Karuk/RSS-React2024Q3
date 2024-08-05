@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
@@ -16,36 +12,16 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@contexts/*": [
-        "contexts/*"
-      ],
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@pages/*": [
-        "pages/*"
-      ],
-      "@models/*": [
-        "models/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@store/*": [
-        "store/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@testSetup/*": [
-        "testSetup/*"
-      ]
+      "@components/*": ["components/*"],
+      "@contexts/*": ["contexts/*"],
+      "@utils/*": ["utils/*"],
+      "@pages/*": ["pages/*"],
+      "@models/*": ["models/*"],
+      "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"],
+      "@public/*": ["public/*"],
+      "@testSetup/*": ["testSetup/*"]
     },
     "strict": false,
     "incremental": true,
@@ -58,16 +34,6 @@
     ],
     "strictNullChecks": true
   },
-  "include": [
-    "pages",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/**/*.ts",
-    "**/**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["pages", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
