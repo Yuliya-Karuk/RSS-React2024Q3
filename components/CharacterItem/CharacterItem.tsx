@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import { FavoriteButton } from '@components/FavoriteButton/FavoriteButton';
-import { useHandleDetails } from '@hooks/useHandleDetails';
 import { CharacterWithFavorite } from '@models/index';
 import { urlImgTemplates } from '@utils/utils';
 import classnames from 'classnames';
@@ -14,7 +13,7 @@ interface CharacterItemProps {
 
 export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) => {
   const imageUrl = urlImgTemplates.character(character.id);
-  const { openDetails } = useHandleDetails();
+  // const { openDetails } = useHandleDetails();
 
   return (
     <li
@@ -22,12 +21,12 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
       role="button"
       data-testid="item"
       tabIndex={0}
-      onClick={e => openDetails(e, character.id)}
-      onKeyUp={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          openDetails(e, character.id);
-        }
-      }}
+      // onClick={e => openDetails(e, character.id)}
+      // onKeyUp={e => {
+      //   if (e.key === 'Enter' || e.key === ' ') {
+      //     openDetails(e, character.id);
+      //   }
+      // }}
     >
       <div className={styles.characterImgContainer}>
         <Image className={styles.characterImg} src={imageUrl} alt="Character" width={400} height={550} />

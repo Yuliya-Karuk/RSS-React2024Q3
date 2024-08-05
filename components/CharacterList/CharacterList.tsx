@@ -1,6 +1,7 @@
+'use client';
+
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { CharacterItem } from '@components/CharacterItem/CharacterItem';
-import { useHandleDetails } from '@hooks/useHandleDetails';
 import { CharacterWithFavorite, CharacterWithId } from '@models/index';
 import { selectFavorites } from '@store/selectors';
 import { setFavoriteFlag } from '@utils/utils';
@@ -14,7 +15,10 @@ interface CharacterListProps {
 }
 
 export const CharacterList = ({ characters, isDetailsOpen }: CharacterListProps) => {
-  const { closeDetails } = useHandleDetails();
+  // const { closeDetails } = useHandleDetails();
+  const closeDetails = () => {
+    console.log('gggg');
+  };
 
   const favorites = useSelector(selectFavorites);
   const markedCharacters: CharacterWithFavorite[] = setFavoriteFlag(characters, favorites);

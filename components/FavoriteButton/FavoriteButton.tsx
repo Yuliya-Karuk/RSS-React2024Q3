@@ -1,3 +1,5 @@
+'use client';
+
 import { useFavorites } from '@hooks/useFavorites';
 import { CharacterWithFavorite } from '@models/index';
 import HeartIcon from '@public/icons/heart.svg';

@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable react-refresh/only-export-components */
+
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 type Theme = 'light' | 'dark';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useSearchForm } from '@hooks/useSearchForm';
 import { useRef } from 'react';
 import styles from './Search.module.scss';

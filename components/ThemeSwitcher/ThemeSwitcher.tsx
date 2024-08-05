@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@contexts/themeProvider';
 import styles from './ThemeSwitcher.module.scss';
 
