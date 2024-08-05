@@ -1,5 +1,6 @@
 import { Film } from '@models/index';
 import { urlImgTemplates } from '@utils/utils';
+import Image from 'next/image';
 import styles from './DetailsFilms.module.scss';
 
 interface DetailsFilmsProps {
@@ -14,7 +15,14 @@ export const DetailsFilms = ({ filteredFilms }: DetailsFilmsProps) => (
         <li key={film.episode_id} className={styles.filmItem}>
           <h5 className={styles.featureTitle}>{film.title}</h5>
           <div className={styles.filmImgContainer}>
-            <img className={styles.filmImg} src={urlImgTemplates.film(film.episode_id)} alt="Character" />
+            <Image
+              priority
+              width={400}
+              height={550}
+              className={styles.filmImg}
+              src={urlImgTemplates.film(film.episode_id)}
+              alt="Film"
+            />
           </div>
         </li>
       ))}

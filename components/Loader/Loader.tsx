@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from './Loader.module.scss';
 
 interface LoaderProps {
@@ -6,6 +7,6 @@ interface LoaderProps {
 
 export const Loader = ({ style }: LoaderProps) => (
   <div className={styles.loaderContainer}>
-    <img className={styles.loader} src="/loader.gif" alt="Loader" style={style} />
+    <Image className={styles.loader} src="/loader.gif" alt="Loader" style={style} width={480} height={360} />
   </div>
 );

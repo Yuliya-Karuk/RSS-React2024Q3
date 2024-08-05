@@ -6,6 +6,10 @@ export default {
   reactStrictMode: true,
   swcMinify: true,
 
+  images: {
+    domains: ['starwars-visualguide.com'],
+  },
+
   webpack: (config, options) => {
     const rules = config.module.rules
       .find(rule => typeof rule.oneOf === 'object')

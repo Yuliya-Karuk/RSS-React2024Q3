@@ -2,7 +2,6 @@ import { ThemeProvider } from '@contexts/themeProvider';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { swapiApi } from '@store/api/swapiApi';
 import { favoritesReducer } from '@store/favoritesSlice';
-import { filmsReducer } from '@store/filmsSlice';
 import type { RenderOptions } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import React, { PropsWithChildren } from 'react';
@@ -10,7 +9,6 @@ import { Provider } from 'react-redux';
 
 const rootReducer = combineReducers({
   [swapiApi.reducerPath]: swapiApi.reducer,
-  films: filmsReducer,
   favorites: favoritesReducer,
 });
 

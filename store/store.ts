@@ -2,14 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { swapiApi } from './api/swapiApi';
 import { favoritesReducer } from './favoritesSlice';
-import { filmsReducer } from './filmsSlice';
 import { errorsNotifyMiddleware } from './middlewares/errorNotifyMiddleware';
 
 const makeStore = () =>
   configureStore({
     reducer: {
       [swapiApi.reducerPath]: swapiApi.reducer,
-      films: filmsReducer,
       favorites: favoritesReducer,
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(swapiApi.middleware, errorsNotifyMiddleware),

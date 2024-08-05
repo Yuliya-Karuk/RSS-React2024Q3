@@ -17,6 +17,7 @@ const productPerPage: number = 10;
 
 const Home = () => {
   const { searchDetails, currentPage, searchQuery } = useSearchParams();
+  // console.log(searchDetails, 'details', currentPage, 'page', searchQuery, 'query');
   const { theme } = useTheme();
 
   const { data } = useSearchPeopleQuery({

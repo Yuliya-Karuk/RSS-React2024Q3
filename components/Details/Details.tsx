@@ -6,6 +6,7 @@ import { useDetails } from '@hooks/useDetails';
 import { useHandleDetails } from '@hooks/useHandleDetails';
 import { selectFavorites } from '@store/selectors';
 import { isNotNullable, setFavoriteFlag, urlImgTemplates } from '@utils/utils';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import styles from './Details.module.scss';
 
@@ -19,7 +20,10 @@ export const Details = () => {
     preparedCharacter && (
       <div className={styles.details} data-testid="details">
         <div className={styles.characterImgContainer}>
-          <img
+          <Image
+            priority
+            width={400}
+            height={550}
             className={styles.characterImg}
             src={urlImgTemplates.character(isNotNullable(preparedCharacter.id))}
             alt="Character"
