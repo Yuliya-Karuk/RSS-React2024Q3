@@ -1,4 +1,6 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Details } from '@components/Details/Details';
+import { Favorites } from '@components/Favorites/Favorites';
 import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
 import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
@@ -19,22 +21,10 @@ const productPerPage: number = 10;
 
 const Home = async ({ searchParams }: { searchParams: { [key: string]: string } }) => {
   const { details, page, query } = searchParams;
-  console.log(details, page, query);
 
   const data = await getPeople(query, page);
-  console.log(data);
-  // const { searchDetails, currentPage, searchQuery } = useSearchParams();
-  // console.log(searchDetails, 'details', currentPage, 'page', searchQuery, 'query');
-  // const { theme } = useTheme();
-
-  // const { data } = useSearchPeopleQuery({
-  //   searchValue: searchQuery,
-  //   page: currentPage,
-  // });
 
   const totalPages = data ? Math.ceil(data.count / productPerPage) : 0;
-
-  // const favorites = useSelector(selectFavorites);
 
   return (
     <ThemeContainer>
@@ -45,21 +35,10 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
             {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
-        {/* {Boolean(searchDetails) && <Details />} */}
+        {Boolean(details) && <Details id={details} />}
       </div>
+      <Favorites />
     </ThemeContainer>
-    // <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
-    //   <div className={styles.container}>
-    //     {data && (
-    //       <div className={styles.leftContainer}>
-    //         <CharacterList characters={data.results} isDetailsOpen={Boolean(searchDetails)} />
-    //         {currentPage && <Pagination currentPage={currentPage} totalPages={totalPages} />}
-    //       </div>
-    //     )}
-    //     {Boolean(searchDetails) && <Details />}
-    //   </div>
-    //   {favorites.length > 0 && <Favorites favorites={favorites} />}
-    // </main>
   );
 };
 

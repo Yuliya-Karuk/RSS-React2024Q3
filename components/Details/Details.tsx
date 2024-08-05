@@ -1,23 +1,43 @@
+import { CloseDetailsButtons } from '@components/CloseDetailsButton/CloseDetailsButton';
 import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
 import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
 import { FavoriteButton } from '@components/FavoriteButton/FavoriteButton';
-import { useDetails } from '@hooks/useDetails';
-import { useHandleDetails } from '@hooks/useHandleDetails';
-import { selectFavorites } from '@store/selectors';
-import { isNotNullable, setFavoriteFlag, urlImgTemplates } from '@utils/utils';
+import { Character, CharacterWithId, Planet } from '@models/index';
+import { addIdToCharacter, isNotNullable, urlImgTemplates } from '@utils/utils';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
 import styles from './Details.module.scss';
 
-export const Details = () => {
-  const { character, planet, filteredFilms } = useDetails();
-  const favorites = useSelector(selectFavorites);
-  const preparedCharacter = character && setFavoriteFlag([character], favorites)[0];
-  const { closeDetails } = useHandleDetails();
+interface DetailsData {
+  charactersWithId: CharacterWithId;
+  planet: Planet;
+}
+
+async function getDetailsData(id: string): Promise<DetailsData> {
+  const detailsResponse = await fetch(`https://swapi.dev/api/people/${id}`, {
+    method: 'GET',
+  });
+  const character: Character = await detailsResponse.json();
+  const charactersWithId: CharacterWithId = addIdToCharacter(character);
+
+  const planetResponse = await fetch(character.homeworld, {
+    method: 'GET',
+  });
+
+  const planet: Planet = await planetResponse.json();
+
+  return { charactersWithId, planet };
+}
+
+interface DetailsProp {
+  id: string;
+}
+
+export const Details = async ({ id }: DetailsProp) => {
+  const { charactersWithId, planet } = await getDetailsData(id);
 
   return (
-    preparedCharacter && (
+    charactersWithId && (
       <div className={styles.details} data-testid="details">
         <div className={styles.characterImgContainer}>
           <Image
@@ -25,18 +45,16 @@ export const Details = () => {
             width={400}
             height={550}
             className={styles.characterImg}
-            src={urlImgTemplates.character(isNotNullable(preparedCharacter.id))}
+            src={urlImgTemplates.character(isNotNullable(charactersWithId.id))}
             alt="Character"
           />
         </div>
-        <p>{preparedCharacter.name}</p>
-        <DetailsInfo character={preparedCharacter} />
-        {filteredFilms && <DetailsFilms filteredFilms={filteredFilms} />}
+        <p>{charactersWithId.name}</p>
+        <DetailsInfo character={charactersWithId} />
+        <DetailsFilms character={charactersWithId} />
         {planet && <DetailsPlanet planet={planet} />}
-        <button type="button" className={styles.closeButton} aria-label="Close details" onClick={() => closeDetails()}>
-          <span className={styles.closeIcon} />
-        </button>
-        <FavoriteButton favorite={preparedCharacter} />
+        <CloseDetailsButtons />
+        <FavoriteButton character={charactersWithId} />
       </div>
     )
   );

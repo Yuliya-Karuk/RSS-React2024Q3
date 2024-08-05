@@ -1,11 +1,13 @@
+'use client';
+
 import { useGetCharacterByIdQuery, useGetFilmsQuery, useGetPlanetQuery } from '@store/api/swapiApi';
 import { extractPlanetPath } from '@utils/utils';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 
 export const useDetails = () => {
-  const router = useRouter();
-  const characterId = (router.query.details as string) || '';
+  const searchParams = useSearchParams();
+  const characterId = searchParams && searchParams.get('details');
 
   const { data: character } = useGetCharacterByIdQuery(characterId || '', {
     skip: !characterId,

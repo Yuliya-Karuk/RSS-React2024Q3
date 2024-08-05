@@ -1,0 +1,14 @@
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.close-icon {
+  display: block;
+  width: 35px;
+  height: 35px;
+  background: no-repeat center url('/icons/close.svg');
+  background-size: contain;
+  border-radius: 5px;
+}
