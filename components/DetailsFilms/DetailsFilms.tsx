@@ -1,6 +1,6 @@
 'use client';
 
-import { useFilms } from '@contexts/filmsProvaider';
+import { useFilms } from '@contexts/filmsProvider';
 import { CharacterWithId } from '@models/index';
 import { urlImgTemplates } from '@utils/utils';
 import Image from 'next/image';

@@ -3,7 +3,7 @@
 import { ErrorButton } from '@components/ErrorButton/ErrorButton';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
-import { FilmsProvider } from '@contexts/filmsProvaider';
+import { FilmsProvider } from '@contexts/filmsProvider';
 import { ThemeProvider } from '@contexts/themeProvider';
 import '@styles/index.scss';
 import { Metadata } from 'next/types';
@@ -34,13 +34,13 @@ export default function RootLayout({
         <StoreProvider>
           <ThemeProvider>
             <FilmsProvider>
-              {/* <Suspense fallback={<Loading />}> */}
-              <Header />
-              {children}
-              <Footer />
-              <ErrorButton />
-              <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
-              {/* </Suspense> */}
+              <div className="wrapper">
+                <Header />
+                {children}
+                <Footer />
+                <ErrorButton />
+                <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
+              </div>
             </FilmsProvider>
           </ThemeProvider>
         </StoreProvider>

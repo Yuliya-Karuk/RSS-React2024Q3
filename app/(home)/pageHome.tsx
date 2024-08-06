@@ -1,11 +1,11 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
-import { Details } from '@components/Details/Details';
 import { Favorites } from '@components/Favorites/Favorites';
 import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
 import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
 import styles from '@styles/home.module.scss';
 import { addIdToCharacters } from '@utils/utils';
+import DetailsWithLoader from 'app/(details)/detailsWithLoader';
 
 async function getPeople(searchValue: string = '', page: string = '1'): Promise<PaginatedCharactersWithId> {
   const response = await fetch(`https://swapi.dev/api/people/?search=${searchValue}&page=${page}`, {
@@ -35,7 +35,7 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
             {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
-        {Boolean(details) && <Details id={details} />}
+        {Boolean(details) && <DetailsWithLoader id={details} />}
       </div>
       <Favorites />
     </ThemeContainer>
