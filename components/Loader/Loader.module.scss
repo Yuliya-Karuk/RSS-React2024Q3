@@ -14,3 +14,13 @@
     align-self: flex-start;
   }
 }
+
+[class*='home'] {
+  .loader-container {
+    @include laptop {
+      min-width: 250px;
+    }
+    width: 30%;
+    min-width: 350px;
+  }
+}

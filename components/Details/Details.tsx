@@ -3,7 +3,7 @@ import { DetailsFilms } from '@components/DetailsFilms/DetailsFilms';
 import { DetailsInfo } from '@components/DetailsInfo/DetailsInfo';
 import { DetailsPlanet } from '@components/DetailsPlanet/DetailsPlanet';
 import { FavoriteButton } from '@components/FavoriteButton/FavoriteButton';
-import { Character, CharacterWithId, Planet } from '@models/index';
+import { Character, CharacterWithId, Film, Planet } from '@models/index';
 import { addIdToCharacter, isNotNullable, urlImgTemplates } from '@utils/utils';
 import Image from 'next/image';
 import styles from './Details.module.scss';
@@ -11,6 +11,7 @@ import styles from './Details.module.scss';
 interface DetailsData {
   charactersWithId: CharacterWithId;
   planet: Planet;
+  films: Film[];
 }
 
 async function getDetailsData(id: string): Promise<DetailsData> {
@@ -26,7 +27,13 @@ async function getDetailsData(id: string): Promise<DetailsData> {
 
   const planet: Planet = await planetResponse.json();
 
-  return { charactersWithId, planet };
+  const filmsResponse = await fetch('https://swapi.dev/api/films/', {
+    method: 'GET',
+  });
+
+  const films = await filmsResponse.json();
+
+  return { charactersWithId, planet, films: films.results };
 }
 
 interface DetailsProp {
@@ -34,8 +41,7 @@ interface DetailsProp {
 }
 
 export const Details = async ({ id }: DetailsProp) => {
-  const { charactersWithId, planet } = await getDetailsData(id);
-
+  const { charactersWithId, planet, films } = await getDetailsData(id);
   return (
     charactersWithId && (
       <div className={styles.details} data-testid="details">
@@ -51,7 +57,7 @@ export const Details = async ({ id }: DetailsProp) => {
         </div>
         <p>{charactersWithId.name}</p>
         <DetailsInfo character={charactersWithId} />
-        <DetailsFilms character={charactersWithId} />
+        <DetailsFilms character={charactersWithId} films={films} />
         {planet && <DetailsPlanet planet={planet} />}
         <CloseDetailsButtons />
         <FavoriteButton character={charactersWithId} />

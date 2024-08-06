@@ -1,17 +1,14 @@
-'use client';
-
-import { useFilms } from '@contexts/filmsProvider';
-import { CharacterWithId } from '@models/index';
+import { CharacterWithId, Film } from '@models/index';
 import { urlImgTemplates } from '@utils/utils';
 import Image from 'next/image';
 import styles from './DetailsFilms.module.scss';
 
 interface DetailsFilmsProps {
   character: CharacterWithId;
+  films: Film[];
 }
 
-export const DetailsFilms = ({ character }: DetailsFilmsProps) => {
-  const { films } = useFilms();
+export const DetailsFilms = ({ character, films }: DetailsFilmsProps) => {
   const filteredFilms = films.filter(film => character.films.includes(film.url));
 
   return (
