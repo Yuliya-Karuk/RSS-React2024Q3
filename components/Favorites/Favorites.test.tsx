@@ -13,9 +13,14 @@ vi.mock('@hooks/useHandleFlyout', () => ({
   })),
 }));
 
+vi.mock('@hooks/useStoreHooks', () => ({
+  useAppSelector: vi.fn(() => mockedFavorites),
+  useAppDispatch: vi.fn(),
+}));
+
 describe('Favorites Component', () => {
   it('should display the list of favorite items', () => {
-    renderWithProviders(<Favorites favorites={mockedFavorites} />);
+    renderWithProviders(<Favorites />);
 
     expect(screen.getByText('Favorites')).toBeInTheDocument();
     expect(screen.getByText('(1 selected)')).toBeInTheDocument();
@@ -24,7 +29,7 @@ describe('Favorites Component', () => {
   });
 
   it('should have a download link with correct href', async () => {
-    renderWithProviders(<Favorites favorites={mockedFavorites} />);
+    renderWithProviders(<Favorites />);
 
     const downloadLink = screen.getByLabelText('download');
     expect(downloadLink).toHaveAttribute('download', '1_characters.csv');

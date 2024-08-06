@@ -5,10 +5,23 @@ import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { renderWithProviders } from '@testSetup/render-router';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+const useRouterPushMock = vi.fn();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: useRouterPushMock,
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => ({
+    get: (key: string) => {
+      const params = new URLSearchParams('details=1');
+      return params.get(key);
+    },
+  }),
+}));
 
 describe('Search', () => {
-  test('clicking the Search button saves the entered value to the local storage', async () => {
+  it('clicking the Search button saves the entered value to the local storage', async () => {
     renderWithProviders(<Search />);
 
     const { getStorage } = useLocalStorage();
@@ -22,7 +35,7 @@ describe('Search', () => {
     expect(input.value).toBe(getStorage());
   });
 
-  test('the component retrieves the value from the local storage upon mounting.', () => {
+  it('the component retrieves the value from the local storage upon mounting.', () => {
     const mockSearch = 'Dart';
     const { setStorage } = useLocalStorage();
     setStorage(mockSearch);

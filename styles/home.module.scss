@@ -44,10 +44,10 @@
 
   @include big-mobile {
     width: 100vw;
-    justify-content: center;
   }
   position: relative;
   display: flex;
+  justify-content: center;
   flex-grow: 1;
   padding: 0;
 }

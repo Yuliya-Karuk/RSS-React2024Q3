@@ -1,4 +1,5 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
 import { screen } from '@testing-library/react';
 import { mockedCharacters } from '@testSetup/msw/mocks';
 import { renderWithProviders } from '@testSetup/render-router';
@@ -17,14 +18,22 @@ describe('CharacterList', () => {
   });
 
   it('check that an appropriate message is displayed if no cards are present', () => {
-    renderWithProviders(<CharacterList characters={[]} isDetailsOpen={false} />);
+    renderWithProviders(
+      <ThemeContainer>
+        <CharacterList characters={[]} isDetailsOpen={false} />
+      </ThemeContainer>
+    );
 
     const emptyMessage = screen.getByText(/Sorry, we couldn't find anything matching your search./i);
     expect(emptyMessage).toBeInTheDocument();
   });
 
   it('verify that the component renders the specified number of cards', async () => {
-    renderWithProviders(<CharacterList characters={mockedCharacters.results} isDetailsOpen={false} />);
+    renderWithProviders(
+      <ThemeContainer>
+        <CharacterList characters={mockedCharacters.results} isDetailsOpen={false} />
+      </ThemeContainer>
+    );
 
     const characterItems = await screen.findAllByTestId('item');
     expect(characterItems.length).toBe(mockedCharacters.results.length);

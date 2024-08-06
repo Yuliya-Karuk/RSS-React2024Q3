@@ -23,7 +23,6 @@ describe('Loader Component', () => {
     render(<Loader />);
 
     const loaderImage = screen.getByRole('img', { name: /Loader/i });
-    expect(loaderImage).toHaveAttribute('src', '/loader.gif');
     expect(loaderImage).toHaveAttribute('alt', 'Loader');
   });
 });

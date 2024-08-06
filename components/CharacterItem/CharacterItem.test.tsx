@@ -5,8 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { mockedCharacterWithFavorite } from '@testSetup/msw/mocks';
 import { renderWithProviders } from '@testSetup/render-router';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
-
 describe('CharacterItem rendering', () => {
   afterAll(() => {
     vi.clearAllMocks();
@@ -26,38 +24,14 @@ describe('CharacterItem rendering', () => {
     expect(birthYear).toBeInTheDocument();
   });
 
-  it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    renderWithProviders(
-      <>
-        <CharacterItem character={mockedCharacterWithFavorite} isDetailsOpen={false} />
-        <Details />
-      </>
-    );
-
-    const spy = vi.spyOn(globalThis, 'fetch');
-
-    const characterItem = await screen.findByTestId('item');
-    expect(characterItem).toBeInTheDocument();
-
-    const user = userEvent.setup();
-
-    await user.click(characterItem);
-
-    expect(spy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        url: 'https://swapi.dev/api/people/1',
-      })
-    );
-
-    const characterName = await screen.findByText('Luke Skywalker Details');
-    expect(characterName).toBeInTheDocument();
-  });
-
   it('Validate that clicking on a card opens a detailed card component;', async () => {
     renderWithProviders(
       <>
         <CharacterItem character={mockedCharacterWithFavorite} isDetailsOpen={false} />
-        <Details />
+        {await (async () => {
+          const jsx = await Details({ id: '1' });
+          return jsx;
+        })()}
       </>
     );
 

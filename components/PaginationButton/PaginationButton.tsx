@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@contexts/themeProvider';
 import classnames from 'classnames';
 import { useRouter, useSearchParams } from 'next/navigation';

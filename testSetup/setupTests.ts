@@ -10,3 +10,9 @@ afterAll(() => server.close());
 vi.mock('@public/icons/heart.svg', () => ({
   default: 'svg-mock',
 }));
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+  usePathname: () => '/',
+  useSearchParams: () => ({}),
+}));

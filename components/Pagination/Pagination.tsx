@@ -1,5 +1,3 @@
-'use client';
-
 import { PaginationButton } from '@components/PaginationButton/PaginationButton';
 import { getPaginationRange } from '@utils/utils';
 import styles from './Pagination.module.scss';

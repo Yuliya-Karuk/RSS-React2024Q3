@@ -12,14 +12,6 @@ vi.mock('@hooks/useHandleDetails', () => ({
   }),
 }));
 
-vi.mock('next/router', () => ({
-  useRouter: () => ({
-    query: {
-      details: '1',
-    },
-  }),
-}));
-
 describe('Details Component', () => {
   afterAll(() => {
     vi.clearAllMocks();
@@ -31,7 +23,12 @@ describe('Details Component', () => {
   });
 
   it('Make sure the detailed card component correctly displays the detailed card data;', async () => {
-    renderWithProviders(<Details />);
+    renderWithProviders(
+      await (async () => {
+        const jsx = await Details({ id: '1' });
+        return jsx;
+      })()
+    );
 
     const characterName = await screen.findByText('Luke Skywalker Details');
     expect(characterName).toBeInTheDocument();
@@ -50,7 +47,12 @@ describe('Details Component', () => {
   });
 
   it('Ensure that clicking the close button hides the component.', async () => {
-    renderWithProviders(<Details />);
+    renderWithProviders(
+      await (async () => {
+        const jsx = await Details({ id: '1' });
+        return jsx;
+      })()
+    );
 
     const user = userEvent.setup();
 

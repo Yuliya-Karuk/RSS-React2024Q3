@@ -2,12 +2,12 @@
 
 import { FavoritesItem } from '@components/FavoritesList/FavoritesItem';
 import { useHandleFlyout } from '@hooks/useHandleFlyout';
+import { useAppSelector } from '@hooks/useStoreHooks';
 import { selectFavorites } from '@store/selectors';
-import { useSelector } from 'react-redux';
 import styles from './Favorites.module.scss';
 
 export const Favorites = () => {
-  const favorites = useSelector(selectFavorites);
+  const favorites = useAppSelector(selectFavorites);
   const { downloadUrl, handleRemoveAll } = useHandleFlyout(favorites);
 
   return (

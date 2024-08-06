@@ -1,3 +1,4 @@
+import { FilmsProvider } from '@contexts/filmsProvider';
 import { ThemeProvider } from '@contexts/themeProvider';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { favoritesReducer } from '@store/favoritesSlice';
@@ -33,7 +34,9 @@ export function renderWithProviders(ui: React.ReactElement, extendedRenderOption
 
   const Wrapper = ({ children }: PropsWithChildren) => (
     <Provider store={store}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <FilmsProvider>{children}</FilmsProvider>
+      </ThemeProvider>
     </Provider>
   );
 

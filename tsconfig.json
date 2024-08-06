@@ -21,7 +21,8 @@
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
       "@public/*": ["public/*"],
-      "@testSetup/*": ["testSetup/*"]
+      "@testSetup/*": ["testSetup/*"],
+      "@app/*": ["app/*"]
     },
     "strict": false,
     "incremental": true,

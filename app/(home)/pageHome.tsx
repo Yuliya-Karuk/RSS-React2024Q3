@@ -5,7 +5,7 @@ import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
 import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
 import styles from '@styles/home.module.scss';
 import { addIdToCharacters } from '@utils/utils';
-import DetailsWithLoader from 'app/(details)/detailsWithLoader';
+import DetailsWithLoader from '../(details)/detailsWithLoader';
 
 async function getPeople(searchValue: string = '', page: string = '1'): Promise<PaginatedCharactersWithId> {
   const response = await fetch(`https://swapi.dev/api/people/?search=${searchValue}&page=${page}`, {

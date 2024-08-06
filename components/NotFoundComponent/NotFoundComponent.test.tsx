@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import { renderWithProviders } from '@testSetup/render-router';
 import NotFoundComponent from './NotFoundComponent';
 
-describe('MainLayout', () => {
+describe('NotFoundComponent', () => {
   it('renders all required components', () => {
     renderWithProviders(<NotFoundComponent />);
 

@@ -2,10 +2,22 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '@testSetup/render-router';
-import mockRouter from 'next-router-mock';
 import { describe, expect, it } from 'vitest';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+const useRouterPushMock = vi.fn();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: useRouterPushMock,
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => ({
+    get: (key: string) => {
+      const params = new URLSearchParams('details=1');
+      return params.get(key);
+    },
+  }),
+}));
 
 describe('Pagination', () => {
   it('disables previous and first buttons on the first page', () => {
@@ -37,7 +49,7 @@ describe('Pagination', () => {
 
     await user.click(nextPageButton);
 
-    expect(mockRouter).toMatchObject({ query: { page: '2' } });
+    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('?page=2'));
   });
 
   it('updates URL query parameter when specific page button is clicked - 2', async () => {
@@ -47,6 +59,6 @@ describe('Pagination', () => {
     const user = userEvent.setup();
     await user.click(pageButton);
 
-    expect(mockRouter).toMatchObject({ query: { page: '3' } });
+    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('?page=3'));
   });
 });
