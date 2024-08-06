@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
 export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
@@ -31,6 +31,22 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
 
     router.push(`?${newQuery}`);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams?.toString());
+
+    if ((params && params.get('details')) !== getStorage()) {
+      const newQuery = new URLSearchParams({
+        page: '1',
+        query: searchValue,
+        ...(details && { details }),
+      }).toString();
+
+      router.push(`?${newQuery}`);
+    }
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { searchValue, handleInputChange, handleSubmit };
 };

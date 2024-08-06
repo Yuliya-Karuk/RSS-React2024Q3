@@ -7,9 +7,7 @@ import { FilmsProvider } from '@contexts/filmsProvaider';
 import { ThemeProvider } from '@contexts/themeProvider';
 import '@styles/index.scss';
 import { Metadata } from 'next/types';
-import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
-import Loading from './loading';
 import StoreProvider from './StoreProvider';
 
 export const metadata: Metadata = {
@@ -36,13 +34,13 @@ export default function RootLayout({
         <StoreProvider>
           <ThemeProvider>
             <FilmsProvider>
-              <Suspense fallback={<Loading />}>
-                <Header />
-                {children}
-                <Footer />
-                <ErrorButton />
-                <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
-              </Suspense>
+              {/* <Suspense fallback={<Loading />}> */}
+              <Header />
+              {children}
+              <Footer />
+              <ErrorButton />
+              <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
+              {/* </Suspense> */}
             </FilmsProvider>
           </ThemeProvider>
         </StoreProvider>
