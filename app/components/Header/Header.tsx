@@ -1,7 +1,7 @@
-import logo from '@assets/logo.png';
+import logo from '@assets/images/logo.png';
 import { Search } from '@components/Search/Search';
 import { ThemeSwitcher } from '@components/ThemeSwitcher/ThemeSwitcher';
-import { Link } from 'react-router-dom';
+import { Link } from "@remix-run/react";
 import styles from './Header.module.scss';
 
 export const Header = () => (

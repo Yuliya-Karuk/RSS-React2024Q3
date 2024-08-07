@@ -1,3 +1,5 @@
+import { Footer } from "@components/Footer/Footer";
+import { Header } from "@components/Header/Header";
 import { ThemeProvider } from "@contexts/themeProvider";
 import {
   Links,
@@ -6,6 +8,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { store } from "@store/store";
+import { Provider } from "react-redux";
 import './styles/index.scss';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -28,9 +32,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <Outlet />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Header />
+        <Outlet />
+        <Footer />ч
+      </ThemeProvider>
+    </Provider>
   );
 }
 

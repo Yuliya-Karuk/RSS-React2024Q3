@@ -15,8 +15,9 @@
   @include big-mobile {
     font-size: 1.2rem;
   }
+
   display: flex;
-  color: var(--color-white-default);
+  color: $color-white-default;
 
   .api {
     @extend %transition;
@@ -24,6 +25,7 @@
     @include hover {
       text-decoration: none;
     }
+
     padding: 0 10px;
     text-decoration: underline;
 
@@ -46,6 +48,6 @@
   display: block;
   width: 25px;
   height: 25px;
-  background: no-repeat center url('../../assets/github.svg');
+  background: no-repeat center url('../../assets/icons/github.svg');
   background-size: contain;
 }

@@ -2,15 +2,15 @@
   @extend %transition;
 
   @include hover {
-    background-color: var(--color-primary-bright);
+    background-color: $color-primary-bright;
   }
 
   @include flex(center, center);
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid var(--color-gray-dark);
-  background-color: var(--color-favorite-button);
+  border: 1px solid $color-gray-dark;
+  background-color: $color-favorite-button;
   border-radius: 5px;
   position: absolute;
   top: 15px;
@@ -57,18 +57,30 @@
 
 .heart {
   path {
-    fill: var(--color-white-default);
+    fill: $color-white-default;
   }
 
   .favorite {
     path {
-      fill: var(--color-invalid-input);
+      fill: $color-invalid-input;
     }
   }
 }
 
 .favorite {
   path {
-    fill: var(--color-invalid-input);
+    fill: $color-invalid-input;
+  }
+}
+
+[class*='light'] {
+  .add-to-favorite-button {
+    background-color: $color-gray-middle;
+  }
+
+  .heart {
+    path {
+      fill: $color-bg-dark;
+    }
   }
 }

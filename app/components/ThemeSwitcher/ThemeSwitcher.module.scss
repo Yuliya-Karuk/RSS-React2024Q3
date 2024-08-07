@@ -20,7 +20,7 @@
   @extend %transition;
   position: absolute;
   border-radius: 30px;
-  background-color: var(--color-gray-dark);
+  background-color: $color-gray-dark;
   cursor: pointer;
   inset: 0;
 
@@ -34,14 +34,14 @@
     height: 40px;
     border-radius: 50%;
     margin: auto 0;
-    background: center no-repeat var(--color-gray-middle) url('../../assets/night.svg');
+    background: center no-repeat $color-gray-middle url('../../assets/icons/night.svg');
     background-size: contain;
     content: '';
   }
 }
 
-.switcher-input:checked + .switcher-round::before {
-  background: center no-repeat var(--color-gray-light) url('../../assets/sun.svg');
+.switcher-input:checked+.switcher-round::before {
+  background: center no-repeat $color-gray-light url('../../assets/icons/sun.svg');
   background-size: contain;
   transform: translateX(30px);
 }
