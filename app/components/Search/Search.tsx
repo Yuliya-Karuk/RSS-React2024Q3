@@ -1,4 +1,5 @@
 import { useSearchForm } from '@hooks/useSearchForm';
+import { Form } from '@remix-run/react';
 import { useRef } from 'react';
 import styles from './Search.module.scss';
 
@@ -8,7 +9,7 @@ export const Search = () => {
 
   return (
     <div className={styles.searchContainer}>
-      {/* <Form noValidate method="get" className={styles.search} onSubmit={handleSubmit}> */}
+      <Form noValidate method="get" className={styles.search} onSubmit={handleSubmit}>
         <input
           ref={inputRef}
           className={styles.searchInput}
@@ -18,8 +19,8 @@ export const Search = () => {
           value={searchValue}
           onChange={handleInputChange}
         />
-        <button type="button" className={styles.searchIcon} aria-label="search button" onClick={handleSubmit} />
-      {/* </Form> */}
+        <button type="submit" className={styles.searchIcon} aria-label="search button" />
+      </Form>
     </div>
   );
 };

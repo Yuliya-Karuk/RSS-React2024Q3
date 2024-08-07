@@ -5,9 +5,11 @@
   @include flex(center);
 }
 
+
+
 .pagination {
   font-family: Forum, serif;
-  color: var(--color-white-default);
+  color: $color-white-default;
   padding: 20px;
   @include flex(flex-start, center, null, 5px);
   @include font(1.6rem, 400, 1, 0.05rem);

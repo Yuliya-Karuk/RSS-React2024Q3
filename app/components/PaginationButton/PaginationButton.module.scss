@@ -33,24 +33,24 @@
   }
 
   &.first span {
-    background: center no-repeat url('/icons/last.svg');
+    background: center no-repeat url('../../assets/icons/last.svg');
     background-size: contain;
   }
 
   &.last span {
-    background: center no-repeat url('/icons/last.svg');
+    background: center no-repeat url('../../assets/icons/last.svg');
     transform: rotate(180deg);
     background-size: contain;
   }
 
   &.previous span {
-    background: center no-repeat url('/icons/next.svg');
+    background: center no-repeat url('../../assets/icons/next.svg');
     transform: rotate(180deg);
     background-size: contain;
   }
 
   &.next span {
-    background: center no-repeat url('/icons/next.svg');
+    background: center no-repeat url('../../assets/icons/next.svg');
     background-size: contain;
   }
 
