@@ -21,9 +21,17 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "~/*": ["./app/*"]
+      "@components/*": ["app/components/*"],
+      "@assets/*": ["app/assets/*"],
+      "@contexts/*": ["app/contexts/*"],
+      "@utils/*": ["app/utils/*"],
+      "@router/*": ["app/router/*"],
+      "@pages/*": ["app/pages/*"],
+      "@models/*": ["app/models/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@store/*": ["app/store/*"],
     },
     "noEmit": true
   }

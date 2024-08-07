@@ -1,5 +1,6 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
+import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
@@ -11,6 +12,17 @@ export default defineConfig({
         v3_throwAbortReason: true,
       },
     }),
+    svgr(),
     tsconfigPaths(),
   ],
+  css: {
+    modules: {
+      localsConvention: 'camelCase',
+    },
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "../app/styles/constants.scss"; @import "../app/styles/mixins.scss"; @import "../app/styles/placeholders.scss";`,
+      },
+    },
+  },
 });

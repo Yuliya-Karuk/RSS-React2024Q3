@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@contexts/themeProvider";
 import {
   Links,
   Meta,
@@ -5,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import "./tailwind.css";
+import './styles/index.scss';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,5 +27,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <ThemeProvider>
+      <Outlet />
+    </ThemeProvider>
+  );
 }
+

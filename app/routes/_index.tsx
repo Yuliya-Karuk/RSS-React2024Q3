@@ -1,48 +1,56 @@
-import type { MetaFunction } from "@remix-run/node";
+import { CharacterList } from '@components/CharacterList/CharacterList';
+import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
+import { PaginatedCharacters } from '@models/index';
+import { useLoaderData } from '@remix-run/react';
+import { addIdToCharacters } from '@utils/utils';
+import styles from './index.module.scss';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+// export const meta: MetaFunction = () => {
+//   return [
+//     { title: "New Remix App" },
+//     { name: "description", content: "Welcome to Remix!" },
+//   ];
+// };
+
+export const loader = async ({ request }) => {
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.search);
+  
+  const search = searchParams.get('query') || '';
+  const page = searchParams.get('page') || '';
+  const details = searchParams.get('details') || '';
+
+  const response = await fetch(`https://swapi.dev/api/people/?search=${search}&page=${page}`, {
+    method: 'GET',
+  });
+
+  const people: PaginatedCharacters = await response.json();
+  const charactersWithId = addIdToCharacters(people);
+  return { paginatedCharacters: charactersWithId, details, page: page };
 };
 
+
+
+const productPerPage: number = 10;
+
 export default function Index() {
+  const { paginatedCharacters, details, page } = useLoaderData();
+  console.log(paginatedCharacters);
+
+  const totalPages = paginatedCharacters ? Math.ceil(paginatedCharacters.count / productPerPage) : 0;
+
   return (
-    <div className="font-sans p-4">
-      <h1 className="text-3xl">Welcome to Remix</h1>
-      <ul className="list-disc mt-4 pl-6 space-y-2">
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/start/quickstart"
-            rel="noreferrer"
-          >
-            5m Quick Start
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/start/tutorial"
-            rel="noreferrer"
-          >
-            30m Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-          >
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <ThemeContainer>
+      <div className={styles.container}>
+        {paginatedCharacters && (
+          <div className={styles.leftContainer}>
+            <CharacterList characters={paginatedCharacters.results} isDetailsOpen={Boolean(details)} />
+            {/* {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />} */}
+          </div>
+        )}
+        {/* {Boolean(details) && <DetailsWithLoader id={details} />} */}
+      </div>
+      {/* <Favorites /> */}
+    </ThemeContainer>
   );
-}
+};
