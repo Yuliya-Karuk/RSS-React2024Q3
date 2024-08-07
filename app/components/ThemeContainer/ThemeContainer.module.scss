@@ -1,8 +1,8 @@
 .page {
-  @include flex(flex-start, center, column);
   background: $color-bg-dark;
   flex: 1;
   z-index: 0;
+  @include flex(flex-start, center, column);
 
   &::after {
     position: absolute;

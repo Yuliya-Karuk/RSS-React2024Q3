@@ -8,7 +8,7 @@ export const Search = () => {
 
   return (
     <div className={styles.searchContainer}>
-      <form noValidate method="" className={styles.search} onSubmit={handleSubmit}>
+      {/* <Form noValidate method="get" className={styles.search} onSubmit={handleSubmit}> */}
         <input
           ref={inputRef}
           className={styles.searchInput}
@@ -18,8 +18,8 @@ export const Search = () => {
           value={searchValue}
           onChange={handleInputChange}
         />
-        <button type="submit" className={styles.searchIcon} aria-label="search button" />
-      </form>
+        <button type="button" className={styles.searchIcon} aria-label="search button" onClick={handleSubmit} />
+      {/* </Form> */}
     </div>
   );
 };

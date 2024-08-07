@@ -1,11 +1,4 @@
 .add-to-favorite-button {
-  @extend %transition;
-
-  @include hover {
-    background-color: $color-primary-bright;
-  }
-
-  @include flex(center, center);
   width: 30px;
   height: 30px;
   padding: 0;
@@ -15,6 +8,13 @@
   position: absolute;
   top: 15px;
   right: 25px;
+  @extend %transition;
+
+  @include hover {
+    background-color: $color-primary-bright;
+  }
+
+  @include flex(center, center);
 }
 
 [class*='favorites'] {

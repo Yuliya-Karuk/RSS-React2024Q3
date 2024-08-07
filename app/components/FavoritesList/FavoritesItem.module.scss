@@ -1,7 +1,7 @@
 .favorites-item {
-  @include flex(space-between, center, column, 10px);
   width: 95%;
   position: relative;
+  @include flex(space-between, center, column, 10px);
 }
 
 .favorites-name {

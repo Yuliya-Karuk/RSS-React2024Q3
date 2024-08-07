@@ -1,9 +1,9 @@
 .character-feature-block {
-  @include flex(space-between, center);
   flex-wrap: wrap;
   width: 100%;
   font-size: 1.6rem;
   color: var(--color-gray-middle);
+  @include flex(space-between, center);
 }
 
 .gender-icon {
@@ -31,8 +31,8 @@
 }
 
 .details-info {
-  @include flex(center, flex-start, column, 10px);
   width: 100%;
+  @include flex(center, flex-start, column, 10px);
 }
 
 .block-title {

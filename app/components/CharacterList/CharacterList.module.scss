@@ -6,6 +6,10 @@
 }
 
 .main-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 10px 20px;
   @extend %container;
 
   @include tablet {
@@ -17,11 +21,6 @@
   @include mobile {
     grid-template-columns: repeat(1, 1fr);
   }
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 10px 20px;
 }
 
 .small {
@@ -33,11 +32,11 @@
 }
 
 .empty-search {
-  @include flex(center, center);
-  @include font(2.8rem, 700, 1, 0.05rem);
   width: 70%;
   margin: 0 auto;
   color: $color-white-default;
   text-align: center;
   flex-grow: 1;
+  @include flex(center, center);
+  @include font(2.8rem, 700, 1, 0.05rem);
 }

@@ -6,9 +6,19 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier ./app --check",
+    "format:fix": "prettier ./app --write",
+    "stylelint": "stylelint ./app",
+    "stylelint:fix": "stylelint ./app --fix",
+    "types-check": "tsc --noEmit",
+    "check": "npm run format && npm run stylelint && npm run lint && npm run types-check",
+    "all-fix": "npm run format:fix && npm run stylelint:fix && npm run lint:fix",
+    "prepare": "husky .husky",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",

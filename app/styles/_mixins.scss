@@ -6,6 +6,14 @@
   letter-spacing: $letter-spacing;
 }
 
+@mixin flex($js: null, $ai: $js, $dir: null, $gap: null) {
+  display: flex;
+  flex-direction: $dir;
+  gap: $gap;
+  align-items: $ai;
+  justify-content: $js;
+}
+
 @mixin tablet {
   @media (max-width: 1024px) {
     @content;
@@ -28,14 +36,6 @@
   @media (max-width: 480px) {
     @content;
   }
-}
-
-@mixin flex($js: null, $ai: $js, $dir: null, $gap: null) {
-  display: flex;
-  flex-direction: $dir;
-  gap: $gap;
-  align-items: $ai;
-  justify-content: $js;
 }
 
 @mixin hover {

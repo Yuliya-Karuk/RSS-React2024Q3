@@ -4,30 +4,28 @@
 }
 
 .footer-container {
+  backdrop-filter: blur(12.5px);
   @extend %container;
   @include flex(space-between, center);
-  backdrop-filter: blur(12.5px);
 }
 
 .footer-copyright {
+  display: flex;
+  color: $color-white-default;
   @include font(1.6rem, 400, 1, 0.05rem);
 
   @include big-mobile {
     font-size: 1.2rem;
   }
 
-  display: flex;
-  color: $color-white-default;
-
   .api {
+    padding: 0 10px;
+    text-decoration: underline;
     @extend %transition;
 
     @include hover {
       text-decoration: none;
     }
-
-    padding: 0 10px;
-    text-decoration: underline;
 
     &:focus {
       text-decoration: none;

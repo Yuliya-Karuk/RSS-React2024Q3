@@ -1,16 +1,16 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from '@remix-run/react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
 export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
   const { getStorage, setStorage } = useLocalStorage();
-  const [searchValue, setSearchValue] = useState(getStorage() || '');
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState<string>(getStorage() || '');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const details = searchParams.get('details');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newSearchValue = e.target.value;
-    setSearchValue(newSearchValue);
+    setSearchValue(e.target.value);
+    console.log('ggg');
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -20,18 +20,24 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
       inputRef.current.blur();
     }
 
+    console.log(searchParams);
+
     setStorage(searchValue);
-    const params = new URLSearchParams(location.search);
-    params.set('page', '1');
-    navigate(`/?${params.toString()}`);
+    setSearchParams({ page: '1',
+      query: searchValue,
+      ...(details && { details }) });
   };
 
-  useEffect(() => {
-    const searchQuery = getStorage() || '';
-    setSearchValue(searchQuery);
-    // eslint-disable-next-line react-compiler/react-compiler
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  // useEffect(() => {
+  //   const params = new URLSearchParams(searchParams.toString());
+
+  //   if ((params && params.get('details')) !== getStorage()) {
+  //     setSearchParams({ page: '1',
+  //     query: searchValue,
+  //     ...(details && { details }) });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return { searchValue, handleInputChange, handleSubmit };
 };

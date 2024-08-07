@@ -1,9 +1,11 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
-import { PaginatedCharacters } from '@models/index';
+import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
+import { LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import styles from '@styles/home.module.scss';
 import { addIdToCharacters } from '@utils/utils';
-import styles from './index.module.scss';
 
 // export const meta: MetaFunction = () => {
 //   return [
@@ -12,10 +14,16 @@ import styles from './index.module.scss';
 //   ];
 // };
 
-export const loader = async ({ request }) => {
+interface IndexLoaderReturn {
+  paginatedCharacters: PaginatedCharactersWithId;
+  details: string;
+  page: string;
+}
+
+export const loader = async ({ request }: LoaderFunctionArgs): Promise<IndexLoaderReturn> => {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
-  
+
   const search = searchParams.get('query') || '';
   const page = searchParams.get('page') || '';
   const details = searchParams.get('details') || '';
@@ -29,12 +37,10 @@ export const loader = async ({ request }) => {
   return { paginatedCharacters: charactersWithId, details, page: page };
 };
 
-
-
 const productPerPage: number = 10;
 
 export default function Index() {
-  const { paginatedCharacters, details, page } = useLoaderData();
+  const { paginatedCharacters, details, page }: IndexLoaderReturn = useLoaderData();
   console.log(paginatedCharacters);
 
   const totalPages = paginatedCharacters ? Math.ceil(paginatedCharacters.count / productPerPage) : 0;
@@ -45,7 +51,7 @@ export default function Index() {
         {paginatedCharacters && (
           <div className={styles.leftContainer}>
             <CharacterList characters={paginatedCharacters.results} isDetailsOpen={Boolean(details)} />
-            {/* {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />} */}
+            {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
         {/* {Boolean(details) && <DetailsWithLoader id={details} />} */}

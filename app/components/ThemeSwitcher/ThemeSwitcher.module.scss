@@ -17,15 +17,14 @@
 }
 
 .switcher-round {
-  @extend %transition;
   position: absolute;
   border-radius: 30px;
   background-color: $color-gray-dark;
   cursor: pointer;
   inset: 0;
+  @extend %transition;
 
   &::before {
-    @extend %transition;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -37,10 +36,11 @@
     background: center no-repeat $color-gray-middle url('../../assets/icons/night.svg');
     background-size: contain;
     content: '';
+    @extend %transition;
   }
 }
 
-.switcher-input:checked+.switcher-round::before {
+.switcher-input:checked + .switcher-round::before {
   background: center no-repeat $color-gray-light url('../../assets/icons/sun.svg');
   background-size: contain;
   transform: translateX(30px);
