@@ -29,6 +29,7 @@
 
   .error-img {
     width: 100%;
+    max-height: 450px;
     filter: drop-shadow(2px 3px 2px $color-white-default);
   }
 }
