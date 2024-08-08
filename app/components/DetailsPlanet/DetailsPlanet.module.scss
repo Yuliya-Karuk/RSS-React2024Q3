@@ -1,8 +1,8 @@
 .character-feature-block {
-  @include flex(space-between, center);
   flex-wrap: wrap;
   width: 100%;
   color: $color-gray-middle;
+  @include flex(space-between, center);
 }
 
 .block-title {

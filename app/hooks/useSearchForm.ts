@@ -20,9 +20,7 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     }
 
     setStorage(searchValue);
-    setSearchParams({ page: '1',
-      query: searchValue,
-      ...(details && { details }) });
+    setSearchParams({ page: '1', query: searchValue, ...(details && { details }) });
   };
 
   // useEffect(() => {

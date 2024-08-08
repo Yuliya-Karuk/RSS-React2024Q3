@@ -1,9 +1,9 @@
 .character-feature-block {
-  @include flex(space-between, center);
   flex-wrap: wrap;
   width: 100%;
   font-size: 1.3rem;
   color: $color-gray-middle;
+  @include flex(space-between, center);
 }
 
 .films {
@@ -21,8 +21,8 @@
 }
 
 .filmItem {
-  @include flex(center, flex-start, column, 5px);
   width: 100%;
+  @include flex(center, flex-start, column, 5px);
 }
 
 .feature-title {
