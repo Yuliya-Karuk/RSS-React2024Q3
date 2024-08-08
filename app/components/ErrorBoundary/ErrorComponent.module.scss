@@ -1,12 +1,9 @@
 .error-page {
-  background-color: var(--color-bg-dark);
+  background-color: $color-bg-dark;
   height: 100vh;
 }
 
 .error-container {
-  height: 100vh;
-  padding: 10px 30px;
-  color: var(--color-white-default);
   @extend %container;
   @include flex(center, center, row, 20px);
   @include font(2.8rem, 700, 1, 0.05rem);
@@ -18,40 +15,47 @@
   @include mobile {
     font-size: 2rem;
   }
+
+  height: 100vh;
+  padding: 10px 30px;
+  color: $color-white-default;
 }
 
 .error-img-container {
-  max-width: 50%;
-  aspect-ratio: 2 / 3;
   @include laptop {
     max-width: 100%;
   }
 
+  max-width: 50%;
+  aspect-ratio: 2 / 3;
+
   .error-img {
     width: 100%;
-    filter: drop-shadow(2px 3px 2px var(--color-white-default));
+    filter: drop-shadow(2px 3px 2px $color-white-default);
   }
 }
 
 .error-content {
-  width: 45%;
-  text-align: center;
   @include laptop {
     width: 100%;
   }
+
+  width: 45%;
+  text-align: center;
 }
 
 .error-button {
-  padding: 15px 30px;
-  border-radius: 10px;
-  color: var(--color-white-default);
-  background-color: var(--color-primary-bright);
-  margin-top: 20px;
   @extend %transition;
   @include font(1.6rem, 400, 1, 0.05rem);
 
   @include hover {
-    background-color: var(--color-gray-middle);
-    color: var(--color-black-default);
+    background-color: $color-gray-middle;
+    color: $color-black-default;
   }
+
+  padding: 15px 30px;
+  border-radius: 10px;
+  color: $color-white-default;
+  background-color: $color-primary-bright;
+  margin-top: 20px;
 }
