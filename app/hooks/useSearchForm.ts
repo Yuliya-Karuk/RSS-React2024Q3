@@ -1,5 +1,5 @@
 import { useSearchParams } from '@remix-run/react';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
 export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
@@ -23,16 +23,15 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     setSearchParams({ page: '1', query: searchValue, ...(details && { details }) });
   };
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams(searchParams.toString());
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
 
-  //   if ((params && params.get('details')) !== getStorage()) {
-  //     setSearchParams({ page: '1',
-  //     query: searchValue,
-  //     ...(details && { details }) });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    if ((params && params.get('search')) !== getStorage()) {
+      setSearchParams({ page: '1', query: searchValue, ...(details && { details }) });
+    }
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { searchValue, handleInputChange, handleSubmit };
 };

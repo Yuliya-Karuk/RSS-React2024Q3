@@ -17,7 +17,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['!**/.server', '!**/.client'],
+  ignorePatterns: ['!**/.server', '!**/.client', '.eslintrc.cjs'],
 
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -93,4 +93,12 @@ module.exports = {
     'react/static-property-placement': 'off',
     'react/no-unescaped-entities': 'off',
   },
+  overrides: [
+    {
+      files: ['./app/entry.server.tsx'],
+      rules: {
+        'no-param-reassign': 'off',
+      },
+    },
+  ],
 };

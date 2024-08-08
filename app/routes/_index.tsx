@@ -1,9 +1,9 @@
-import { CharacterList } from '@components/CharacterList/CharacterList';
+/* eslint-disable react-refresh/only-export-components */
 import Details from '@components/Details/Details';
 import { Favorites } from '@components/Favorites/Favorites';
+import LeftContainer from '@components/LeftContainer/LeftContainer';
 import { Loader } from '@components/Loader/Loader';
-import { Pagination } from '@components/Pagination/Pagination';
-import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
+import { useTheme } from '@contexts/themeProvider';
 import {
   Character,
   CharacterWithId,
@@ -13,17 +13,10 @@ import {
   Planet,
 } from '@models/index';
 import { LoaderFunctionArgs } from '@remix-run/node';
-import { Await, useLoaderData } from '@remix-run/react';
+import { useLoaderData, useNavigation } from '@remix-run/react';
 import styles from '@styles/home.module.scss';
 import { addIdToCharacter, addIdToCharacters } from '@utils/utils';
-import { Suspense } from 'react';
-
-// export const meta: MetaFunction = () => {
-//   return [
-//     { title: "New Remix App" },
-//     { name: "description", content: "Welcome to Remix!" },
-//   ];
-// };
+import classnames from 'classnames';
 
 interface IndexData {
   paginatedCharacters: PaginatedCharactersWithId;
@@ -85,33 +78,34 @@ const productPerPage: number = 10;
 
 export default function Index() {
   const { paginatedCharacters, details, page, films, planet, detailsCharacter }: IndexData = useLoaderData();
-
+  const navigation = useNavigation();
+  const { theme } = useTheme();
   const totalPages = paginatedCharacters ? Math.ceil(paginatedCharacters.count / productPerPage) : 0;
 
+  if (navigation.state === 'loading') {
+    return (
+      <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
+        <Loader />
+      </main>
+    );
+  }
+
   return (
-    <ThemeContainer>
+    <main className={classnames(styles.page, { [styles.light]: theme === 'light' })}>
       <div className={styles.container}>
         {paginatedCharacters && (
-          <div className={styles.leftContainer}>
-            <CharacterList characters={paginatedCharacters.results} isDetailsOpen={Boolean(details)} />
-            {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
-          </div>
+          <LeftContainer
+            paginatedCharacters={paginatedCharacters}
+            details={details}
+            page={page}
+            totalPages={totalPages}
+          />
         )}
-
-        {Boolean(details) && (
-          <Suspense fallback={<Loader />}>
-            <Await resolve={{ films, planet, detailsCharacter }}>
-              {() => {
-                if (films && planet && detailsCharacter) {
-                  return <Details films={films} planet={planet} detailsCharacter={detailsCharacter} />;
-                }
-                return <Loader />;
-              }}
-            </Await>
-          </Suspense>
+        {Boolean(details) && films && planet && detailsCharacter && (
+          <Details films={films} planet={planet} detailsCharacter={detailsCharacter} />
         )}
       </div>
       <Favorites />
-    </ThemeContainer>
+    </main>
   );
 }

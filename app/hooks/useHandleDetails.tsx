@@ -1,13 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams } from '@remix-run/react';
 
 export const useHandleDetails = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const closeDetails = () => {
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(searchParams.toString());
     params.delete('details');
-    navigate(`/?${params.toString()}`);
+    setSearchParams(params);
   };
 
   const openDetails = (
@@ -15,10 +14,10 @@ export const useHandleDetails = () => {
     characterId: string
   ) => {
     e.stopPropagation();
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(searchParams.toString());
 
     params.set('details', characterId);
-    navigate(`/?${params.toString()}`);
+    setSearchParams(params);
   };
 
   return { closeDetails, openDetails };

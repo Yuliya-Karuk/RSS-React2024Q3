@@ -1,5 +1,5 @@
 import { useTheme } from '@contexts/themeProvider';
-import { useNavigate, useSearchParams } from '@remix-run/react';
+import { useSearchParams } from '@remix-run/react';
 import classnames from 'classnames';
 import styles from './PaginationButton.module.scss';
 
@@ -12,19 +12,13 @@ interface PaginationProps {
 
 export const PaginationButton = ({ onClickNumber, element, isDisabled, ariaLabel }: PaginationProps) => {
   const { theme } = useTheme();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const details = searchParams.get('details');
-  const query = searchParams.get('query');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePageChange = (page: number) => {
-    const newQuery = new URLSearchParams({
-      page: `${page}`,
-      ...(query && { query }),
-      ...(details && { details }),
-    }).toString();
+    const params = new URLSearchParams(searchParams.toString());
 
-    navigate(`?${newQuery}`);
+    params.set('page', String(page));
+    setSearchParams(params);
   };
 
   return (

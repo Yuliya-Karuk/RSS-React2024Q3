@@ -1,4 +1,4 @@
-import { NotFound } from '@pages/notFound/notFound';
+import { NotFound } from '@components/NotFound/notFound';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';

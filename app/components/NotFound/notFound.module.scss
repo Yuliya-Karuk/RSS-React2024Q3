@@ -1,7 +1,7 @@
 .not-found {
   width: 100vw;
   height: 100vh;
-  color: var(--color-white-default);
+  color: $color-white-default;
   @include flex(flex-start, center, column);
   @include font(1.6rem, 700, 1, 0.05rem);
 }
@@ -15,14 +15,14 @@
   text-decoration: none;
   margin-top: 20px;
   padding: 10px 20px;
-  background: var(--color-bg-dark);
+  background: $color-bg-dark;
   border-radius: 5px;
-  border: 2px solid var(--color-bg-dark);
+  border: 2px solid $color-bg-dark;
   @extend %transition;
 
   &:not([disabled]):hover {
-    background: var(--color-white-default);
-    color: var(--color-bg-dark);
-    border: 2px solid var(--color-bg-dark);
+    background: $color-white-default;
+    color: $color-bg-dark;
+    border: 2px solid $color-bg-dark;
   }
 }
