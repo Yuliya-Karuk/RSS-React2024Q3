@@ -1,17 +1,17 @@
-@mixin font($font-size, $font-weight, $line-height, $letter-spacing: normal, $text-transform: none) {
-  font-size: $font-size;
-  font-weight: $font-weight;
-  line-height: $line-height;
-  text-transform: $text-transform;
-  letter-spacing: $letter-spacing;
-}
-
 @mixin flex($js: null, $ai: $js, $dir: null, $gap: null) {
   display: flex;
   flex-direction: $dir;
   gap: $gap;
   align-items: $ai;
   justify-content: $js;
+}
+
+@mixin font($font-size, $font-weight, $line-height, $letter-spacing: normal, $text-transform: none) {
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  text-transform: $text-transform;
+  letter-spacing: $letter-spacing;
 }
 
 @mixin tablet {

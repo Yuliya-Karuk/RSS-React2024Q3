@@ -1,101 +1,49 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
   env: {
     browser: true,
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["!**/.server", "!**/.client"],
-
   extends: [
-    "eslint:recommended",
-    "airbnb",
-    "airbnb/hooks",
-    "prettier",
+    'airbnb',
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:import/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'prettier',
   ],
+  ignorePatterns: ['!**/.server', '!**/.client'],
 
-  plugins: [
-    "react-compiler",
-  ],
-
-  overrides: [
-    // React
-    {
-      files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: ["react", "jsx-a11y", "react-hooks", "prettier"],
-      extends: [
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
-        "airbnb",
-        "airbnb/hooks",
-        "prettier",
-      ],
-      settings: {
-        react: {
-          version: "detect",
-        },
-        formComponents: ["Form"],
-        linkComponents: [
-          { name: "Link", linkAttribute: "to" },
-          { name: "NavLink", linkAttribute: "to" },
-        ],
-        "import/resolver": {
-          typescript: {},
-        },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: './tsconfig.json',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  plugins: ['react', 'react-hooks', 'react-refresh', '@typescript-eslint', 'import', 'prettier', 'react-compiler'],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json',
       },
     },
-
-    // Typescript
-    {
-      files: ["**/*.{ts,tsx}"],
-      plugins: ["@typescript-eslint", "import", "prettier"],
-      parser: "@typescript-eslint/parser",
-      settings: {
-        "import/internal-regex": "^~/",
-        "import/resolver": {
-          node: {
-            extensions: [".ts", ".tsx"],
-          },
-          typescript: {
-            alwaysTryTypes: true,
-          },
-        },
-      },
-      extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
-        "airbnb-typescript",
-        "prettier",
-      ],
-    },
-
-    // Node
-    {
-      files: [".eslintrc.cjs"],
-      env: {
-        node: true,
-      },
-    },
-  ],
-
+  },
   rules: {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
-    "react/prefer-stateless-function": "off",
+    'react/prefer-stateless-function': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/function-component-definition': 'off',
     'no-debugger': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],

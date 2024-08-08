@@ -1,11 +1,22 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import Details from '@components/Details/Details';
+import { Favorites } from '@components/Favorites/Favorites';
+import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
-import { PaginatedCharacters, PaginatedCharactersWithId } from '@models/index';
+import {
+  Character,
+  CharacterWithId,
+  Film,
+  PaginatedCharacters,
+  PaginatedCharactersWithId,
+  Planet,
+} from '@models/index';
 import { LoaderFunctionArgs } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Await, useLoaderData } from '@remix-run/react';
 import styles from '@styles/home.module.scss';
-import { addIdToCharacters } from '@utils/utils';
+import { addIdToCharacter, addIdToCharacters } from '@utils/utils';
+import { Suspense } from 'react';
 
 // export const meta: MetaFunction = () => {
 //   return [
@@ -14,13 +25,16 @@ import { addIdToCharacters } from '@utils/utils';
 //   ];
 // };
 
-interface IndexLoaderReturn {
+interface IndexData {
   paginatedCharacters: PaginatedCharactersWithId;
+  detailsCharacter?: CharacterWithId;
+  planet?: Planet;
+  films?: Film[];
   details: string;
   page: string;
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs): Promise<IndexLoaderReturn> => {
+export const loader = async ({ request }: LoaderFunctionArgs): Promise<IndexData> => {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
 
@@ -34,14 +48,43 @@ export const loader = async ({ request }: LoaderFunctionArgs): Promise<IndexLoad
 
   const people: PaginatedCharacters = await response.json();
   const charactersWithId = addIdToCharacters(people);
-  return { paginatedCharacters: charactersWithId, details, page: page };
+
+  if (details) {
+    const detailsResponse = await fetch(`https://swapi.dev/api/people/${details}`, {
+      method: 'GET',
+    });
+    const character: Character = await detailsResponse.json();
+    const characterWithId: CharacterWithId = addIdToCharacter(character);
+
+    const planetResponse = await fetch(character.homeworld, {
+      method: 'GET',
+    });
+
+    const planet: Planet = await planetResponse.json();
+
+    const filmsResponse = await fetch('https://swapi.dev/api/films/', {
+      method: 'GET',
+    });
+
+    const films = await filmsResponse.json();
+
+    return {
+      paginatedCharacters: charactersWithId,
+      details,
+      page,
+      films: films.results,
+      planet,
+      detailsCharacter: characterWithId,
+    };
+  }
+
+  return { paginatedCharacters: charactersWithId, details, page };
 };
 
 const productPerPage: number = 10;
 
 export default function Index() {
-  const { paginatedCharacters, details, page }: IndexLoaderReturn = useLoaderData();
-  console.log(paginatedCharacters);
+  const { paginatedCharacters, details, page, films, planet, detailsCharacter }: IndexData = useLoaderData();
 
   const totalPages = paginatedCharacters ? Math.ceil(paginatedCharacters.count / productPerPage) : 0;
 
@@ -54,9 +97,16 @@ export default function Index() {
             {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
-        {/* {Boolean(details) && <DetailsWithLoader id={details} />} */}
+
+        {Boolean(details) && (
+          <Suspense fallback={<Loader />}>
+            <Await resolve={{ films, planet, detailsCharacter }}>
+              {() => <Details films={films} planet={planet} detailsCharacter={detailsCharacter} />}
+            </Await>
+          </Suspense>
+        )}
       </div>
-      {/* <Favorites /> */}
+      <Favorites />
     </ThemeContainer>
   );
-};
+}

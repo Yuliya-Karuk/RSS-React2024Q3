@@ -10,7 +10,6 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    console.log('ggg');
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -19,8 +18,6 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-
-    console.log(searchParams);
 
     setStorage(searchValue);
     setSearchParams({ page: '1',

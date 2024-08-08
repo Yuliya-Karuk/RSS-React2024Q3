@@ -1,15 +1,10 @@
-import { Footer } from "@components/Footer/Footer";
-import { Header } from "@components/Header/Header";
-import { ThemeProvider } from "@contexts/themeProvider";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
-import { store } from "@store/store";
-import { Provider } from "react-redux";
+import { Footer } from '@components/Footer/Footer';
+import { Header } from '@components/Header/Header';
+import { ThemeProvider } from '@contexts/themeProvider';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { store } from '@store/store';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import './styles/index.scss';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,9 +31,9 @@ export default function App() {
       <ThemeProvider>
         <Header />
         <Outlet />
-        <Footer />ч
+        <Footer />
+        <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
       </ThemeProvider>
     </Provider>
   );
 }
-
