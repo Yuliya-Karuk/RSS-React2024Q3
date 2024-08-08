@@ -1,12 +1,4 @@
 .error-button {
-  @extend %transition;
-  @include font(1.6rem, 400, 1, 0.05rem);
-
-  @include hover {
-    background-color: $color-gray-middle;
-    color: $color-black-default;
-  }
-
   position: fixed;
   z-index: 1000;
   bottom: 10px;
@@ -15,4 +7,11 @@
   border-radius: 10px;
   color: $color-white-default;
   background-color: $color-primary-bright;
+  @extend %transition;
+  @include font(1.6rem, 400, 1, 0.05rem);
+
+  @include hover {
+    background-color: $color-gray-middle;
+    color: $color-black-default;
+  }
 }

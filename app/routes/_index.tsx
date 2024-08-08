@@ -29,7 +29,7 @@ interface IndexData {
   paginatedCharacters: PaginatedCharactersWithId;
   detailsCharacter?: CharacterWithId;
   planet?: Planet;
-  films?: Film[];
+  films?: Film[] | undefined;
   details: string;
   page: string;
 }
@@ -101,7 +101,12 @@ export default function Index() {
         {Boolean(details) && (
           <Suspense fallback={<Loader />}>
             <Await resolve={{ films, planet, detailsCharacter }}>
-              {() => <Details films={films} planet={planet} detailsCharacter={detailsCharacter} />}
+              {() => {
+                if (films && planet && detailsCharacter) {
+                  return <Details films={films} planet={planet} detailsCharacter={detailsCharacter} />;
+                }
+                return <Loader />;
+              }}
             </Await>
           </Suspense>
         )}

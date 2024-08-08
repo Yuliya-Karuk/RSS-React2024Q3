@@ -46,17 +46,5 @@ export function ErrorBoundary() {
 
   console.error('LOG: This error was caught by Error Boundary', error);
 
-  return (
-    <html lang="en">
-      <head>
-        <title>Oh no! Error!</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <ErrorComponent />
-        <Scripts />
-      </body>
-    </html>
-  );
+  return <ErrorComponent />;
 }
