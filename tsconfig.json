@@ -33,6 +33,7 @@
       "@hooks/*": ["app/hooks/*"],
       "@store/*": ["app/store/*"],
       "@styles/*": ["app/styles/*"],
+      "@testSetup/*": ["app/testSetup/*"],
     },
     "noEmit": true
   }

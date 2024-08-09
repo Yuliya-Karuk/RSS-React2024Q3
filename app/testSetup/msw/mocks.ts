@@ -1,7 +1,6 @@
-import { CharacterWithFavorite, CharacterWithId } from '@models/index';
+import { Character, CharacterWithFavorite, CharacterWithId } from '@models/index';
 
-export const mockedCharacter: CharacterWithId = {
-  id: '1',
+export const mockedCharacter: Character = {
   name: 'Luke Skywalker Mocked',
   height: '172',
   mass: '77',
@@ -25,12 +24,17 @@ export const mockedCharacter: CharacterWithId = {
   url: 'https://swapi.dev/api/people/1/',
 };
 
-export const mockedReadyCharacter: CharacterWithFavorite = {
+export const mockedCharacterWithId: CharacterWithId = {
   ...mockedCharacter,
+  id: '1',
+};
+
+export const mockedCharacterWithFavorite: CharacterWithFavorite = {
+  ...mockedCharacterWithId,
   isFavorite: false,
 };
 
-export const mockedFavorites: CharacterWithFavorite[] = [mockedReadyCharacter];
+export const mockedFavorites: CharacterWithFavorite[] = [mockedCharacterWithFavorite];
 
 export const mockedDetails = {
   id: '1',
@@ -68,7 +72,7 @@ export const mockedCharacters = {
   count: 1,
   next: '',
   previous: '',
-  results: [mockedCharacter],
+  results: [mockedCharacterWithId],
 };
 
 export const mockedFilm = {

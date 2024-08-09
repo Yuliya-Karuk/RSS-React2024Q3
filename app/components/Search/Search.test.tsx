@@ -1,17 +1,21 @@
 import { Search } from '@components/Search/Search';
 import { useLocalStorage } from '@hooks/useLocalStorage';
+import { createRemixStub } from '@remix-run/testing';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { renderWithProviders } from '@testSetup/render-router';
+
+const RemixStub = createRemixStub([
+  {
+    path: '/',
+    Component: () => <Search />,
+  },
+]);
 
 describe('Search', () => {
-  test('clicking the Search button saves the entered value to the local storage', async () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <Search />
-      </MemoryRouter>
-    );
+  it('clicking the Search button saves the entered value to the local storage', async () => {
+    renderWithProviders(<RemixStub initialEntries={['/']} />);
 
     const { getStorage } = useLocalStorage();
 
@@ -24,16 +28,12 @@ describe('Search', () => {
     expect(input.value).toBe(getStorage());
   });
 
-  test('the component retrieves the value from the local storage upon mounting.', () => {
+  it('the component retrieves the value from the local storage upon mounting.', () => {
     const mockSearch = 'Dart';
     const { setStorage } = useLocalStorage();
     setStorage(mockSearch);
 
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <Search />
-      </MemoryRouter>
-    );
+    renderWithProviders(<RemixStub initialEntries={['/']} />);
 
     const input = screen.getByPlaceholderText<HTMLInputElement>('SEARCH ...');
     expect(input.value).toBe(mockSearch);
