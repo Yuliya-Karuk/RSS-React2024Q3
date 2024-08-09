@@ -49,7 +49,7 @@ describe('Pagination', () => {
 
     await user.click(nextPageButton);
 
-    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('?page=2'));
+    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('page=2'));
   });
 
   it('updates URL query parameter when specific page button is clicked - 2', async () => {
@@ -59,6 +59,6 @@ describe('Pagination', () => {
     const user = userEvent.setup();
     await user.click(pageButton);
 
-    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('?page=3'));
+    expect(useRouterPushMock).toHaveBeenCalledWith(expect.stringContaining('page=3'));
   });
 });

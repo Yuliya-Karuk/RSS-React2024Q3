@@ -5,9 +5,9 @@ interface DetailsWithLoaderProps {
   children: React.ReactNode;
 }
 
-export default async function DetailsWithLoader({ children }: DetailsWithLoaderProps) {
+export default async function HomeWithLoader({ children }: DetailsWithLoaderProps) {
   return (
-    <Suspense key="details" fallback={<Loader />}>
+    <Suspense key="characters" fallback={<Loader />}>
       {children}
     </Suspense>
   );

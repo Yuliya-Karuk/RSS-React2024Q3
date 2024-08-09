@@ -23,6 +23,7 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
     }
 
     setStorage(searchValue);
+
     const newQuery = new URLSearchParams({
       page: '1',
       query: searchValue,
@@ -35,14 +36,14 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams?.toString());
 
-    if ((params && params.get('details')) !== getStorage()) {
-      const newQuery = new URLSearchParams({
-        page: '1',
-        query: searchValue,
-        ...(details && { details }),
-      }).toString();
+    if ((params && params.get('search')) !== getStorage()) {
+      params.set('query', searchValue);
 
-      router.push(`?${newQuery}`);
+      if (!params.get('page')) {
+        params.set('page', '1');
+      }
+
+      router.push(`?${params.toString()}`);
     }
     // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps

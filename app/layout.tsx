@@ -3,9 +3,11 @@
 import { ErrorButton } from '@components/ErrorButton/ErrorButton';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
+import { Loader } from '@components/Loader/Loader';
 import { ThemeProvider } from '@contexts/themeProvider';
 import '@styles/index.scss';
 import { Metadata } from 'next/types';
+import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import StoreProvider from './StoreProvider';
 
@@ -32,13 +34,15 @@ export default function RootLayout({
       <body>
         <StoreProvider>
           <ThemeProvider>
-            <div className="wrapper">
-              <Header />
-              {children}
-              <Footer />
-              <ErrorButton />
-              <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
-            </div>
+            <Suspense key="main" fallback={<Loader />}>
+              <div className="wrapper">
+                <Header />
+                {children}
+                <Footer />
+                <ErrorButton />
+                <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
+              </div>
+            </Suspense>
           </ThemeProvider>
         </StoreProvider>
       </body>

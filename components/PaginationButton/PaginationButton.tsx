@@ -16,17 +16,13 @@ export const PaginationButton = ({ onClickNumber, element, isDisabled, ariaLabel
   const { theme } = useTheme();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const details = searchParams && searchParams.get('details');
-  const query = searchParams && searchParams.get('query');
 
   const handlePageChange = (page: number) => {
-    const newQuery = new URLSearchParams({
-      page: `${page}`,
-      ...(query && { query }),
-      ...(details && { details }),
-    }).toString();
+    const params = new URLSearchParams(searchParams?.toString());
 
-    router.push(`?${newQuery}`);
+    params.set('page', String(page));
+
+    router.push(`?${params.toString()}`);
   };
 
   return (

@@ -7,7 +7,13 @@ export default {
   swcMinify: true,
 
   images: {
-    domains: ['starwars-visualguide.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'starwars-visualguide.com',
+        port: '',
+      },
+    ],
   },
 
   webpack: (config, options) => {
@@ -44,8 +50,5 @@ export default {
   sassOptions: {
     includePaths: [stylesPath],
     prependData: `@import "mixins.scss"; @import "placeholders.scss"; @import "constants.scss";`,
-  },
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
   },
 };

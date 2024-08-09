@@ -18,6 +18,7 @@
     "reduxjs",
     "testid",
     "svgr",
-    "Skywalker"
+    "Skywalker",
+    "starwars-visualguide"
   ]
 }

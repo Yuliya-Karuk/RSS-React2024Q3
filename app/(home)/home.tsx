@@ -1,4 +1,5 @@
 import { CharacterList } from '@components/CharacterList/CharacterList';
+import { Details } from '@components/Details/Details';
 import { Favorites } from '@components/Favorites/Favorites';
 import { Pagination } from '@components/Pagination/Pagination';
 import ThemeContainer from '@components/ThemeContainer/ThemeContainer';
@@ -35,7 +36,11 @@ const Home = async ({ searchParams }: { searchParams: { [key: string]: string } 
             {page && <Pagination currentPage={Number(page)} totalPages={totalPages} />}
           </div>
         )}
-        {Boolean(details) && <DetailsWithLoader id={details} />}
+        {Boolean(details) && (
+          <DetailsWithLoader>
+            <Details id={details} />
+          </DetailsWithLoader>
+        )}
       </div>
       <Favorites />
     </ThemeContainer>
