@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Component, ErrorInfo, ReactNode } from 'react';
 import styles from './ErrorBoundary.module.scss';
 
@@ -41,7 +42,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               </button>
             </div>
             <div className={styles.errorImgContainer}>
-              <img className={styles.errorImg} src="/images/error.png" alt="Error" />
+              <Image className={styles.errorImg} src="/images/error.png" alt="Error" width={400} height={600} />
             </div>
           </div>
         </div>

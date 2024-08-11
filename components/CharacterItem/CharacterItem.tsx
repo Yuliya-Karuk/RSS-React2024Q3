@@ -4,6 +4,7 @@ import { useHandleDetails } from '@hooks/useHandleDetails';
 import { CharacterWithFavorite } from '@models/index';
 import { urlImgTemplates } from '@utils/utils';
 import classnames from 'classnames';
+import Image from 'next/image';
 import styles from './CharacterItem.module.scss';
 
 interface CharacterItemProps {
@@ -29,7 +30,7 @@ export const CharacterItem = ({ character, isDetailsOpen }: CharacterItemProps) 
       }}
     >
       <div className={styles.characterImgContainer}>
-        <img className={styles.characterImg} src={imageUrl} alt="Character" />
+        <Image className={styles.characterImg} src={imageUrl} alt="Character" width={400} height={550} />
       </div>
       <h3>{character.name}</h3>
       <div className={styles.characterFeatureBlock}>

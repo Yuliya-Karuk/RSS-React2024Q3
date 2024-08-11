@@ -13,6 +13,7 @@
     "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
     "prettier"
   ],
   "ignorePatterns": ["dist", ".eslintrc.cjs", "next.config.js"],
@@ -89,5 +90,13 @@
     "react-compiler/react-compiler": "error",
     "react/static-property-placement": "off",
     "react/no-unescaped-entities": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.test.tsx"],
+      "rules": {
+        "@next/next/no-img-element": "off"
+      }
+    }
+  ]
 }

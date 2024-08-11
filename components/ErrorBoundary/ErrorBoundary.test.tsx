@@ -1,6 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { ClassAttributes, ImgHTMLAttributes } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { ErrorBoundary } from './ErrorBoundary';
+
+vi.mock('next/image', () => ({
+  __esModule: true,
+  default: (
+    props: JSX.IntrinsicAttributes & ClassAttributes<HTMLImageElement> & ImgHTMLAttributes<HTMLImageElement>
+  ) => <img {...props} alt="mock" />,
+}));
 
 const ErrorComponent = () => {
   throw new Error('Test Error');
