@@ -26,7 +26,7 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if ((params && params.get('search')) !== getStorage()) {
+    if ((params && params.get('query')) !== getStorage() || !params.get('query')) {
       setSearchParams({ page: '1', query: searchValue, ...(details && { details }) });
     }
     // eslint-disable-next-line react-compiler/react-compiler
