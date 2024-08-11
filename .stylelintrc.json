@@ -11,7 +11,6 @@
       }
     ],
     "no-descending-specificity": null,
-    "scss/at-import-partial-extension": "always",
     "custom-property-empty-line-before": "never",
     "declaration-empty-line-before": "never",
     "media-feature-range-notation": "prefix",
@@ -30,6 +29,20 @@
         "properties": ["width", "font-size", "background-color"],
         "emptyLineBefore": "never"
       }
+    ],
+    "order/order": [
+      "dollar-variables",
+      "custom-properties",
+      "declarations",
+      {
+        "type": "at-rule",
+        "name": "extend"
+      },
+      {
+        "type": "at-rule",
+        "name": "include"
+      },
+      "rules"
     ]
   }
 }

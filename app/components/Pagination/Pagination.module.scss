@@ -1,0 +1,14 @@
+.pagination-nav {
+  margin-top: auto;
+  width: 100%;
+  position: relative;
+  @include flex(center);
+}
+
+.pagination {
+  font-family: Forum, serif;
+  color: $color-white-default;
+  padding: 20px;
+  @include flex(flex-start, center, null, 5px);
+  @include font(1.6rem, 400, 1, 0.05rem);
+}

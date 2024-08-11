@@ -1,0 +1,53 @@
+.character-feature-block {
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 1.6rem;
+  color: $color-gray-middle;
+  @include flex(space-between, center);
+}
+
+.gender-icon {
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid $color-gray-dark;
+  background-color: $color-input-bg;
+}
+
+.male,
+.female {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.male {
+  background: no-repeat center url('../../assets/icons/male.svg');
+  background-size: cover;
+}
+
+.female {
+  background: no-repeat center url('../../assets/icons/female.svg');
+  background-size: cover;
+}
+
+.details-info {
+  width: 100%;
+  @include flex(center, flex-start, column, 10px);
+}
+
+.block-title {
+  text-align: center;
+  margin: 10px;
+  color: $color-primary-bright;
+  width: 100%;
+}
+
+[class*='light'] {
+  .character-feature-block {
+    color: #545454;
+  }
+
+  .block-title {
+    color: $color-primary-bright-faded;
+  }
+}

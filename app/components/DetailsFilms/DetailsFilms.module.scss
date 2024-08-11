@@ -1,0 +1,58 @@
+.character-feature-block {
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 1.3rem;
+  color: $color-gray-middle;
+  @include flex(space-between, center);
+}
+
+.films {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
+  row-gap: 15px;
+}
+
+.block-title {
+  text-align: center;
+  margin: 10px;
+  color: $color-primary-bright;
+  width: 100%;
+}
+
+.filmItem {
+  width: 100%;
+  @include flex(center, flex-start, column, 5px);
+}
+
+.feature-title {
+  color: $color-gray-light;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.film-img-container {
+  width: 100%;
+  margin-top: auto;
+  aspect-ratio: 8 / 11;
+
+  .film-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+[class*='light'] {
+  .character-feature-block {
+    color: #545454;
+  }
+
+  .block-title {
+    color: $color-primary-bright-faded;
+  }
+
+  .feature-title {
+    color: #101010;
+  }
+}

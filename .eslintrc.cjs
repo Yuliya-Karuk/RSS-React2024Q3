@@ -1,8 +1,10 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
   env: {
     browser: true,
-    es2022: true,
+    commonjs: true,
+    es6: true,
   },
   extends: [
     'airbnb',
@@ -13,31 +15,24 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'prettier'
+    'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vitest.config.ts'],
+  ignorePatterns: ['!**/.server', '!**/.client', '.eslintrc.cjs'],
+
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.app.json'],
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    'react-refresh',
-    '@typescript-eslint',
-    'import',
-    'prettier',
-    'react-compiler'
-  ],
+  plugins: ['react', 'react-hooks', 'react-refresh', '@typescript-eslint', 'import', 'prettier', 'react-compiler'],
   settings: {
     'import/resolver': {
       typescript: {
-        project: './tsconfig.app.json',
+        project: './tsconfig.json',
       },
     },
   },
@@ -46,12 +41,9 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
-    "react/prefer-stateless-function": "off",
+    'react/prefer-stateless-function': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/function-component-definition': 'off',
     'no-debugger': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
@@ -101,4 +93,12 @@ module.exports = {
     'react/static-property-placement': 'off',
     'react/no-unescaped-entities': 'off',
   },
+  overrides: [
+    {
+      files: ['./app/entry.server.tsx'],
+      rules: {
+        'no-param-reassign': 'off',
+      },
+    },
+  ],
 };

@@ -1,0 +1,44 @@
+.character-img-container {
+  width: 70%;
+  align-self: center;
+
+  .character-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+}
+
+.details {
+  width: 30%;
+  min-width: 350px;
+  margin-top: 10px;
+  padding: 40px 15px 10px;
+  background: #4f4f4f60;
+  overflow: scroll;
+  border-radius: 5px;
+  border: 1px solid $color-gray-dark;
+  color: $color-white-default;
+  backdrop-filter: blur(10px);
+  @include flex(flex-start, flex-start, column, 10px);
+  @include font(2rem, 700, 1, 0.05rem);
+
+  @include laptop {
+    min-width: 250px;
+  }
+
+  @include big-mobile {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.page-loader {
+  align-self: flex-start;
+}
+
+[class*='light'] {
+  .details {
+    color: $color-bg-dark;
+  }
+}
