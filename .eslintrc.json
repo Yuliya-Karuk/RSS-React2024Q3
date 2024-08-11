@@ -13,6 +13,7 @@
     "plugin:import/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
     "prettier"
   ],
   "ignorePatterns": ["dist", ".eslintrc.cjs", "next.config.js"],

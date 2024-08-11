@@ -38,24 +38,3 @@
     background: linear-gradient(to bottom, rgb(255 255 255 / 0%), $color-gray-light);
   }
 }
-
-.container {
-  @extend %container;
-
-  @include big-mobile {
-    width: 100vw;
-  }
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-  padding: 0;
-}
-
-.leftContainer {
-  @include flex(flex-start, center, column);
-
-  @include big-mobile {
-    width: 100%;
-  }
-}

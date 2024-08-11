@@ -2,7 +2,7 @@ import { Details } from '@components/Details/Details';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from '@testSetup/render-router';
 import { describe, expect, it } from 'vitest';
-import Home from './home';
+import Home from './Home';
 
 const searchParams = { page: '1', query: '', details: '' };
 

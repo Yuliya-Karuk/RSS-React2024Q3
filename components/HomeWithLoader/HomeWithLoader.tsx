@@ -1,5 +1,6 @@
 import { Loader } from '@components/Loader/Loader';
 import { Suspense } from 'react';
+import styles from './HomeWithLoader.module.scss';
 
 interface DetailsWithLoaderProps {
   children: React.ReactNode;
@@ -7,7 +8,14 @@ interface DetailsWithLoaderProps {
 
 export default async function HomeWithLoader({ children }: DetailsWithLoaderProps) {
   return (
-    <Suspense key="characters" fallback={<Loader />}>
+    <Suspense
+      key="characters"
+      fallback={
+        <div className={styles.page}>
+          <Loader />
+        </div>
+      }
+    >
       {children}
     </Suspense>
   );

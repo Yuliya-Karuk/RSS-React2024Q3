@@ -1,6 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-
-import { ErrorButton } from '@components/ErrorButton/ErrorButton';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
 import { Loader } from '@components/Loader/Loader';
@@ -39,7 +37,6 @@ export default function RootLayout({
                 <Header />
                 {children}
                 <Footer />
-                <ErrorButton />
                 <ToastContainer position="top-center" autoClose={2000} className="Toastify" />
               </div>
             </Suspense>

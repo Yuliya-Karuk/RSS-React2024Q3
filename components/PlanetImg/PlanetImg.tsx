@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable @next/next/no-img-element */
+
 import { Planet } from '@models/index';
 import { extractIdFromUrl, urlImgTemplates } from '@utils/utils';
 import styles from './PlanetImg.module.scss';
