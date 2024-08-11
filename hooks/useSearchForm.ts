@@ -36,7 +36,7 @@ export const useSearchForm = (inputRef: React.RefObject<HTMLInputElement>) => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams?.toString());
 
-    if ((params && params.get('search')) !== getStorage()) {
+    if ((params && params.get('query')) !== getStorage() || !params.get('query')) {
       params.set('query', searchValue);
 
       if (!params.get('page')) {
