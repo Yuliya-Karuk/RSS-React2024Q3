@@ -1,0 +1,50 @@
+.header {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: rgb(8 8 8 / 40%);
+  color: $color-white-default;
+}
+
+.header-container {
+  @extend %container;
+  @include flex(space-between, center, null, 10px);
+  backdrop-filter: blur(12.5px);
+}
+
+.logo {
+  width: 72px;
+  height: 34px;
+}
+
+.logo-link {
+  margin: 0 auto;
+  @include focused;
+  @include laptop {
+    margin-right: auto;
+    padding: 0 20px;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.header-link {
+  padding: 13px 18px;
+  transition: all 0.3s ease-out;
+  color: $color-white-default;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid $color-gray-dark;
+
+  @include hover {
+    background-color: $color-primary-bright;
+    color: $color-gray-dark;
+  }
+
+  &:focus {
+    background-color: $color-primary-bright;
+    color: $color-gray-middle;
+  }
+}
