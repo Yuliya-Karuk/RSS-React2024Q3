@@ -1,0 +1,13 @@
+.file-container {
+  width: 100%;
+  position: relative;
+}
+
+.file-name {
+  position: absolute;
+  @include font(1.8rem, 400, 1, 0.05rem);
+  color: $color-white-default;
+  top: 50px;
+  z-index: 20;
+  right: 15px;
+}

@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { CountryInput } from '../../components/CountryInput/CountryInput';
+import { FileInput } from '../../components/FileInput/FileInput';
 import { Input } from '../../components/Input/Input';
 import { selectCountries } from '../../store/selectors';
 import { useAppSelector } from '../../store/storeHooks';
@@ -14,7 +15,7 @@ type IFormInput = {
   password: string;
   confirmPassword: string;
   acceptTerms: boolean;
-  // picture: File;
+  picture: FileList;
   country: string;
   gender: NonNullable<'male' | 'female'>;
 };
@@ -62,25 +63,19 @@ function createValidationSchema(countries: string[]) {
 
     acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions').required(),
 
-    // picture: yup
-    //   .mixed<File>()
-    //   .required('A picture is required')
-    //   .test(
-    //     'fileSize',
-    //     'File too large, should be less than 2MB',
-    //     value => value && value.size <= 2 * 1024 * 1024 // 2MB
-    //   )
-    //   .test(
-    //     'fileFormat',
-    //     'Unsupported format, only PNG and JPEG allowed',
-    //     value => value && ['image/jpeg', 'image/png'].includes(value.type)
-    //   )
-    //   .transform(originalValue => {
-    //     if (originalValue) {
-    //       return URL.createObjectURL(originalValue);
-    //     }
-    //     return null;
-    //   }),
+    picture: yup
+      .mixed<FileList>()
+      .required('A picture is required')
+      .test(
+        'fileFormat',
+        'Unsupported format, only PNG and JPEG allowed',
+        value => value && value[0] && ['image/jpeg', 'image/png'].includes(value[0].type)
+      )
+      .test(
+        'fileSize',
+        'File too large, should be less than 5MB',
+        value => value && value[0] && value[0].size <= 5 * 1024 * 1024
+      ),
 
     country: yup.string().required('Country is a required field').oneOf(countries, 'Please select a valid country'),
   });
@@ -122,18 +117,6 @@ export const ControlledForm = () => {
           error={errors.confirmPassword}
         />
 
-        <Input
-          name={'acceptTerms'}
-          label="Accept Terms and Conditions agreement"
-          register={register}
-          type="checkbox"
-          error={errors.acceptTerms}
-        />
-
-        {/* <label>Picture</label>
-      <input type="file" {...register('picture')} />
-      {errors.picture && <p>{errors.picture.message}</p>} */}
-
         <CountryInput
           autocomplete="on"
           name={'country'}
@@ -145,21 +128,19 @@ export const ControlledForm = () => {
           setValue={setValue}
         />
 
-        {/* <Input
-          autocomplete="on"
-          name={'country'}
-          label="Country"
+        <FileInput name={'picture'} label="Picture" register={register} type="file" error={errors.picture} />
+
+        <Input
+          name={'acceptTerms'}
+          label="Accept Terms and Conditions agreement"
           register={register}
-          type="text"
-          error={errors.country}
-          watch={watch}
-        /> */}
+          type="checkbox"
+          error={errors.acceptTerms}
+        />
 
-        {/* <label>Country</label>
-      <select {...register('country')}></select>
-      {errors.country && <p>{errors.country.message}</p>} */}
-
-        <input type="submit" />
+        {/* <button type="submit" className={styles.submitButton}>
+          Submit
+        </button> */}
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FieldError, FieldValues, Path, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import eyeOff from '../../assets/eye-off.svg';
 import eyeOn from '../../assets/eye-show.svg';
@@ -14,11 +14,12 @@ interface InputProps<T extends FieldValues> {
   autocomplete?: string | undefined;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onInput?: (e: ChangeEvent<HTMLInputElement>) => void;
   watch?: UseFormWatch<T>;
 }
 
 export function Input<T extends FieldValues>(props: InputProps<T>) {
-  const { name, label, register, type = 'text', autocomplete = undefined, error, onFocus, onBlur } = props;
+  const { name, label, register, type = 'text', autocomplete = undefined, error, onFocus, onBlur, onInput } = props;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
@@ -27,6 +28,7 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
         htmlFor={name}
         className={cn(styles.label, {
           [styles.checkbox]: type === 'checkbox',
+          [styles.file]: type === 'file',
         })}
       >
         {label}
@@ -45,6 +47,7 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
         {...(autocomplete && { autoComplete: autocomplete })}
         {...(onFocus && { onFocus: onFocus })}
         {...(onBlur && { onBlur: onBlur })}
+        {...(onInput && { onInput: onInput })}
       />
       {type === 'password' && (
         <button type="button" onClick={() => setIsPasswordVisible(!isPasswordVisible)} className={styles.eye}>

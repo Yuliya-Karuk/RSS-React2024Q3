@@ -61,12 +61,9 @@ input[type='number']::-webkit-inner-spin-button {
   border-color: $color-invalid-input;
 }
 
-input[type='checkbox'] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+input[type='checkbox'],
+input[type='file'] {
+  @extend %visually-hidden;
 }
 
 .custom-checkbox {
@@ -97,5 +94,43 @@ input[type='checkbox'] {
 
   input[type='checkbox']:checked + &::after {
     display: block;
+  }
+}
+
+.file {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    min-height: 60px;
+    margin-top: 5px;
+    padding: 10px;
+    color: $color-white-default;
+    background-color: $color-input-bg;
+    border: 2px solid $color-white-default;
+    border-radius: 5px;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:hover {
+      box-shadow: 0 0 0 50px $color-input-bg inset;
+      -webkit-text-fill-color: $color-white-default;
+    }
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    background: center no-repeat url('../../assets/picture.svg');
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: absolute;
+    z-index: 10;
+    top: 35px;
+    left: 15px;
   }
 }

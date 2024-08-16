@@ -4,9 +4,10 @@
   padding: 15px;
   font-size: 1.6rem;
   text-align: center;
-  background-color: var(--color-bg-dark-transparent);
+  background-color: $color-bg-dark-transparent;
   backdrop-filter: blur(10px);
   border-radius: 20px;
+  margin-bottom: 20px;
 }
 
 .form {
@@ -14,6 +15,27 @@
   gap: 5px;
   justify-content: flex-start;
   position: relative;
-  color: var(--color-white-default);
+  color: $color-white-default;
   display: flex;
+}
+
+.submit-button {
+  @extend %transition;
+  align-self: flex-end;
+  width: 240px;
+  padding: 10px 5px;
+  margin-top: 20px;
+  background-color: $color-white-default;
+  border-radius: 5px;
+  color: $color-bg-dark;
+
+  &:enabled:hover {
+    background-color: $color-gray-middle;
+  }
+
+  &:disabled {
+    cursor: default;
+    color: $color-gray-dark;
+    background-color: $color-gray-middle;
+  }
 }
