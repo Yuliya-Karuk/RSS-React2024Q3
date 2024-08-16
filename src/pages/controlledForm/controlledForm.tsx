@@ -1,7 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { CountryInput } from '../../components/CountryInput/CountryInput';
 import { Input } from '../../components/Input/Input';
+import { selectCountries } from '../../store/selectors';
+import { useAppSelector } from '../../store/storeHooks';
 import styles from './controlledForm.module.scss';
 
 type IFormInput = {
@@ -12,7 +15,7 @@ type IFormInput = {
   confirmPassword: string;
   acceptTerms: boolean;
   // picture: File;
-  // country: string;
+  country: string;
   gender: NonNullable<'male' | 'female'>;
 };
 
@@ -20,73 +23,80 @@ export const validEmailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
 
 const passwordStrengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Name is a required field')
-    .matches(/^[A-Z][a-z]*$/, 'Name must start with a capital letter and be followed by lowercase letters'),
+function createValidationSchema(countries: string[]) {
+  return yup.object().shape({
+    name: yup
+      .string()
+      .required('Name is a required field')
+      .matches(/^[A-Z][a-z]*$/, 'Name must start with a capital letter and be followed by lowercase letters'),
 
-  age: yup
-    .number()
-    .transform((value, originalValue) => (originalValue.trim() === '' ? undefined : value))
-    .required('Age is a required field')
-    .min(0, 'Age cannot be negative'),
+    age: yup
+      .number()
+      .transform((value, originalValue) => (originalValue.trim() === '' ? undefined : value))
+      .required('Age is a required field')
+      .min(0, 'Age cannot be negative'),
 
-  email: yup.string().required('Email is a required field').matches(validEmailRegExp, 'Must be a valid email format'),
+    email: yup.string().required('Email is a required field').matches(validEmailRegExp, 'Must be a valid email format'),
 
-  password: yup
-    .string()
-    .required('Password is a required field')
-    .matches(
-      passwordStrengthRegex,
-      'Password must contain 1 number, 1 uppercase letter, 1 lowercase letter, and 1 special character'
-    ),
+    password: yup
+      .string()
+      .required('Password is a required field')
+      .matches(
+        passwordStrengthRegex,
+        'Password must contain 1 number, 1 uppercase letter, 1 lowercase letter, and 1 special character'
+      ),
 
-  confirmPassword: yup
-    .string()
-    .required('Confirm Password is a required field')
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .matches(
-      passwordStrengthRegex,
-      'Password must contain 1 number, 1 uppercase letter, 1 lowercase letter, and 1 special character'
-    ),
+    confirmPassword: yup
+      .string()
+      .required('Confirm Password is a required field')
+      .oneOf([yup.ref('password')], 'Passwords must match')
+      .matches(
+        passwordStrengthRegex,
+        'Password must contain 1 number, 1 uppercase letter, 1 lowercase letter, and 1 special character'
+      ),
 
-  gender: yup.string().oneOf(['male', 'female'], 'Please select a valid gender').required('Gender is a required field'),
+    gender: yup
+      .string()
+      .oneOf(['male', 'female'], 'Please select a valid gender')
+      .required('Gender is a required field'),
 
-  acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions').required(),
+    acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions').required(),
 
-  // picture: yup
-  //   .mixed<File>()
-  //   .required('A picture is required')
-  //   .test(
-  //     'fileSize',
-  //     'File too large, should be less than 2MB',
-  //     value => value && value.size <= 2 * 1024 * 1024 // 2MB
-  //   )
-  //   .test(
-  //     'fileFormat',
-  //     'Unsupported format, only PNG and JPEG allowed',
-  //     value => value && ['image/jpeg', 'image/png'].includes(value.type)
-  //   )
-  //   .transform(originalValue => {
-  //     if (originalValue) {
-  //       return URL.createObjectURL(originalValue);
-  //     }
-  //     return null;
-  //   }),
+    // picture: yup
+    //   .mixed<File>()
+    //   .required('A picture is required')
+    //   .test(
+    //     'fileSize',
+    //     'File too large, should be less than 2MB',
+    //     value => value && value.size <= 2 * 1024 * 1024 // 2MB
+    //   )
+    //   .test(
+    //     'fileFormat',
+    //     'Unsupported format, only PNG and JPEG allowed',
+    //     value => value && ['image/jpeg', 'image/png'].includes(value.type)
+    //   )
+    //   .transform(originalValue => {
+    //     if (originalValue) {
+    //       return URL.createObjectURL(originalValue);
+    //     }
+    //     return null;
+    //   }),
 
-  // country: yup
-  //   .string()
-  //   .required('Country is a required field')
-  //   .oneOf(['Germany', 'Poland'], 'Please select a valid country'),
-});
+    country: yup.string().required('Country is a required field').oneOf(countries, 'Please select a valid country'),
+  });
+}
 
 export const ControlledForm = () => {
+  const countries = useAppSelector(selectCountries);
+  const validationSchema = createValidationSchema(countries);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
+    watch,
+    setValue,
+  } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
   const onSubmit = (data: IFormInput) => {
     console.log(data);
@@ -120,13 +130,30 @@ export const ControlledForm = () => {
           error={errors.acceptTerms}
         />
 
-        {/* <label>Accept Terms</label>
-      <input type="checkbox" {...register('acceptTerms')} />
-      {errors.acceptTerms && <p>{errors.acceptTerms.message}</p>} */}
-
         {/* <label>Picture</label>
       <input type="file" {...register('picture')} />
       {errors.picture && <p>{errors.picture.message}</p>} */}
+
+        <CountryInput
+          autocomplete="on"
+          name={'country'}
+          label="Country"
+          register={register}
+          type="text"
+          error={errors.country}
+          watch={watch}
+          setValue={setValue}
+        />
+
+        {/* <Input
+          autocomplete="on"
+          name={'country'}
+          label="Country"
+          register={register}
+          type="text"
+          error={errors.country}
+          watch={watch}
+        /> */}
 
         {/* <label>Country</label>
       <select {...register('country')}></select>
