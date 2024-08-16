@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import '../../styles/index.scss';
 import { Header } from '../Header/Header';
 import styles from './MainLayout.module.scss';
 

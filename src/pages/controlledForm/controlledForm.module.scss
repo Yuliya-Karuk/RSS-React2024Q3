@@ -1,0 +1,19 @@
+.form-container {
+  position: relative;
+  width: clamp(300px, 80vw, 700px);
+  padding: 15px;
+  font-size: 1.6rem;
+  text-align: center;
+  background-color: var(--color-bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+.form {
+  flex-direction: column;
+  gap: 5px;
+  justify-content: flex-start;
+  position: relative;
+  color: var(--color-white-default);
+  display: flex;
+}

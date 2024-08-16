@@ -1,0 +1,101 @@
+.input-container {
+  position: relative;
+}
+
+.label {
+  position: relative;
+  z-index: 10;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  text-align: left;
+  @include font(1.6rem, 400, 1, 0.05rem);
+  color: $color-white-default;
+}
+
+.checkbox {
+  padding-left: 40px;
+}
+
+.input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  color: $color-white-default;
+  background-color: $color-input-bg;
+  border: 2px solid $color-white-default;
+  border-radius: 5px;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:hover {
+    box-shadow: 0 0 0 50px $color-input-bg inset;
+    -webkit-text-fill-color: $color-white-default;
+  }
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.with-eye {
+  padding-right: 35px;
+}
+
+.eye {
+  position: absolute;
+  top: 42px;
+  right: 10px;
+}
+
+.form-error {
+  align-self: flex-start;
+  height: 2rem;
+  @include font(1.2rem, 400, 1, 0.05rem);
+  color: $color-primary-bright;
+}
+
+.invalid {
+  border-color: $color-invalid-input;
+}
+
+input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-checkbox {
+  &::before {
+    @extend %transition;
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid $color-white-default;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: none;
+    width: 15px;
+    height: 15px;
+    background-image: url('../../assets/checked.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: opacity 0.3s;
+  }
+
+  input[type='checkbox']:checked + &::after {
+    display: block;
+  }
+}

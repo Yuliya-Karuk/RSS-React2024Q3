@@ -33,6 +33,7 @@
 .header-link {
   padding: 13px 18px;
   transition: all 0.3s ease-out;
+  @include font(1.6rem, 400, 1, 0.05rem);
   color: $color-white-default;
   text-decoration: none;
   border-radius: 5px;
