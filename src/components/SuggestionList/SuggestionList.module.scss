@@ -2,7 +2,6 @@
   position: absolute;
   z-index: 100;
   width: 100%;
-  @include flex(center, flex-start, column, 10px);
   color: $color-white-default;
   background-color: $color-bg-dark;
   border: 1px solid $color-gray-dark;

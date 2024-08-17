@@ -1,5 +1,6 @@
 .page {
-  @include flex(flex-start, center, column);
+  @include flex(center, null, row);
+  flex-wrap: wrap;
   background: $color-bg-dark;
   flex: 1;
   z-index: 0;
