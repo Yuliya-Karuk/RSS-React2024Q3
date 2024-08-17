@@ -1,0 +1,35 @@
+.gender-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.orange {
+  color: $color-primary-bright;
+}
+
+fieldset {
+  width: 100%;
+}
+
+legend {
+  text-align: left;
+}
+
+.form-error {
+  align-self: flex-start;
+  height: 2rem;
+  @include font(1.2rem, 400, 1, 0.05rem);
+  color: $color-primary-bright;
+}
+
+.radio-container {
+  width: 100%;
+  padding: 0 10px;
+  margin-top: 5px;
+  display: flex;
+  gap: 30px;
+  background-color: $color-input-bg;
+  border: 2px solid $color-white-default;
+  border-radius: 5px;
+}

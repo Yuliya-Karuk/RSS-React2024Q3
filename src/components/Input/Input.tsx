@@ -32,9 +32,7 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
         })}
       >
         {label}
-        <span className={styles.orange} role="presentation">
-          *
-        </span>
+        <span className={cn(styles.orange, { [styles.orangeHidden]: type === 'radio' })}>*</span>
       </label>
       <input
         className={cn(styles.input, {
@@ -55,6 +53,7 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
         </button>
       )}
       {type === 'checkbox' && <span className={styles.customCheckbox} />}
+      {type === 'radio' && <span className={styles.customRadio} />}
       <p className={styles.formError}>{error && error.message}</p>
     </div>
   );

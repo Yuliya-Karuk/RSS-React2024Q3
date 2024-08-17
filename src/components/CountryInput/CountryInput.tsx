@@ -1,34 +1,15 @@
 import { useEffect, useState } from 'react';
-import {
-  FieldError,
-  FieldValues,
-  Path,
-  PathValue,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form';
+import { FieldValues, Path, PathValue, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { InputProps } from '../../models/types';
 import { selectCountries } from '../../store/selectors';
 import { useAppSelector } from '../../store/storeHooks';
 import { Input } from '../Input/Input';
 import { SuggestionList } from '../SuggestionList/SuggestionList';
 import styles from './CountryInput.module.scss';
 
-interface InputProps<T extends FieldValues> {
-  name: Path<T>;
-  label: string;
-  register: UseFormRegister<T>;
-  type?: string;
-  error?: FieldError;
-  autocomplete?: string | undefined;
+interface CountryInputProps<T extends FieldValues> extends InputProps<T> {
   watch: UseFormWatch<T>;
   setValue: UseFormSetValue<T>;
-}
-
-interface CountryInputProps<T extends FieldValues> extends InputProps<T> {
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  error?: FieldError;
 }
 
 export function CountryInput<T extends FieldValues>(props: CountryInputProps<T>) {
