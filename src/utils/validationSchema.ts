@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { passwordMinLength } from './consts';
 
-export type IFormInput = {
+export interface CustomForm {
   name: string;
   age: number;
   email: string;
@@ -11,6 +11,10 @@ export type IFormInput = {
   picture: FileList;
   country: string;
   gender: string;
+}
+
+export type CustomFormData = Omit<CustomForm, 'picture'> & {
+  picture: string;
 };
 
 export const validEmailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

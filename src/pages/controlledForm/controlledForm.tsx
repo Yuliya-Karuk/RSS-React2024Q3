@@ -1,37 +1,13 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { CountryInput } from '../../components/CountryInput/CountryInput';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
 import { Input } from '../../components/Input/Input';
 import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
-import { selectCountries } from '../../store/selectors';
-import { useAppSelector } from '../../store/storeHooks';
-import { createValidationSchema, IFormInput } from '../../utils/validationSchema';
+import { useControlledForm } from '../../hooks/useControlledForm';
 import styles from './controlledForm.module.scss';
 
 export const ControlledForm = () => {
-  const countries = useAppSelector(selectCountries);
-  const validationSchema = useMemo(() => createValidationSchema(countries), [countries]);
-  const [uploadedImage, setUploadedImage] = useState('');
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    watch,
-    setValue,
-  } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
-
-  const onSubmit = (data: IFormInput) => {
-    const filledForm = {
-      ...data,
-      picture: uploadedImage,
-    };
-
-    console.log(filledForm);
-  };
+  const { register, handleSubmit, errors, isValid, watch, setValue, onSubmit, setUploadedImage } = useControlledForm();
 
   return (
     <div className={styles.formContainer}>

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { countries } from '../utils/countries';
+import { countries } from '../../utils/countries';
 
-type FavoritesState = {
+type CountriesState = {
   countries: string[];
 };
 
-const initialState: FavoritesState = {
+const initialState: CountriesState = {
   countries: countries,
 };
 
