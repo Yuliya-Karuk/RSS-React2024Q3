@@ -6,10 +6,10 @@ export const Home = () => {
   const forms = useAppSelector(selectForms);
 
   return (
-    <div>
+    <>
       {forms.map((form, i) => (
         <SavedForm key={form.name} form={form} number={i} />
       ))}
-    </div>
+    </>
   );
 };

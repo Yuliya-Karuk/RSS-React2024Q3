@@ -1,58 +1,13 @@
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
 import { Input } from '../../components/Input/Input';
 import { UncontrolledCountryInput } from '../../components/UncontrolledCountryInput/UncontrolledCountryInput';
 import { UncontrolledPasswordInput } from '../../components/UncontrolledPasswordInput/UncontrolledPasswordInput';
-import { ValidationErrors } from '../../models/types';
-import { selectCountries } from '../../store/selectors';
-import { addForm } from '../../store/slices/formsSlice';
-import { useAppDispatch, useAppSelector } from '../../store/storeHooks';
-import { transformImgToBase64 } from '../../utils/utils';
-import { createValidationSchema, CustomFormData } from '../../utils/validationSchema';
+import { useUncontrolledForm } from '../../hooks/useUncontrolledForm';
 import styles from './uncontrolledForm.module.scss';
 
 export const UncontrolledForm = () => {
-  // const { register, handleSubmit, errors, isValid, watch, setValue, onSubmit, setUploadedImage } = useControlledForm();
-  const [errors, setErrors] = useState<ValidationErrors>({});
-  const countries = useAppSelector(selectCountries);
-  const validationSchema = useMemo(() => createValidationSchema(countries), [countries]);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
-    console.log(data);
-
-    try {
-      const res = validationSchema.validateSync(data, { abortEarly: false });
-      const transformedPicture = await transformImgToBase64(data.picture as File);
-      const filledForm: CustomFormData = {
-        ...res,
-        picture: transformedPicture,
-      };
-
-      dispatch(addForm(filledForm));
-      navigate('/');
-    } catch (error: unknown) {
-      if (error instanceof yup.ValidationError) {
-        const errorsList: Record<string, { message: string }> = {};
-
-        error.inner.forEach(({ path, message }) => {
-          if (path) {
-            errorsList[path] = { message };
-          }
-        });
-
-        setErrors(errorsList);
-        console.log(errorsList);
-      }
-    }
-  };
+  const { handleSubmit, errors } = useUncontrolledForm();
 
   return (
     <div className={styles.formContainer}>
