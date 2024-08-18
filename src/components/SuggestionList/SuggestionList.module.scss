@@ -1,0 +1,28 @@
+.suggestion-list {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  color: $color-white-default;
+  background-color: $color-bg-dark;
+  border: 1px solid $color-gray-dark;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px $color-gray-dark;
+  overflow: auto;
+  max-height: 200px;
+}
+
+.suggestion-item {
+  width: 100%;
+}
+
+.suggestion-button {
+  @extend %transition;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid $color-gray-dark;
+  text-align: left;
+
+  @include hover {
+    background: $color-primary-bright;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "editor.formatOnSave": true,
+  "[typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+    }
+  },
+  "files.insertFinalNewline": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "always",
+  },
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "sass",
+  ],
+  "cSpell.words": [
+    "stylelint",
+    "hookform",
+  ]
+}

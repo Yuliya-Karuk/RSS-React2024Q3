@@ -1,0 +1,41 @@
+.form-container {
+  width: clamp(300px, 80vw, 700px);
+  font-size: 1.6rem;
+  background-color: $color-bg-dark-transparent;
+  position: relative;
+  padding: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.form {
+  flex-direction: column;
+  gap: 5px;
+  justify-content: flex-start;
+  position: relative;
+  color: $color-white-default;
+  display: flex;
+}
+
+.submit-button {
+  @extend %transition;
+  align-self: flex-end;
+  width: 240px;
+  padding: 10px 5px;
+  margin-top: 20px 0;
+  background-color: $color-white-default;
+  border-radius: 5px;
+  color: $color-bg-dark;
+
+  &:enabled:hover {
+    background-color: $color-primary-bright;
+  }
+
+  &:disabled {
+    cursor: default;
+    color: $color-gray-dark;
+    background-color: $color-gray-middle;
+  }
+}

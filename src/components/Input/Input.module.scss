@@ -1,0 +1,206 @@
+.input-container {
+  position: relative;
+}
+
+.label {
+  position: relative;
+  z-index: 10;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  text-align: left;
+  @include font(1.6rem, 400, 1, 0.05rem);
+  color: $color-white-default;
+}
+
+.checkbox {
+  padding-left: 40px;
+}
+
+.input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  color: $color-white-default;
+  background-color: $color-input-bg;
+  border: 2px solid $color-white-default;
+  border-radius: 5px;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:hover {
+    box-shadow: 0 0 0 50px $color-input-bg inset;
+    -webkit-text-fill-color: $color-white-default;
+  }
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.with-eye {
+  padding-right: 35px;
+}
+
+.eye {
+  position: absolute;
+  top: 42px;
+  right: 10px;
+}
+
+.form-error {
+  align-self: flex-start;
+  height: 2rem;
+  @include font(1.2rem, 400, 1, 0.05rem);
+  color: $color-primary-bright;
+}
+
+.invalid {
+  border-color: $color-invalid-input;
+}
+
+.orange {
+  color: $color-primary-bright;
+}
+
+.orange-hidden {
+  display: none;
+}
+
+input[type='checkbox'],
+input[type='file'] {
+  @extend %visually-hidden;
+}
+
+.custom-checkbox {
+  cursor: pointer;
+
+  &::before {
+    @extend %transition;
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid $color-white-default;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: none;
+    width: 15px;
+    height: 15px;
+    background-image: url('../../assets/checked.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: opacity 0.3s;
+  }
+
+  input[type='checkbox']:checked + &::after {
+    display: block;
+  }
+}
+
+.file {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    min-height: 60px;
+    margin-top: 5px;
+    padding: 10px;
+    color: $color-white-default;
+    background-color: $color-input-bg;
+    border: 2px solid $color-white-default;
+    border-radius: 5px;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:hover {
+      box-shadow: 0 0 0 50px $color-input-bg inset;
+      -webkit-text-fill-color: $color-white-default;
+    }
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    background: center no-repeat url('../../assets/picture.svg');
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: absolute;
+    z-index: 10;
+    top: 35px;
+    left: 15px;
+  }
+}
+
+input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  left: 0;
+  z-index: 10;
+  height: 30px;
+  top: 25%;
+}
+
+.custom-radio {
+  @extend %transition;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid $color-white-default;
+  position: relative;
+  display: block;
+
+  &::after {
+    @extend %transition;
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+input[type='radio']:checked + .custom-radio {
+  border-color: $color-primary-bright;
+}
+
+input[type='radio']:checked + .custom-radio::after {
+  background: $color-primary-bright;
+}
+
+[class*='gender'] {
+  .label {
+    cursor: pointer;
+    width: unset;
+    margin: 0;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    min-height: 70px;
+  }
+
+  .form-error {
+    display: none;
+  }
+}
