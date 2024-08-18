@@ -4,12 +4,10 @@ import { InputProps } from '../../models/types';
 import { Input } from '../Input/Input';
 import styles from './FileInput.module.scss';
 
-interface FileInputProps<T extends FieldValues> extends InputProps<T> {
-  setUploadedImage: React.Dispatch<React.SetStateAction<string>>;
-}
+type FileInputProps<T extends FieldValues> = InputProps<T>;
 
 export function FileInput<T extends FieldValues>(props: FileInputProps<T>) {
-  const { name, label, register, type = 'text', error, setUploadedImage } = props;
+  const { name, label, register, type = 'text', error } = props;
 
   const [selectedFileName, setSelectedFileName] = useState('');
 
@@ -19,20 +17,10 @@ export function FileInput<T extends FieldValues>(props: FileInputProps<T>) {
 
     if (selectedFile) {
       setSelectedFileName(selectedFile.name);
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const imageInBase64 = reader.result as string;
-        setUploadedImage(imageInBase64);
-      };
-
-      reader.readAsDataURL(selectedFile);
     } else {
       setSelectedFileName('');
     }
   };
-
-  // console.log(uploadedImage);
 
   return (
     <div className={styles.fileContainer}>

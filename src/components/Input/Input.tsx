@@ -1,26 +1,26 @@
 import cn from 'classnames';
-import { ChangeEvent, useState } from 'react';
-import { FieldError, FieldValues, Path, UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { useState } from 'react';
+import { FieldValues } from 'react-hook-form';
 import eyeOff from '../../assets/eye-off.svg';
 import eyeOn from '../../assets/eye-show.svg';
+import { InputProps } from '../../models/types';
 import styles from './Input.module.scss';
 
-interface InputProps<T extends FieldValues> {
-  name: Path<T>;
-  label: string;
-  register: UseFormRegister<T>;
-  type?: string;
-  error?: FieldError;
-  autocomplete?: string | undefined;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onInput?: (e: ChangeEvent<HTMLInputElement>) => void;
-  watch?: UseFormWatch<T>;
-}
-
 export function Input<T extends FieldValues>(props: InputProps<T>) {
-  const { name, label, register, type = 'text', autocomplete = undefined, error, onFocus, onBlur, onInput } = props;
+  const {
+    name,
+    label,
+    register,
+    type = 'text',
+    autocomplete = undefined,
+    error,
+    onFocus,
+    onBlur,
+    onInput,
+    value,
+  } = props;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const registerProps = register ? register(name) : { name: name };
 
   return (
     <div className={styles.inputContainer}>
@@ -40,8 +40,9 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
           [styles.invalid]: error,
         })}
         id={name}
+        {...(value !== undefined && { value: value })}
         type={type === 'password' && isPasswordVisible ? 'text' : type}
-        {...register(name)}
+        {...registerProps}
         {...(autocomplete && { autoComplete: autocomplete })}
         {...(onFocus && { onFocus: onFocus })}
         {...(onBlur && { onBlur: onBlur })}

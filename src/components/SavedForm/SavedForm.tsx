@@ -13,7 +13,7 @@ export interface CustomForm {
   password: string;
   confirmPassword: string;
   acceptTerms: boolean;
-  picture: FileList;
+  picture: File;
   country: string;
   gender: string;
 }

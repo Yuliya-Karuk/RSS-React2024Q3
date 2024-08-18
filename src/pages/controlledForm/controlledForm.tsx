@@ -3,11 +3,12 @@ import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
 import { Input } from '../../components/Input/Input';
 import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
+
 import { useControlledForm } from '../../hooks/useControlledForm';
 import styles from './controlledForm.module.scss';
 
 export const ControlledForm = () => {
-  const { register, handleSubmit, errors, isValid, watch, setValue, onSubmit, setUploadedImage } = useControlledForm();
+  const { register, handleSubmit, errors, isValid, watch, setValue, onSubmit } = useControlledForm();
 
   return (
     <div className={styles.formContainer}>
@@ -49,14 +50,7 @@ export const ControlledForm = () => {
           setValue={setValue}
         />
 
-        <MemoizedFileInput
-          name={'picture'}
-          label="Picture"
-          register={register}
-          type="file"
-          error={errors.picture}
-          setUploadedImage={setUploadedImage}
-        />
+        <MemoizedFileInput name={'picture'} label="Picture" register={register} type="file" error={errors.picture} />
 
         <Input
           name={'acceptTerms'}

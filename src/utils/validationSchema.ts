@@ -8,7 +8,7 @@ export interface CustomForm {
   password: string;
   confirmPassword: string;
   acceptTerms: boolean;
-  picture: FileList;
+  picture: File;
   country: string;
   gender: string;
 }
@@ -56,20 +56,26 @@ export function createValidationSchema(countries: string[]) {
 
     gender: yup.string().required('Gender is a required field'),
 
-    acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms and conditions').required(),
+    acceptTerms: yup
+      .boolean()
+      .oneOf([true], 'You must accept the terms and conditions')
+      .required('You must accept the terms and conditions'),
 
     picture: yup
-      .mixed<FileList>()
+      .mixed<File>()
       .required('A picture is required')
+      .transform(value => {
+        return value instanceof FileList ? value[0] : value;
+      })
       .test(
         'fileFormat',
         'Unsupported format, only PNG and JPEG allowed',
-        value => value && value[0] && ['image/jpeg', 'image/png'].includes(value[0].type)
+        value => value && value instanceof File && ['image/jpeg', 'image/png'].includes(value.type)
       )
       .test(
         'fileSize',
         'File too large, should be less than 5MB',
-        value => value && value[0] && value[0].size <= 5 * 1024 * 1024
+        value => value && value instanceof File && value.size <= 5 * 1024 * 1024
       ),
 
     country: yup.string().required('Country is a required field').oneOf(countries, 'Please select a valid country'),
