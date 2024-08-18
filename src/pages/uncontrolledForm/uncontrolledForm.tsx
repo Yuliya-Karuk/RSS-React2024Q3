@@ -1,8 +1,8 @@
+import { UncontrolledCountryInput } from '../../components/CountryInput/UncontrolledCountryInput';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
 import { Input } from '../../components/Input/Input';
-import { UncontrolledCountryInput } from '../../components/UncontrolledCountryInput/UncontrolledCountryInput';
-import { UncontrolledPasswordInput } from '../../components/UncontrolledPasswordInput/UncontrolledPasswordInput';
+import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
 import { useUncontrolledForm } from '../../hooks/useUncontrolledForm';
 import styles from './uncontrolledForm.module.scss';
 
@@ -17,7 +17,7 @@ export const UncontrolledForm = () => {
 
         <Input name={'email'} label="Email" type="email" error={errors.email} />
 
-        <UncontrolledPasswordInput name={'password'} label="Password" type="password" error={errors.password} />
+        <PasswordInput name={'password'} label="Password" type="password" error={errors.password} />
 
         <Input name={'confirmPassword'} label="Confirm Password" type="password" error={errors.confirmPassword} />
 

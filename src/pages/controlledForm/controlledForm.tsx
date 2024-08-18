@@ -1,4 +1,4 @@
-import { CountryInput } from '../../components/CountryInput/CountryInput';
+import { ControlledCountryInput } from '../../components/CountryInput/ControlledCountryInput';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
 import { Input } from '../../components/Input/Input';
@@ -18,14 +18,7 @@ export const ControlledForm = () => {
 
         <Input name={'email'} label="Email" register={register} type="email" error={errors.email} />
 
-        <PasswordInput
-          name={'password'}
-          label="Password"
-          register={register}
-          type="password"
-          error={errors.password}
-          watch={watch}
-        />
+        <PasswordInput name={'password'} label="Password" register={register} type="password" error={errors.password} />
 
         <Input
           name={'confirmPassword'}
@@ -39,7 +32,7 @@ export const ControlledForm = () => {
 
         <GenderFieldset name={'gender'} label="Gender" register={register} type="radio" error={errors.gender} />
 
-        <CountryInput
+        <ControlledCountryInput
           autocomplete="on"
           name={'country'}
           label="Country"

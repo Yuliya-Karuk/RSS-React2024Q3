@@ -7,12 +7,12 @@ import { Input } from '../Input/Input';
 import { SuggestionList } from '../SuggestionList/SuggestionList';
 import styles from './CountryInput.module.scss';
 
-interface CountryInputProps<T extends FieldValues> extends InputProps<T> {
+interface ControlledCountryInputProps<T extends FieldValues> extends InputProps<T> {
   watch: UseFormWatch<T>;
   setValue: UseFormSetValue<T>;
 }
 
-export function CountryInput<T extends FieldValues>(props: CountryInputProps<T>) {
+export function ControlledCountryInput<T extends FieldValues>(props: ControlledCountryInputProps<T>) {
   const { name, label, register, type = 'text', autocomplete = undefined, error, watch, setValue } = props;
   const countries = useAppSelector(selectCountries);
 

@@ -2,22 +2,22 @@ export const calculateStrength = (password: string): number => {
   let strength = 0;
 
   if (password.length >= 8) {
-    strength++;
+    strength += 1;
   }
   if (/[A-Z]/.test(password)) {
-    strength++;
+    strength += 1;
   }
   if (/[a-z]/.test(password)) {
-    strength++;
+    strength += 1;
   }
   if (/\d/.test(password)) {
-    strength++;
+    strength += 1;
   }
   if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    strength++;
+    strength += 1;
   }
 
-  return Math.min(strength, 4);
+  return Math.min(strength, 5);
 };
 
 export const transformImgToBase64 = (img: File): Promise<string> => {

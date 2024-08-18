@@ -21,10 +21,13 @@ export const validEmailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
 
 const passwordStrengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
+const englishLettersRegExp = /^[A-Za-z]+$/;
+
 export function createValidationSchema(countries: string[]) {
   return yup.object().shape({
     name: yup
       .string()
+      .matches(englishLettersRegExp, 'Only English letters are allowed')
       .required('Name is a required field')
       .matches(/^[A-Z][a-z]*$/, 'Name must start with a capital letter and be followed by lowercase letters'),
 

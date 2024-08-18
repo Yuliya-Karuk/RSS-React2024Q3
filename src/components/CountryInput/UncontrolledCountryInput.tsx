@@ -5,12 +5,12 @@ import { selectCountries } from '../../store/selectors';
 import { useAppSelector } from '../../store/storeHooks';
 import { Input } from '../Input/Input';
 import { SuggestionList } from '../SuggestionList/SuggestionList';
-import styles from './UncontrolledCountryInput.module.scss';
+import styles from './CountryInput.module.scss';
 
 type UncontrolledCountryInputProps<T extends FieldValues> = InputProps<T>;
 
 export function UncontrolledCountryInput<T extends FieldValues>(props: UncontrolledCountryInputProps<T>) {
-  const { name, label, register, type = 'text', autocomplete = undefined, error } = props;
+  const { name, label, type = 'text', autocomplete = undefined, error } = props;
   const countries = useAppSelector(selectCountries);
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>(countries);
@@ -35,7 +35,6 @@ export function UncontrolledCountryInput<T extends FieldValues>(props: Uncontrol
         autocomplete={autocomplete}
         name={name}
         label={label}
-        register={register}
         type={type}
         error={error}
         onFocus={() => setIsFocused(true)}

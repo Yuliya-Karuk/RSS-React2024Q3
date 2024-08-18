@@ -14,7 +14,7 @@ const formsSlice = createSlice({
   initialState,
   reducers: {
     addForm: (state, action: PayloadAction<CustomFormData>) => {
-      state.forms.push(action.payload);
+      state.forms.unshift(action.payload);
     },
   },
 });

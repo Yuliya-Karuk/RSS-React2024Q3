@@ -16,6 +16,34 @@
     width: unset;
     max-width: 450px;
   }
+
+  &:first-of-type {
+    box-shadow: 1px 1px 5px 1px $color-primary-bright;
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: $color-white-default;
+      background-size: contain;
+      top: 10px;
+      right: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 40px;
+      background: no-repeat center url('../../assets/new.svg');
+      background-size: contain;
+      top: 0;
+      right: -10px;
+    }
+  }
 }
 
 .heading {
