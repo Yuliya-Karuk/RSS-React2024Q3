@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { InputProps } from '../../models/types';
 import { selectCountries } from '../../store/selectors';
 import { useAppSelector } from '../../store/storeHooks';
-import { Input } from '../Input/Input';
+import { MemoizedInput } from '../Input/Input';
 import { SuggestionList } from '../SuggestionList/SuggestionList';
 import styles from './CountryInput.module.scss';
 
@@ -31,7 +31,7 @@ export function UncontrolledCountryInput<T extends FieldValues>(props: Uncontrol
 
   return (
     <div className={styles.countryContainer}>
-      <Input
+      <MemoizedInput
         autocomplete={autocomplete}
         name={name}
         label={label}
@@ -48,3 +48,7 @@ export function UncontrolledCountryInput<T extends FieldValues>(props: Uncontrol
     </div>
   );
 }
+
+export const MemoizedUncontrolledCountryInput = memo(UncontrolledCountryInput) as <T extends FieldValues>(
+  props: UncontrolledCountryInputProps<T>
+) => JSX.Element;

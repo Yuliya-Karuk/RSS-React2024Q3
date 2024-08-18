@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { FieldValues, Path, PathValue, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { InputProps } from '../../models/types';
 import { selectCountries } from '../../store/selectors';
 import { useAppSelector } from '../../store/storeHooks';
-import { Input } from '../Input/Input';
+import { MemoizedInput } from '../Input/Input';
 import { SuggestionList } from '../SuggestionList/SuggestionList';
 import styles from './CountryInput.module.scss';
 
@@ -37,7 +37,7 @@ export function ControlledCountryInput<T extends FieldValues>(props: ControlledC
 
   return (
     <div className={styles.countryContainer}>
-      <Input
+      <MemoizedInput
         autocomplete={autocomplete}
         name={name}
         label={label}
@@ -53,3 +53,7 @@ export function ControlledCountryInput<T extends FieldValues>(props: ControlledC
     </div>
   );
 }
+
+export const MemoizedControlledCountryInput = memo(ControlledCountryInput) as <T extends FieldValues>(
+  props: ControlledCountryInputProps<T>
+) => JSX.Element;

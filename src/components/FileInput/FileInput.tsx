@@ -1,7 +1,7 @@
 import { ChangeEvent, memo, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { InputProps } from '../../models/types';
-import { Input } from '../Input/Input';
+import { MemoizedInput } from '../Input/Input';
 import styles from './FileInput.module.scss';
 
 type FileInputProps<T extends FieldValues> = InputProps<T>;
@@ -24,7 +24,14 @@ export function FileInput<T extends FieldValues>(props: FileInputProps<T>) {
 
   return (
     <div className={styles.fileContainer}>
-      <Input name={name} label={label} register={register} type={type} error={error} onInput={handleFileUpload} />
+      <MemoizedInput
+        name={name}
+        label={label}
+        register={register}
+        type={type}
+        error={error}
+        onInput={handleFileUpload}
+      />
       <p className={styles.fileName}>{selectedFileName}</p>
     </div>
   );

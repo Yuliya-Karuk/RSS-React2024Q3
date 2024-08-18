@@ -1,8 +1,8 @@
-import { UncontrolledCountryInput } from '../../components/CountryInput/UncontrolledCountryInput';
+import { MemoizedUncontrolledCountryInput } from '../../components/CountryInput/UncontrolledCountryInput';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
-import { Input } from '../../components/Input/Input';
-import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
+import { MemoizedInput } from '../../components/Input/Input';
+import { MemoizedPasswordInput } from '../../components/PasswordInput/PasswordInput';
 import { useUncontrolledForm } from '../../hooks/useUncontrolledForm';
 import styles from './uncontrolledForm.module.scss';
 
@@ -13,19 +13,31 @@ export const UncontrolledForm = () => {
     <div className={styles.formContainer}>
       <h1 className={styles.formTitle}>Uncontrolled Form</h1>
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
-        <Input name={'name'} label="Name" type="text" error={errors.name} />
+        <MemoizedInput name={'name'} label="Name" type="text" error={errors.name} autocomplete="user-name" />
 
-        <Input name={'email'} label="Email" type="email" error={errors.email} />
+        <MemoizedInput name={'email'} label="Email" type="email" error={errors.email} autocomplete="user-email" />
 
-        <PasswordInput name={'password'} label="Password" type="password" error={errors.password} />
+        <MemoizedPasswordInput
+          name={'password'}
+          label="Password"
+          type="password"
+          error={errors.password}
+          autocomplete="new-password"
+        />
 
-        <Input name={'confirmPassword'} label="Confirm Password" type="password" error={errors.confirmPassword} />
+        <MemoizedInput
+          name={'confirmPassword'}
+          label="Confirm Password"
+          type="password"
+          error={errors.confirmPassword}
+          autocomplete="new-password"
+        />
 
-        <Input name={'age'} label="Age" type="number" error={errors.age} />
+        <MemoizedInput name={'age'} label="Age" type="number" error={errors.age} />
 
         <GenderFieldset name={'gender'} label="Gender" type="radio" error={errors.gender} />
 
-        <UncontrolledCountryInput
+        <MemoizedUncontrolledCountryInput
           autocomplete="on"
           name={'country'}
           label="Country"
@@ -35,7 +47,7 @@ export const UncontrolledForm = () => {
 
         <MemoizedFileInput name={'picture'} label="Picture" type="file" error={errors.picture} />
 
-        <Input
+        <MemoizedInput
           name={'acceptTerms'}
           label="Accept Terms and Conditions agreement"
           type="checkbox"

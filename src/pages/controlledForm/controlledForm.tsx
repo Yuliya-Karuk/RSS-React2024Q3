@@ -1,8 +1,8 @@
-import { ControlledCountryInput } from '../../components/CountryInput/ControlledCountryInput';
+import { MemoizedControlledCountryInput } from '../../components/CountryInput/ControlledCountryInput';
 import { MemoizedFileInput } from '../../components/FileInput/FileInput';
 import { GenderFieldset } from '../../components/GenderFieldset/GenderFieldset';
-import { Input } from '../../components/Input/Input';
-import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
+import { MemoizedInput } from '../../components/Input/Input';
+import { MemoizedPasswordInput } from '../../components/PasswordInput/PasswordInput';
 
 import { useControlledForm } from '../../hooks/useControlledForm';
 import styles from './controlledForm.module.scss';
@@ -14,25 +14,47 @@ export const ControlledForm = () => {
     <div className={styles.formContainer}>
       <h1 className={styles.formTitle}>Controlled Form</h1>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input name={'name'} label="Name" register={register} type="text" error={errors.name} />
+        <MemoizedInput
+          name={'name'}
+          label="Name"
+          register={register}
+          type="text"
+          error={errors.name}
+          autocomplete="user-name"
+        />
 
-        <Input name={'email'} label="Email" register={register} type="email" error={errors.email} />
+        <MemoizedInput
+          name={'email'}
+          label="Email"
+          register={register}
+          type="email"
+          error={errors.email}
+          autocomplete="user-email"
+        />
 
-        <PasswordInput name={'password'} label="Password" register={register} type="password" error={errors.password} />
+        <MemoizedPasswordInput
+          name={'password'}
+          label="Password"
+          register={register}
+          type="password"
+          error={errors.password}
+          autocomplete="new-password"
+        />
 
-        <Input
+        <MemoizedInput
           name={'confirmPassword'}
           label="Confirm Password"
           register={register}
           type="password"
           error={errors.confirmPassword}
+          autocomplete="new-password"
         />
 
-        <Input name={'age'} label="Age" register={register} type="number" error={errors.age} />
+        <MemoizedInput name={'age'} label="Age" register={register} type="number" error={errors.age} />
 
         <GenderFieldset name={'gender'} label="Gender" register={register} type="radio" error={errors.gender} />
 
-        <ControlledCountryInput
+        <MemoizedControlledCountryInput
           autocomplete="on"
           name={'country'}
           label="Country"
@@ -45,7 +67,7 @@ export const ControlledForm = () => {
 
         <MemoizedFileInput name={'picture'} label="Picture" register={register} type="file" error={errors.picture} />
 
-        <Input
+        <MemoizedInput
           name={'acceptTerms'}
           label="Accept Terms and Conditions agreement"
           register={register}

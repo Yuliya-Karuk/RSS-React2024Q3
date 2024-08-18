@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { FieldValues } from 'react-hook-form';
 import { InputProps } from '../../models/types';
 import { genders } from '../../utils/consts';
-import { Input } from '../Input/Input';
+import { MemoizedInput } from '../Input/Input';
 import styles from './GenderFieldset.module.scss';
 
 type GenderFieldsetProps<T extends FieldValues> = InputProps<T>;
@@ -19,7 +19,7 @@ export function GenderFieldset<T extends FieldValues>(props: GenderFieldsetProps
         </legend>
         <div className={styles.radioContainer}>
           {genders.map(gender => (
-            <Input key={gender} name={name} label={gender} register={register} type={type} error={error} />
+            <MemoizedInput key={gender} name={name} label={gender} register={register} type={type} error={error} />
           ))}
         </div>
       </fieldset>

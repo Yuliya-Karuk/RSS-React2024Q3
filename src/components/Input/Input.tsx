@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import eyeOff from '../../assets/eye-off.svg';
 import eyeOn from '../../assets/eye-show.svg';
@@ -21,11 +21,12 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
   } = props;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const registerProps = register ? register(name) : { name: name };
+  console.log(name);
 
   return (
     <div className={styles.inputContainer}>
       <label
-        htmlFor={name}
+        htmlFor={type === 'radio' ? `${name}-${label}` : name}
         className={cn(styles.label, {
           [styles.checkbox]: type === 'checkbox',
           [styles.file]: type === 'file',
@@ -39,7 +40,7 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
           [styles.withEye]: type === 'password',
           [styles.invalid]: error,
         })}
-        id={name}
+        id={type === 'radio' ? `${name}-${label}` : name}
         {...(value !== undefined && { value: value })}
         type={type === 'password' && isPasswordVisible ? 'text' : type}
         {...registerProps}
@@ -59,3 +60,5 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
     </div>
   );
 }
+
+export const MemoizedInput = memo(Input) as <T extends FieldValues>(props: InputProps<T>) => JSX.Element;
