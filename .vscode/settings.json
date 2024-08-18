@@ -6,9 +6,9 @@
     }
   },
   "files.insertFinalNewline": true,
-  // "editor.codeActionsOnSave": {
-  //   "source.fixAll.stylelint": "always",
-  // },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "always",
+  },
   "stylelint.validate": [
     "css",
     "scss",

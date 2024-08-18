@@ -21,7 +21,6 @@ export function Input<T extends FieldValues>(props: InputProps<T>) {
   } = props;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const registerProps = register ? register(name) : { name: name };
-  console.log(name);
 
   return (
     <div className={styles.inputContainer}>
